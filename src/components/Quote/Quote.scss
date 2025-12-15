@@ -1,0 +1,140 @@
+/* Quote Component Styles */
+
+.antigravity-quote-wrapper {
+  padding: var(--spacing-64, 4rem) var(--wp--layout--margin);
+  position: relative;
+  /* Remove default background to allow modular placement */
+  /* background-color: var(--wp--preset--color--sandwood); */ 
+  color: var(--wp--preset--color--burgundy);
+}
+
+.antigravity-quote-container {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Typography --- */
+
+.quote-text {
+  font-family: var(--wp--preset--font-family--playfair-display);
+  font-size: clamp(22px, 3.5vw, 40px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0 0 var(--spacing-32, 2rem) 0;
+}
+
+.quote-citation {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16, 1rem);
+  font-family: var(--wp--preset--font-family--merriweather);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.9;
+}
+
+.citation-line {
+  display: block;
+  width: 40px;
+  height: 2px;
+  background-color: var(--wp--preset--color--divine-gold);
+}
+
+/* --- Decorative Elements --- */
+
+.quote-icon {
+  font-family: var(--font-playfair, 'Playfair Display', serif);
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(1.375rem, 4vw, 2.5rem); /* 22px to 40px */
+  line-height: 1.3;
+  color: var(--color-burgundy, #5a1e28);
+  opacity: 0.3;
+  position: absolute;
+  top: -60px;
+  left: -40px;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* --- Layout Variants --- */
+
+/* 1. Center Layout */
+.layout-center {
+  text-align: center;
+}
+
+.layout-center .antigravity-quote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layout-center .quote-citation {
+  justify-content: center;
+}
+
+.layout-center .quote-icon {
+  top: -50px; /* Tighter to text */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10rem; /* Slightly larger for background effect */
+  opacity: 0.15; /* More subtle */
+}
+
+/* 2. Side-Line Layout */
+.layout-side-line {
+  text-align: left;
+}
+
+.layout-side-line .antigravity-quote-container {
+  border-left: 5px solid var(--wp--preset--color--divine-gold);
+  padding-left: var(--spacing-40, 2.5rem);
+}
+
+.layout-side-line .quote-icon {
+  left: 20px; /* Inside the padding relative to container */
+  top: -30px;
+  font-size: 8rem;
+  opacity: 0.15;
+}
+
+/* --- Style Variants --- */
+
+/* Card Variant */
+.variant-card .antigravity-quote-container {
+  background-color: white;
+  padding: clamp(1.5rem, 5vw, 4rem); /* 24px mobile -> 64px desktop */
+  border-radius: 4px;
+  box-shadow: 0 20px 40px -10px rgba(42, 5, 10, 0.08); /* Subtle Burgundy Shadow */
+  overflow: hidden; /* Ensure decorative icon stays inside the card */
+}
+
+/* Adjust Icon for Card Variant specifically */
+.variant-card .quote-icon {
+  top: -20px; /* Bring it inside slightly */
+  left: 20px;
+  opacity: 0.1; /* Even more subtle on white */
+}
+
+/* Adjust side-line inside card */
+.variant-card.layout-side-line .antigravity-quote-container {
+  border-left: none; /* Remove default border logic */
+  display: flex; /* Re-flow for internal border if needed, or just keep simple */
+}
+
+.variant-card.layout-side-line .antigravity-quote-content {
+  border-left: 5px solid var(--wp--preset--color--divine-gold);
+  padding-left: 2.5rem;
+}
+
+/* Ensure padding wrapper doesn't double up too much visually */
+.variant-card.antigravity-quote-wrapper {
+  padding-top: var(--spacing-32, 2rem);
+  padding-bottom: var(--spacing-32, 2rem);
+}

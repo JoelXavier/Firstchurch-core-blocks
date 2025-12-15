@@ -1,0 +1,77 @@
+import { Meta, IconGallery, IconItem } from '@storybook/blocks';
+
+<Meta title="Foundations/Iconography" />
+
+# Iconography
+
+Icons in our system are designed to be simple, elegant, and communicative. They should be used sparingly to enhance navigation and comprehension without cluttering the interface.
+
+## Style Guidelines
+
+*   **Style**: Outline / Strokeline (Preferred) or Solid (Active States).
+*   **Stroke Width**: 1.5px or 2px (Consistent).
+*   **Color**: Inherit from text (`currentColor`) or specific Semantic Colors.
+*   **Corner Radius**: Slightly rounded (matches spacing tokens).
+
+## Sizing Standards
+
+| Size Token | Pixel Value | Usage |
+|------------|-------------|-------|
+| `Small` | 16px | Inline text, meta data |
+| `Medium` | 24px | Navigation, Buttons (Default) |
+| `Large` | 32px | Section Headers, Feature Cards |
+| `Hero` | 48px | Featured Areas |
+
+## Key Icons
+
+*(Placeholders for Approved Assets)*
+
+<IconGallery>
+  <IconItem name="Menu">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+  </IconItem>
+  <IconItem name="Search">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+  </IconItem>
+  <IconItem name="User">
+     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  </IconItem>
+   <IconItem name="Chevron Down">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+  </IconItem>
+  <IconItem name="Cross (Faith)">
+     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M6 8h12"/></svg>
+  </IconItem>
+</IconGallery>
+
+## Domain Icons (Church Specific)
+
+<IconGallery>
+  <IconItem name="Amendments (File Alt)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
+  </IconItem>
+  <IconItem name="Preface (Book Open)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor"><path d="M249.6 471.5c10.8 3.8 22.4-4.1 22.4-15.5V78.6c0-4.2-1.6-8.4-5-11C247.4 52 202.4 32 144 32C93.5 32 46.3 45.3 18.1 56.1C6.8 60.5 0 71.7 0 83.8V454.1c0 11.9 12.8 20.2 24.1 16.5C55.6 460.1 105.5 448 144 448c33.9 0 79 14 105.6 23.5zm294.1 0l10.7-3.7c11.3-3.8 24.1-12.2 24.1-24.1V83.8c0-12.1-6.8-23.3-18.1-27.6C529.7 45.3 482.5 32 432 32c-58.4 0-103.4 20-123 35.6c-3.3 2.6-5 6.8-5 11V456c0 11.4 11.7 19.3 22.4 15.5c26.6-9.5 71.7-23.5 105.6-23.5c38.5 0 88.4 12.1 119.9 22.6z"/></svg>
+  </IconItem>
+  <IconItem name="Holiness (Cross)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" fill="currentColor"><path d="M176 0c-26.5 0-48 21.5-48 48V160H48c-26.5 0-48 21.5-48 48s21.5 48 48 48H128V464c0 26.5 21.5 48 48 48s48-21.5 48-48V256H336c26.5 0 48-21.5 48-48s-21.5-48-48-48H224V48c0-26.5-21.5-48-48-48z"/></svg>
+  </IconItem>
+  <IconItem name="Doctrine (Book)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
+  </IconItem>
+  <IconItem name="Moral (Scale)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor"><path d="M256 336h-32V249.2L326.7 96H320 96c-17.7 0-32-14.3-32-32s14.3-32 32-32h92.2l-30.1-45.1C147.9 4.1 133 8.3 120.2 18.2L15.6 156.9c-12.7 16.9-3.9 41.1 17.2 41.1H84.1c11.9 43.1 51.5 74 98.4 74H224v64H160c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H480c35.3 0 64-28.7 64-64V432c0-35.3-28.7-64-64-64H416V272h41.5c46.9 0 86.6-30.9 98.4-74h51.3c21.1 0 29.9-24.2 17.2-41.1L519.8 18.2c-12.7-9.9-27.7-14.1-37.9-1.9L451.8 32H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H353.3L416 249.2V336H384c-8.8 0-16 7.2-16 16v48H272V352c0-8.8-7.2-16-16-16z"/></svg>
+  </IconItem>
+  <IconItem name="By-Laws (Gavel)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M318.6 9.4c-12.5-12.5-32.8-12.5-45.3 0l-120 120c-12.5 12.5-12.5 32.8 0 45.3l16 16c12.5 12.5 32.8 12.5 45.3 0l4-4L325.4 293.4l-4 4c-12.5 12.5-12.5 32.8 0 45.3l16 16c12.5 12.5 32.8 12.5 45.3 0l120-120c12.5-12.5 12.5-32.8 0-45.3l-16-16c-12.5-12.5-32.8-12.5-45.3 0l-4 4L330.6 74.6l4-4c12.5-12.5 12.5-32.8 0-45.3l-16-16zm-152 288c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l48 48c12.5 12.5 32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-1.4-1.4L272 285.3 226.7 240 168 298.7l-1.4-1.4z"/></svg>
+  </IconItem>
+  <IconItem name="Brotherhood (Users)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor"><path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3v33.1c0 21.2 5.1 41.1 14.2 59c-33 7.9-57.2 37.4-57.2 73.0v45.3c0 17 13.8 30.7 30.7 30.7H60.3C27 465.1 0 438.1 0 404.8V298.7zm533.3 0c0-33.3-27-60.3-60.3-60.3H366.3c17 0 30.7-13.8 30.7-30.7v-45.3c0-35.6-24.2-65.1-57.2-73.0c9.1-17.9 14.2-37.8 14.2-59V224c0-7.6-.6-15.1-1.9-22.3c13.6-6.2 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7v106.1c0 33.3-27 60.3-60.3 60.3H462.7c16.9 0 30.7-13.8 30.7-30.7v-45.3c0-35.6-24.2-65.1-57.2-73.0c9.1 17.9 14.2 37.8 14.2 59c0 7.6-.6 15.1-1.9 22.3c13.6 6.2 28.7 9.7 44.6 9.7h42.7c59 0 106.7 47.8 106.7 106.7V404.8zM320 128a80 80 0 1 0 0 160 80 80 0 1 0 0-160zM224 416c0-35.3 28.7-64 64-64h64c35.3 0 64 28.7 64 64v32c0 35.3-28.7 64-64 64H288c-35.3 0-64-28.7-64-64V416z"/></svg>
+  </IconItem>
+  <IconItem name="Sisterhood (Female)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" fill="currentColor"><path d="M80 176a112 112 0 1 1 224 0A112 112 0 1 1 80 176zM224 349.1c-12.5 5.8-22.3 15.6-28.1 28.1H256c17.7 0 32 14.3 32 32s-14.3 32-32 32H195.9C215 482.4 259.9 512 312 512h16c22.1 0 40-17.9 40-40V338.5c0-10.6-5.8-20.3-15.1-25.3l-59.5-32C280.9 292.1 272 277.6 272 261.6V256h-16c-17.7 0-32-14.3-32-32s14.3-32 32-32h16v-8c0-57.4-46.6-104-104-104S64 126.6 64 184v8h16c17.7 0 32 14.3 32 32s-14.3 32-32 32H64v5.6c0 16 8.9 30.5 22.6 39.5l59.5 32c9.3 5 15.1 14.7 15.1 25.3V472c0 22.1 17.9 40 40 40h16c52.1 0 97-29.6 116.1-70.8H128c-17.7 0-32-14.3-32-32s14.3-32 32-32h60.1c-5.8-12.5-15.6-22.3-28.1-28.1C106.4 346.5 64 309.2 64 261.6V256c-35.3 0-64-28.7-64-64V128C0 57.3 57.3 0 128 0s128 57.3 128 128v64c0 35.3-28.7 64-64 64v5.6c0 47.6-42.4 84.9-89.9 87.5z"/></svg>
+  </IconItem>
+  <IconItem name="Baptism (Water/Dove)">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M419.6 332l92.8 33.8c11.6 4.2 19.6 15.2 19.6 27.5V416c0 35.3-28.7 64-64 64H44c-35.3 0-64-28.7-64-64v-22.8c0-12.3 8-23.3 19.6-27.5l92.8-33.8c2.5-1 5.3-1.5 8-1.5c4 0 7.8 1.1 11.2 3.1l6.2 3.8c10.8 6.5 23.3 9.9 35.9 9.9s25.1-3.5 35.9-9.9l6.2-3.8c7.1-4.3 15.9-5.1 23.6-2.2l32.6 11.9 32.6-11.9c7.7-2.8 16.5-2.1 23.6 2.2l6.2 3.8c10.8 6.5 23.3 9.9 35.9 9.9s25.1-3.5 35.9-9.9l6.2-3.8c3.4-2 7.2-3.1 11.2-3.1c2.7 0 5.5 .5 8 1.5zM388.5 25.1c11.6-4.2 23.9-6.3 36.2-6.3c44 0 81.3 29.3 92.5 68.9l12 42.3c2.2 7.6 1.1 15.8-3.1 22.7L420.2 328.7c-9.5 15.5-26.3 25.1-44.5 25.1c-22.1 0-41.9-14.3-48.5-35.3L288 195.4l1.8 77.2c.4 17.5-6.6 34.3-19.1 46.5l-2.4 2.3c-24.6 24.2-63.9 24.5-88.8 .6L102.3 248H96c-53 0-96-43-96-96V128C0 75 43 32 96 32h1.6L201 1.8C209.6-.7 218.8-.2 227.1 3.2L320 40v3.4l-31.5 186-136.4 46.9c-8.5 2.9-17.7 .1-23.3-6.9L49.1 170.1C48.4 169.2 48 168.1 48 167v-15c0-26.5 21.5-48 48-48h16c8.8 0 16 7.2 16 16v30.6l87.5 30.1L248 83.2V80c0-26.5 21.5-48 48-48h64c8.8 0 16 7.2 16 16v16h12.5z"/></svg>
+  </IconItem>
+</IconGallery>

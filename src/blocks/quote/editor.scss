@@ -1,0 +1,7 @@
+/* Standard WP Entry Point for Editor Styles */
+@import '../../components/Quote/Quote.scss';
+
+.wp-block-antigravity-quote {
+    /* Ensure the editor block container handles the click area properly */
+    /* The large icon sometimes captures clicks, so we ensure pointer-events: none is respected */
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/quote",
+  "version": "0.1.0",
+  "title": "Regal Quote",
+  "category": "antigravity-blocks",
+  "icon": "format-quote",
+  "description": "A high-impact quote component with regal typography.",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "color": {
+      "background": true,
+      "text": true
+    }
+  },
+  "attributes": {
+    "quote": {
+      "type": "string",
+      "default": "For God so loved the world, that he gave his only begotten Son..."
+    },
+    "citation": {
+      "type": "string",
+      "default": "John 3:16"
+    },
+    "layout": {
+      "type": "string",
+      "default": "center"
+    },
+    "variant": {
+      "type": "string",
+      "default": "default"
+    },
+    "showIcon": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "textdomain": "antigravity-core",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

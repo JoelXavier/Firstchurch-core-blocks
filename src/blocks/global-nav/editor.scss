@@ -1,0 +1,5 @@
+/* Editor specific overrides */
+.antigravity-global-nav-editor {
+    /* Ensure it doesn't overflow the editor canvas uncontrollably */
+    max-width: 100%;
+}

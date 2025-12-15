@@ -1,0 +1,83 @@
+/* Card Component */
+.antigravity-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--wp--preset--color--white, #fff);
+    border: 1px solid var(--wp--preset--color--neutral-200, #e5e5e5);
+    border-radius: 8px; /* Standard radius */
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
+}
+
+.antigravity-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.antigravity-card__media {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    background-color: var(--wp--preset--color--neutral-100, #f0f0f0);
+}
+
+.antigravity-card__media img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.antigravity-card__content {
+    padding: var(--spacing-sm, 1rem);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.antigravity-card__header {
+    margin-bottom: var(--spacing-xs, 0.5rem);
+}
+
+.antigravity-card__category {
+    display: inline-block;
+    font-size: var(--wp--preset--font-size--caption, 0.75rem);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--wp--preset--color--sem-warning, #B08D55);
+    margin-right: 0.5rem;
+    font-weight: 600;
+}
+
+.antigravity-card__date {
+    font-size: var(--wp--preset--font-size--caption, 0.75rem);
+    color: var(--wp--preset--color--neutral-500, #767676);
+}
+
+.antigravity-card__title {
+    margin: 0.5rem 0;
+    font-family: var(--wp--preset--font-family--heading, serif);
+    font-size: var(--wp--preset--font-size--h5, 1.25rem);
+    line-height: 1.3;
+}
+
+.antigravity-card__title a {
+    text-decoration: none;
+    color: var(--wp--preset--color--ink-black, #1a1a1a);
+}
+
+.antigravity-card__title a:hover {
+    color: var(--wp--preset--color--cardinal, #8A1C26);
+}
+
+.antigravity-card__excerpt {
+    font-size: var(--wp--preset--font-size--body, 1rem);
+    color: var(--wp--preset--color--neutral-600, #525252);
+    margin-top: auto; /* Push to bottom if needed, or allow flow */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

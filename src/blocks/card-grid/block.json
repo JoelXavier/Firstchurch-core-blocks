@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/card-grid",
+  "version": "0.1.0",
+  "title": "Card Grid (3-Up)",
+  "category": "antigravity-blocks",
+  "icon": "grid-view",
+  "description": "A 3-column grid container for displaying content cards.",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "color": {
+      "background": true,
+      "text": true
+    }
+  },
+  "attributes": {
+    "sectionTitle": {
+      "type": "string",
+      "default": "Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia"
+    }
+  },
+  "textdomain": "antigravity-core",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

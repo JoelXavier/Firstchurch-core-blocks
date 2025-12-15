@@ -1,0 +1,12 @@
+/* Editor specific overrides for child block */
+.wp-block-antigravity-card-item {
+    cursor: default; /* Reset pointer */
+}
+
+.card-link-wrapper {
+    /* Disable link behavior in editor */
+    pointer-events: none; 
+}
+
+/* Re-enable pointer events for specific editable areas if needed, 
+   but since we use Inspector/RichText, we handle edit state separately */

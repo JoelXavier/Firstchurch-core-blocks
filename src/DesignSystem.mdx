@@ -1,0 +1,126 @@
+import { Meta, ColorPalette, ColorItem, Typeset } from '@storybook/blocks';
+import './tokens.css';
+
+<Meta title="Foundations/Design Tokens" />
+
+# Design System Style Guide
+
+Our design language prioritizes **elegance, professionalism, and invitation**. Every token is curated to support these pillars for the Church identity.
+
+---
+
+## 1. Color System
+The palette uses a mix of deep, trustworthy anchors (Ink Black, Navy Grey) and warm, inviting accents (Divine Gold, Cardinal, Sandwood).
+
+### Core Brand
+<ColorPalette>
+  <ColorItem
+    title="Primary Identity"
+    subtitle="The foundation of the brand"
+    colors={{
+      'Ink Black': 'var(--wp--preset--color--ink-black)',
+      'Navy Grey': 'var(--wp--preset--color--navy-grey)',
+      'Cardinal': 'var(--wp--preset--color--cardinal)',
+      'Burgundy': 'var(--wp--preset--color--burgundy)',
+    }}
+  />
+  <ColorItem
+    title="Accents & Neutrals"
+    subtitle="Warmth and Balance"
+    colors={{
+      'Divine Gold': 'var(--wp--preset--color--divine-gold)',
+      'Sandwood': 'var(--wp--preset--color--sandwood)',
+      'Cloud Blue': 'var(--wp--preset--color--cloud-blue)',
+      'White': 'var(--wp--preset--color--white)',
+    }}
+  />
+</ColorPalette>
+
+### Semantic Palette
+Functional colors aligned with the brand's elegance.
+<ColorPalette>
+  <ColorItem
+    title="Success"
+    subtitle="Growth & Confirmation"
+    colors={{ 'Deep Sage': 'var(--wp--preset--color--sem-success)' }}
+  />
+  <ColorItem
+    title="Warning"
+    subtitle="Caution & Attention"
+    colors={{ 'Divine Gold': 'var(--wp--preset--color--sem-warning)' }}
+  />
+  <ColorItem
+    title="Error"
+    subtitle="Critical Actions"
+    colors={{ 'Cardinal': 'var(--wp--preset--color--sem-error)' }}
+  />
+  <ColorItem
+    title="Info"
+    subtitle="Contextual Help"
+    colors={{ 'Navy Grey': 'var(--wp--preset--color--sem-info)' }}
+  />
+</ColorPalette>
+
+### Neutral Scale
+A refined grayscale for text, borders, and subtle backgrounds.
+<ColorPalette>
+  <ColorItem
+    title="Grayscale"
+    subtitle="UI Elements"
+    colors={{
+      '0 (White)': 'var(--wp--preset--color--neutral-0)',
+      '100': 'var(--wp--preset--color--neutral-100)',
+      '300': 'var(--wp--preset--color--neutral-300)',
+      '500': 'var(--wp--preset--color--neutral-500)',
+      '700': 'var(--wp--preset--color--neutral-700)',
+      '900 (Black)': 'var(--wp--preset--color--neutral-900)',
+    }}
+  />
+</ColorPalette>
+
+---
+
+## 2. Typography
+**Branding Font:** `Tangerine` (Cursive/Script) - *Used for Church Name*
+**Heading Font:** `Playfair Display` (Serif)
+**Body Font:** `Merriweather` (Serif)
+
+### Golden Ratio Scale (~1.618)
+<Typeset
+  fontSizes={[
+    'var(--wp--preset--font-size--body)',
+    'var(--wp--preset--font-size--h5)',
+    'var(--wp--preset--font-size--h4)',
+    'var(--wp--preset--font-size--h3)',
+    'var(--wp--preset--font-size--h2)',
+  ]}
+  fontWeight={400}
+  sampleText="Restoring the Standard"
+  fontFamily="var(--wp--preset--font-family--heading)"
+/>
+
+---
+
+## 3. Spacing & Layout
+We use a **Rule of 8s** scale efficiently mapped to T-shirt sizes.
+
+### Spacing Scale
+
+| Alias (T-Shirt) | Token | Value |
+|-----------------|-------|-------|
+| `--spacing-xs` | `--spacing--08` | 0.5rem (8px) |
+| `--spacing-sm` | `--spacing--16` | 1rem (16px) |
+| `--spacing-md` | `--spacing--24` | 1.5rem (24px) |
+| `--spacing-lg` | `--spacing--40` | 2.5rem (40px) |
+| `--spacing-xl` | `--spacing--64` | 4rem (64px) |
+| `--spacing-2xl`| `--spacing--80` | 5rem (80px) |
+
+### Grid System
+A fluid grid that adapts to 4 main breakpoints.
+
+| Aspect | Mobile | Tablet | Desktop |
+|--------|--------|--------|---------|
+| **Columns** | 4 | 8 | 12 |
+| **Gutter** | 16px | 24px | 32px |
+| **Margin/Side**| 18px | 24px | 70px |
+

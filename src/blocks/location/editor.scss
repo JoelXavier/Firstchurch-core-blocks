@@ -1,0 +1,7 @@
+/* Import shared component styles */
+@import '../../components/Location/Location.scss';
+
+/* Editor specific overrides if needed */
+.wp-block-antigravity-location {
+    /* Ensure it takes full width in editor if full alignment selected */
+}

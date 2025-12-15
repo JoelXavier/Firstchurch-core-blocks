@@ -1,0 +1,24 @@
+{
+  "apiVersion": 3,
+  "name": "antigravity/quick-links",
+  "version": "1.0.0",
+  "title": "Quick Links Strip",
+  "category": "antigravity",
+  "icon": "align-wide",
+  "description": "A full-width strip of quick navigation links.",
+  "supports": {
+    "html": false,
+    "align": ["full"]
+  },
+  "attributes": {
+    "title": {
+        "type": "string",
+        "default": "Quick Links"
+    }
+  },
+  "textdomain": "antigravity-core",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

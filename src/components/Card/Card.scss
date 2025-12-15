@@ -1,0 +1,149 @@
+/* Card Grid & Item Component Styles */
+
+.antigravity-card-grid {
+    padding: var(--spacing-64, 4rem) var(--wp--layout--margin);
+}
+
+.card-grid-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-32, 2rem);
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1400px;
+}
+
+@media (min-width: 768px) {
+    .card-grid-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--wp--preset--spacing--32, 2rem);
+    }
+}
+
+/* --- Section Header --- */
+.card-grid-header {
+    margin-bottom: var(--spacing-48, 3rem);
+    max-width: 800px; /* Keep title from getting too wide */
+}
+
+.card-grid-header .section-title {
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-size: var(--wp--preset--font-size--h2);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--wp--preset--color--burgundy);
+    margin: 0 0 var(--spacing-24, 1.5rem) 0;
+}
+
+.card-grid-header .section-line {
+    width: 60px;
+    height: 4px;
+    background-color: var(--wp--preset--color--divine-gold);
+}
+
+/* --- Card Link Hover Group --- */
+.card-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+}
+
+/* --- Image Styles --- */
+.card-image-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    margin-bottom: var(--spacing-24, 1.5rem);
+    background-color: var(--wp--preset--color--neutral-200);
+}
+
+.card-image-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: var(--wp--preset--color--neutral-200);
+    margin-bottom: var(--spacing-24, 1.5rem);
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.card-link-wrapper:hover .card-image {
+    transform: scale(1.05); /* Zoom effect */
+}
+
+/* --- Content Styles --- */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    position: relative;
+    padding-bottom: var(--spacing-16, 1rem);
+}
+
+.card-label {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.75rem; 
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--wp--preset--color--neutral-900);
+    margin-bottom: var(--spacing-16, 1rem);
+    display: block;
+}
+
+.card-title {
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-size: var(--wp--preset--font-size--h4); /* ~2rem */
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--wp--preset--color--neutral-900);
+    margin: 0 0 var(--spacing-24, 1.5rem) 0;
+}
+
+/* --- CTA Button --- */
+.card-cta {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--wp--preset--color--neutral-900);
+    margin-top: auto; 
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.card-link-wrapper:hover .card-cta {
+    color: var(--wp--preset--color--burgundy); /* Change to Burgundy on hover */
+}
+
+/* Arrow Icon */
+.card-cta::after {
+    content: "›"; /* Simple, font-agnostic arrow */
+    font-size: 1.25em;
+    line-height: 1;
+    font-weight: 400; /* Lighter than text */
+    margin-bottom: 2px; /* Optical alignment */
+}
+
+/* --- Bottom Border --- */
+.card-bottom-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--wp--preset--color--cardinal);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}

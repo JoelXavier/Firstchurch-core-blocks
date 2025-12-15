@@ -1,0 +1,197 @@
+/* Quick Links Component Styles */
+
+.antigravity-quick-links {
+    position: relative;
+    /* The Elegant Cardinal Background */
+    background-color: var(--wp--preset--color--cardinal);
+    background-image: radial-gradient(circle at 50% 50%, #68121d 0%, var(--wp--preset--color--cardinal) 100%);
+    border-bottom: 4px solid var(--wp--preset--color--divine-gold);
+    color: var(--wp--preset--color--sandwood);
+    overflow: hidden;
+}
+
+.quick-links-inner {
+    max-width: var(--wp--style--global--wide-size);
+    margin: 0 auto;
+    padding: var(--spacing-32, 2rem) var(--wp--layout--margin);
+    
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-32, 2rem);
+    
+    /* Ensure nice stacking order on mobile */
+    align-items: center; /* Center items when stacked */
+    text-align: center;
+}
+
+/* increased breakpoint from 960px to 1024px so we skip the awkward squeezed phase */
+@media (min-width: 1024px) {
+    .quick-links-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+        padding-top: var(--spacing-48, 3rem);
+        padding-bottom: var(--spacing-48, 3rem);
+    }
+}
+
+/* --- Section Title (Left) --- */
+.quick-links-header {
+    flex-shrink: 0;
+    position: relative;
+    padding-right: var(--spacing-48, 3rem);
+    border-right: 1px solid rgba(255,255,255,0.1);
+    margin-right: var(--spacing-48, 3rem);
+    
+    /* Mobile styles defaults */
+    border-right: none;
+    margin-right: 0;
+    padding-right: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 1.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .quick-links-header {
+        border-bottom: none;
+        padding-bottom: 0;
+        width: auto;
+        border-right: 1px solid rgba(255,255,255,0.1);
+        padding-right: var(--spacing-48, 3rem);
+        margin-right: var(--spacing-48, 3rem);
+        display: block; /* Return to block for desktop */
+        align-items: flex-start;
+    }
+}
+
+.quick-links-title {
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 1rem 0; /* Increased from 0.5rem to 1rem */
+    color: var(--wp--preset--color--sandwood);
+}
+
+.quick-links-underline {
+    width: 60px;
+    height: 3px;
+    background-color: var(--wp--preset--color--divine-gold);
+    border-radius: 2px;
+}
+
+/* --- Links Container (Right) --- */
+.quick-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-24, 1.5rem);
+    flex-grow: 1;
+    justify-content: center; /* Center on mobile */
+    align-items: flex-start; /* Align items left for readability */
+    width: 100%;
+    max-width: 400px; /* Constrain width on mobile */
+}
+
+@media (min-width: 768px) {
+    .quick-links-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 1024px) {
+    .quick-links-list {
+        justify-content: flex-end;
+    }
+}
+
+/* --- Individual Link Item --- */
+.quick-link-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--wp--preset--color--sandwood);
+    transition: transform 0.3s ease;
+    width: 100%; /* Fill container on mobile */
+    justify-content: flex-start;
+}
+
+@media (min-width: 768px) {
+    .quick-link-item {
+        width: auto;
+    }
+}
+
+.quick-link-item:hover {
+    transform: translateX(5px);
+}
+
+/* Circular Image "Stamp" */
+.quick-link-image-wrapper {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255, 215, 0, 0.3); /* Subtle Gold Ring */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.quick-link-item:hover .quick-link-image-wrapper {
+    border-color: var(--wp--preset--color--divine-gold);
+    transform: scale(1.05) rotate(3deg);
+}
+
+.quick-link-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Text & Icon */
+.quick-link-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.quick-link-label {
+    font-family: var(--wp--preset--font-family--inter);
+    font-weight: 700;
+    font-size: 1.125rem;
+    line-height: 1.2;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quick-link-arrow {
+    /* Mobile/Tablet: Always visible */
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: var(--wp--preset--color--divine-gold);
+}
+
+@media (min-width: 1024px) {
+    .quick-link-arrow {
+        /* Desktop: Fade in on hover */
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    
+    .quick-link-item:hover .quick-link-arrow {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

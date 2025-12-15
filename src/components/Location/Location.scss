@@ -1,0 +1,157 @@
+/* Location Component Styles */
+
+.antigravity-location-wrapper {
+  /* Default Theme: Warm Sandwood */
+  background-color: var(--wp--preset--color--sandwood);
+  color: var(--wp--preset--color--burgundy);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.antigravity-location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 50/50 Split */
+  min-height: 600px; /* Substantial height */
+}
+
+/* --- Left Column: Info --- */
+.antigravity-location-info {
+  /* Use responsive global margin for the outer edge (Left) */
+  padding: var(--spacing-64, 4rem) var(--spacing-40, 2.5rem) var(--spacing-64, 4rem) var(--wp--layout--margin);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-32, 2rem);
+  max-width: 650px;
+  margin-left: auto; /* Push content towards center seam */
+  margin-right: var(--spacing-40, 2.5rem); /* Space from seam */
+}
+
+/* Headings */
+.antigravity-location-heading {
+  font-family: var(--wp--preset--font-family--playfair-display);
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.antigravity-location-subheading {
+  font-family: var(--wp--preset--font-family--merriweather);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 400;
+  margin-bottom: var(--spacing-16, 1rem);
+  opacity: 0.9;
+  position: relative;
+  display: inline-block;
+}
+
+/* Divine Gold Divider */
+.antigravity-location-divider {
+  width: 60px;
+  height: 3px;
+  background-color: var(--wp--preset--color--divine-gold);
+  margin: var(--spacing-24, 1.5rem) 0;
+}
+
+/* Schedule List */
+.antigravity-location-schedule {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-24, 1.5rem) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24, 1.5rem);
+}
+
+.antigravity-location-schedule-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.schedule-day {
+  font-family: var(--wp--preset--font-family--playfair-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--wp--preset--color--burgundy);
+  line-height: 1;
+}
+
+.schedule-time {
+  font-family: var(--wp--preset--font-family--merriweather);
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--wp--preset--color--ink-black); /* Slightly darker for readability */
+}
+
+/* Address Block */
+.antigravity-location-address {
+  font-family: var(--wp--preset--font-family--inter);
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin-top: auto;
+}
+
+/* --- Right Column: Map --- */
+.antigravity-location-map {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  /* Gold Border on the seam */
+  border-left: 2px solid rgba(176, 141, 85, 0.3); /* Divine Gold semi-transparent */
+}
+
+.antigravity-location-map iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(20%) contrast(1.1); /* Subtle map styling */
+  display: block;
+}
+
+/* Floating Address Card (Optional - Overlay on map) */
+.location-map-card {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  background: white;
+  padding: 24px 32px;
+  border-left: 4px solid var(--wp--preset--color--divine-gold);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  max-width: 300px;
+  z-index: 10;
+}
+
+.map-card-address {
+  font-family: var(--wp--preset--font-family--playfair-display);
+  font-size: 1.25rem;
+  color: var(--wp--preset--color--burgundy);
+  line-height: 1.3;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .antigravity-location-grid {
+    grid-template-columns: 1fr; /* Stack */
+    min-height: auto;
+  }
+
+  .antigravity-location-info {
+    padding: 3rem 1.5rem;
+    margin-right: auto;
+    max-width: 100%;
+  }
+
+  .antigravity-location-map {
+    height: 400px;
+    border-left: none;
+    border-top: 2px solid rgba(176, 141, 85, 0.3);
+  }
+}

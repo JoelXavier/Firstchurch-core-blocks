@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/card-item",
+  "version": "0.1.0",
+  "title": "Card Item",
+  "category": "antigravity-blocks",
+  "parent": ["antigravity/card-grid"],
+  "icon": "feedback",
+  "description": "A single content card with image, label, title, and link.",
+  "supports": {
+    "html": false,
+    "reusable": false
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "LABEL"
+    },
+    "title": {
+      "type": "string",
+      "default": "Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia"
+    },
+    "linkUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "linkText": {
+      "type": "string",
+      "default": "LEARN MORE >"
+    },
+    "mediaId": {
+      "type": "number",
+      "default": 0
+    },
+    "mediaUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "textdomain": "antigravity-core",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

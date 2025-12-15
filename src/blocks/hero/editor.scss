@@ -1,0 +1,5 @@
+/* Editor-specific overrides for Hero block */
+.wp-block-antigravity-hero {
+    /* Ensure the editor container doesn't collapse */
+    min-height: 50px;
+}

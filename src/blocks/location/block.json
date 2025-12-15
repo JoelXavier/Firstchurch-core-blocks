@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/location",
+  "version": "0.1.0",
+  "title": "Location / Visit Us",
+  "category": "antigravity-blocks",
+  "icon": "location-alt",
+  "description": "A high-impact 'Visit Us' module with location info and map.",
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"],
+    "color": {
+      "background": true,
+      "text": true
+    }
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Visit Apostle, Pastor Gino Jennings"
+    },
+    "subHeading": {
+      "type": "string",
+      "default": "International Headquarters Campus"
+    },
+    "addressLines": {
+      "type": "array",
+      "default": [
+        "First Church of Our Lord Jesus Christ",
+        "5105 N. 5th Street",
+        "Philadelphia, PA. 19120"
+      ]
+    },
+    "schedule": {
+      "type": "array",
+      "default": [
+        { "label": "Tuesday", "time": "7:00 PM" },
+        { "label": "Thursday", "time": "7:00 PM" },
+        { "label": "Sunday", "time": "11:00 AM & 5:00 PM" }
+      ]
+    },
+    "mapEmbedIframe": {
+      "type": "string",
+      "default": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3056.592523287664!2d-75.12937992426338!3d40.0211649715053!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c6b7bd167732d9%3A0xe54523774880562b!2s5105%20N%205th%20St%2C%20Philadelphia%2C%20PA%2019120!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "sandwood"
+    }
+  },
+  "textdomain": "antigravity-core",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

@@ -1,0 +1,40 @@
+{
+  "apiVersion": 3,
+  "name": "antigravity/fundraiser",
+  "version": "1.0.0",
+  "title": "Fundraiser (Progress Bar)",
+  "category": "antigravity",
+  "icon": "chart-bar",
+  "description": "A sleek progress bar for fundraising goals.",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "FC Convention Center Fundraiser"
+    },
+    "goalAmount": {
+      "type": "number",
+      "default": 5000000
+    },
+    "raisedAmount": {
+      "type": "number",
+      "default": 1644394
+    },
+    "linkText": {
+      "type": "string",
+      "default": "Donate to FC Convention Center Fundraiser"
+    },
+    "linkUrl": {
+      "type": "string",
+      "default": "#"
+    }
+  },
+  "textdomain": "antigravity-core",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

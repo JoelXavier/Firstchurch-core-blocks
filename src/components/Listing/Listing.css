@@ -1,0 +1,52 @@
+/* Listing Component */
+.antigravity-listing {
+    width: 100%;
+}
+
+/* Grid Layout */
+.antigravity-listing--layout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--grid-gutter-desktop, 32px);
+}
+
+/* List Layout */
+.antigravity-listing--layout-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-24, 1.5rem);
+}
+
+/* List Layout - specific card adjustments? */
+.antigravity-listing--layout-list .antigravity-card {
+    flex-direction: row;
+    align-items: center;
+}
+
+.antigravity-listing--layout-list .antigravity-card__media {
+    width: 250px;
+    height: 100%;
+    padding-top: 0; /* Remove aspect ratio hacks for flex list */
+    flex-shrink: 0;
+}
+
+.antigravity-listing--layout-list .antigravity-card__media img {
+    position: relative; /* Reset absolute */
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Responsive adjustment for List view on mobile */
+@media (max-width: 768px) {
+    .antigravity-listing--layout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .antigravity-listing--layout-list .antigravity-card {
+        flex-direction: column;
+    }
+    .antigravity-listing--layout-list .antigravity-card__media {
+        width: 100%;
+        height: 200px;
+    }
+}

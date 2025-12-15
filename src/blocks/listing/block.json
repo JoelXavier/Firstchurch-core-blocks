@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/listing",
+  "version": "1.0.0",
+  "title": "Content Listing",
+  "category": "widgets",
+  "icon": "grid-view",
+  "description": "Display a dynamic list or grid of posts.",
+  "attributes": {
+    "postType": {
+      "type": "string",
+      "default": "post"
+    },
+    "perPage": {
+      "type": "number",
+      "default": 3
+    },
+    "layout": {
+      "type": "string",
+      "default": "grid"
+    },
+    "columns": {
+      "type": "number",
+      "default": 3
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": true
+    },
+    "showCategory": {
+      "type": "boolean",
+      "default": true
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "textdomain": "antigravity-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

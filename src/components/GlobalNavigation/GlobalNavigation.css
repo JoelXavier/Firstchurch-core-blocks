@@ -1,0 +1,423 @@
+/* GlobalNavigation.css */
+
+.antigravity-global-nav-root {
+  margin-bottom: 0 !important; /* Force flush with next block (Hero) */
+}
+
+.global-nav-link {
+  text-decoration: none;
+  color: var(--wp--preset--color--ink-black);
+  font-family: var(--wp--preset--font-family--ui);
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 4px; /* Pill shape */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Hover State: Subtle Background + Color Shift */
+.global-nav-link:hover {
+  background-color: rgba(86, 13, 26, 0.05); /* Very subtle Burgundy wash */
+  color: var(--wp--preset--color--burgundy);
+  transform: translateY(-1px); /* Slight lift */
+}
+
+/* Underline Animation */
+.global-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 6px; /* Inside the padding */
+  left: 12px;
+  right: 12px;
+  height: 1.5px;
+  background-color: var(--wp--preset--color--burgundy);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+}
+
+.global-nav-link:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+/* Chevron Rotation on Group Hover */
+.global-nav-item:hover .nav-chevron {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+.nav-chevron {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Accessibility: Focus Visible */
+.global-nav-link:focus-visible {
+  outline: 2px solid var(--wp--preset--color--burgundy);
+  outline-offset: 2px;
+  background-color: rgba(86, 13, 26, 0.1);
+}
+
+/* ========================================= */
+/* HEADER DROPDOWNS (Easy Hover)             */
+/* ========================================= */
+
+.global-nav-item {
+  position: relative; /* Anchor for dropdown */
+}
+
+.global-nav-dropdown {
+  position: absolute;
+  top: 100%; /* Below link */
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background-color: #fff;
+  min-width: 180px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 8px 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 100;
+  pointer-events: none; /* Prevent click when hidden */
+}
+
+/* Show Dropdown on Hover */
+.global-nav-item:hover .global-nav-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* Dropdown items */
+.global-nav-dropdown li a {
+  display: block;
+  padding: 10px 16px;
+  color: var(--wp--preset--color--ink-black);
+  text-decoration: none;
+  font-family: var(--wp--preset--font-family--ui);
+  font-size: 13px;
+  transition: background 0.2s;
+  font-weight: 500;
+}
+
+.global-nav-dropdown li a:hover {
+  background-color: rgba(86, 13, 26, 0.05);
+  color: var(--wp--preset--color--burgundy);
+}
+
+/* CTA Button Hover */
+.global-cta-button {
+  transition: all 0.2s ease;
+}
+
+.global-cta-button:hover {
+  background-color: var(--wp--preset--color--cardinal) !important; /* Darker red */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(86, 13, 26, 0.2) !important;
+}
+
+.global-cta-button:active {
+  transform: translateY(0);
+}
+
+/* ========================================= */
+/* FULL PAGE MENU OVERLAY                    */
+/* ========================================= */
+
+.full-page-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #2A050A; /* Dark Burgundy */
+  color: #fff;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.full-page-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Close Button */
+.menu-close-btn {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  transition: transform 0.3s ease;
+}
+
+.menu-close-btn:hover {
+  transform: rotate(90deg);
+}
+
+/* Full Menu Logo */
+.menu-logo {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+
+/* Menu Layout (Grid) */
+.menu-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr; /* 3 Columns: Main, News, Quick */
+  gap: 64px;
+  max-width: 1200px;
+  width: 100%;
+  padding: 80px 40px;
+}
+
+.menu-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-heading {
+  font-family: var(--wp--preset--font-family--heading);
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #B08D55; /* Gold Heading for Sections */
+  margin-bottom: 24px;
+  font-weight: 500;
+  position: relative; /* For pseudo-element */
+  padding-bottom: 12px;
+}
+
+/* Fading Divider Line */
+.menu-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  /* Lighter gold shade with faded edges */
+  background: linear-gradient(90deg, 
+    rgba(176, 141, 85, 0) 0%, 
+    rgba(176, 141, 85, 0.4) 15%, 
+    rgba(176, 141, 85, 0.4) 85%, 
+    rgba(176, 141, 85, 0) 100%
+  );
+}
+
+/* Column 1: Main Links */
+.full-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-nav-list a {
+  font-family: var(--wp--preset--font-family--heading); /* Playfair */
+  font-size: 40px; /* Big Impact */
+  font-weight: 700;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.full-nav-list a:hover {
+  color: #B08D55; /* Gold Hover */
+  transform: translateX(10px);
+}
+
+/* Column 2: News Items */
+.news-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.news-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.news-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.news-cat {
+  font-family: var(--wp--preset--font-family--ui);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.news-title {
+  font-family: var(--wp--preset--font-family--heading);
+  font-size: 20px;
+  color: #fff;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.news-read-more {
+  font-family: var(--wp--preset--font-family--ui);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #B08D55;
+  text-decoration: none;
+  margin-top: 4px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* Column 3: Quick Links & Socials */
+.text-right {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.quick-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Increased from 12px for better touch targets */
+}
+
+.quick-nav-list a {
+  font-family: var(--wp--preset--font-family--heading);
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity 0.3s;
+}
+
+.quick-nav-list a:hover {
+  opacity: 1;
+  color: #B08D55;
+}
+
+.menu-socials {
+  margin-top: 48px;
+  display: flex;
+  gap: 24px; /* Increased gap for icons */
+  justify-content: flex-end;
+}
+
+.social-icon {
+  color: rgba(255, 255, 255, 0.5); /* Muted white by default */
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.5; /* For stroke-based icons */
+}
+
+.social-icon:hover {
+  color: #B08D55; /* Gold Hover */
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 1218px) {
+  /* Hide Desktop Nav for Intermediate Screens */
+  .desktop-nav,
+  .desktop-nav-separator {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  /* Fix vertical alignment for long content */
+  .full-page-menu {
+    align-items: flex-start; /* Start from top instead of centering */
+  }
+
+  .menu-container {
+    grid-template-columns: 1fr;
+    padding: 140px 24px 40px; /* Increased top padding to clear Logo/Close button */
+    gap: 40px;
+  }
+
+  .text-right {
+    text-align: left;
+    align-items: flex-start;
+  }
+  
+  .menu-socials {
+    justify-content: flex-start;
+  }
+
+  .full-nav-list a {
+    font-size: 32px;
+  }
+
+  /* Make close button sticky or ensure z-index if content scrolls behind */
+  .menu-close-btn, .menu-logo {
+    z-index: 1001; /* Ensure above scrolling content if overlapping */
+  }
+}
+
+@media (max-width: 649px) {
+  /* Hide Elements on Mobile */
+  .global-cta-button {
+    display: none;
+  }
+
+  .global-header__brand-text {
+    display: none !important; /* Force hide inline style */
+  }
+
+  .announcement-indicators {
+    display: none !important;
+  }
+
+  /* Adjust Header Height if needed */
+  .global-header__top {
+    min-height: 100px !important; /* Smaller on mobile */
+  }
+
+  .global-header__brand img {
+    height: 70px !important; /* Smaller logo */
+  }
+}

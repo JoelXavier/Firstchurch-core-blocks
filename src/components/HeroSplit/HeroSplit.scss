@@ -1,0 +1,128 @@
+/* Hero Split Component Styles */
+
+.antigravity-hero-split {
+    display: flex;
+    flex-direction: column; /* Mobile first: Stacked */
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    
+    /* Default Colors (Overrideable via inline styles) */
+    --hero-split-bg: var(--wp--preset--color--soft-charcoal);
+    --hero-split-text: var(--wp--preset--color--sandwood);
+    --hero-split-link: var(--wp--preset--color--white);
+    
+    background-color: var(--hero-split-bg);
+    color: var(--hero-split-text);
+}
+
+@media (min-width: 960px) {
+    .antigravity-hero-split {
+        flex-direction: row;
+        min-height: 600px; /* Ensure substantial presence on desktop */
+    }
+    
+    .antigravity-hero-split.image-right {
+        flex-direction: row-reverse;
+    }
+}
+
+/* --- Image Side --- */
+.hero-split-image-wrapper {
+    width: 100%;
+    position: relative;
+    /* Use aspect ratio for better mobile/tablet scaling */
+    aspect-ratio: 16 / 9;
+    min-height: 300px; 
+}
+
+@media (min-width: 960px) {
+    .hero-split-image-wrapper {
+        width: 50%;
+        min-height: auto; /* Let flex stretch it */
+        aspect-ratio: auto; /* Reset aspect ratio for split view */
+    }
+}
+
+.hero-split-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- Content Side --- */
+.hero-split-content {
+    width: 100%;
+    padding: var(--spacing-48, 3rem) var(--wp--layout--margin);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+@media (min-width: 960px) {
+    .hero-split-content {
+        width: 50%;
+        padding: var(--spacing-64, 5rem) var(--spacing-64, 5rem); /* Extra breathing room */
+    }
+}
+
+.hero-split-label {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: var(--spacing-24, 1.5rem);
+    opacity: 0.9;
+}
+
+.hero-split-title {
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin: 0 0 var(--spacing-32, 2rem) 0;
+    /* Inherit color unless overridden */
+    color: inherit;
+}
+
+/* --- Link & Decor --- */
+.hero-split-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--wp--preset--font-family--inter);
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: var(--hero-split-link);
+    margin-bottom: var(--spacing-32, 2rem);
+    transition: opacity 0.3s ease;
+}
+
+.hero-split-link:hover {
+    opacity: 0.8;
+}
+
+.hero-split-link svg {
+    width: 1rem; /* 16px */
+    height: 1rem;
+    transition: transform 0.3s ease;
+    /* Allow current color inheritance for theming */
+    fill: currentColor;
+}
+
+.hero-split-link:hover svg {
+    transform: translateX(5px);
+}
+
+.hero-split-bar {
+    width: 120px;
+    height: 4px;
+    background-color: var(--wp--preset--color--divine-gold);
+    border-radius: 2px;
+}

@@ -1,0 +1,6 @@
+@import 'style.scss';
+
+/* Disabled pointer events in editor to prevent clicking the link */
+.disabled-in-editor {
+    pointer-events: none;
+}
