@@ -4,7 +4,7 @@
   "name": "antigravity/location",
   "version": "0.1.0",
   "title": "Location / Visit Us",
-  "category": "antigravity-blocks",
+  "category": "antigravity",
   "icon": "location-alt",
   "description": "A high-impact 'Visit Us' module with location info and map.",
   "supports": {

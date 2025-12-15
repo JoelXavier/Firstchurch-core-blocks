@@ -4,9 +4,9 @@
   "name": "antigravity/global-nav",
   "version": "1.0.0",
   "title": "Global Navigation",
-  "category": "design",
-  "icon": "menu-alt3",
-  "description": "Premium global navigation with mega menu and announcements.",
+  "category": "antigravity",
+  "icon": "menu",
+  "description": "A site-wide navigation bar.with mega menu and announcements.",
   "supports": {
     "html": false,
     "align": ["full", "wide"],

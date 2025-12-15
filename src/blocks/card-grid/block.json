@@ -4,7 +4,7 @@
   "name": "antigravity/card-grid",
   "version": "0.1.0",
   "title": "Card Grid (3-Up)",
-  "category": "antigravity-blocks",
+  "category": "antigravity",
   "icon": "grid-view",
   "description": "A 3-column grid container for displaying content cards.",
   "supports": {

@@ -21,6 +21,8 @@ module.exports = {
 		// Quick Links
 		'blocks/quick-links/index': path.resolve( process.cwd(), 'src/blocks/quick-links/index.js' ),
 		'blocks/quick-link-item/index': path.resolve( process.cwd(), 'src/blocks/quick-link-item/index.js' ),
+		// Hero Split
+		'blocks/hero-split/index': path.resolve( process.cwd(), 'src/blocks/hero-split/index.js' ),
 	},
     output: {
         path: path.resolve( process.cwd(), 'build' ),

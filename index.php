@@ -41,8 +41,28 @@ function antigravity_core_blocks_init()
     // Register Quick Links (Parent) and Item (Child)
     register_block_type(__DIR__ . '/build/blocks/quick-link-item');
     register_block_type(__DIR__ . '/build/blocks/quick-links');
+
+    // Register Hero Split
+    register_block_type(__DIR__ . '/build/blocks/hero-split');
 }
 add_action('init', 'antigravity_core_blocks_init');
+
+/**
+ * Register Custom Block Category "FC"
+ */
+function antigravity_core_blocks_category($categories, $post)
+{
+    return array_merge(
+        $categories,
+        [
+            [
+                'slug' => 'antigravity',
+                'title' => 'FC',
+            ],
+        ]
+    );
+}
+add_filter('block_categories_all', 'antigravity_core_blocks_category', 10, 2);
 
 /**
  * Enqueue Global Assets (Fonts)

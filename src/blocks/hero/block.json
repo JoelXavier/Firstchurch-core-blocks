@@ -4,9 +4,9 @@
   "name": "antigravity/hero",
   "version": "1.0.0",
   "title": "Hero Section",
-  "category": "design",
+  "category": "antigravity",
   "icon": "cover-image",
-  "description": "Immersive hero section with slideshow support and locked content areas.",
+  "description": "A full-width hero section with slideshow support and locked content areas.",
   "supports": {
     "html": false,
     "align": ["full"],

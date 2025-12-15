@@ -1,0 +1,60 @@
+{
+  "apiVersion": 3,
+  "name": "antigravity/hero-split",
+  "version": "1.0.0",
+  "title": "Hero Split (Image 50/50)",
+  "category": "antigravity",
+  "icon": "columns",
+  "description": "A 50/50 split section with image and content.",
+  "supports": {
+    "html": false,
+    "align": ["full"]
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "Label"
+    },
+    "title": {
+      "type": "string",
+      "default": "Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia"
+    },
+    "linkText": {
+      "type": "string",
+      "default": "Learn More"
+    },
+    "linkUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "imageId": {
+      "type": "number",
+      "default": 0
+    },
+    "imageUrl": {
+      "type": "string",
+      "default": "https://placehold.co/800x800/222/gold"
+    },
+    "imagePosition": {
+      "type": "string",
+      "default": "left"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#1a1a1a"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#f1eadd"
+    },
+    "linkColor": {
+      "type": "string",
+      "default": "#ffffff"
+    }
+  },
+  "textdomain": "antigravity-core",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

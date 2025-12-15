@@ -4,7 +4,7 @@
   "name": "antigravity/quote",
   "version": "0.1.0",
   "title": "Regal Quote",
-  "category": "antigravity-blocks",
+  "category": "antigravity",
   "icon": "format-quote",
   "description": "A high-impact quote component with regal typography.",
   "supports": {
