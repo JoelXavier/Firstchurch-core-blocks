@@ -59,6 +59,15 @@ function antigravity_core_blocks_init()
     // Register Footer Blocks
     register_block_type(__DIR__ . '/build/blocks/footer');
     register_block_type(__DIR__ . '/build/blocks/footer-column');
+
+    // Register Section Block
+    register_block_type(__DIR__ . '/build/blocks/section');
+
+    // Register Breadcrumbs
+    register_block_type(__DIR__ . '/build/blocks/breadcrumbs');
+
+    // Register Event Feed (Auto)
+    register_block_type(__DIR__ . '/build/blocks/event-feed');
 }
 add_action('init', 'antigravity_core_blocks_init');
 
@@ -112,6 +121,15 @@ function antigravity_core_blocks_assets()
         plugins_url('build/extensions/separator/index.js', __FILE__),
         ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'],
         filemtime(plugin_dir_path(__FILE__) . 'build/extensions/separator/index.js'),
+        true
+    );
+
+    // Event Settings Extension
+    wp_enqueue_script(
+        'antigravity-event-settings',
+        plugins_url('build/extensions/event-settings/index.js', __FILE__),
+        ['wp-plugins', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-core-data', 'wp-i18n'],
+        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/event-settings/index.js'),
         true
     );
 
@@ -308,6 +326,64 @@ function antigravity_register_cpts()
         'has_archive' => true,
         'rewrite' => array('slug' => 'locations'),
     ));
+
+    // Register Event Meta (Start Date) for Querying
+    register_post_meta('event', '_event_start_date', array(
+        'show_in_rest' => true,
+        'single' => true,
+        'type' => 'string', // Stored as YYYY-MM-DD HH:MM:SS
+        'auth_callback' => function () {
+            return current_user_can('edit_posts');
+        }
+    ));
+
+    register_post_meta('event', '_event_end_date', array(
+        'show_in_rest' => true,
+        'single' => true,
+        'type' => 'string',
+        'auth_callback' => function () {
+            return current_user_can('edit_posts');
+        }
+    ));
+
+    register_post_meta('event', '_event_schedule', array(
+        'show_in_rest' => array(
+            'schema' => array(
+                'type' => 'array',
+                'items' => array(
+                    'type' => 'object',
+                    'properties' => array(
+                        'time' => array('type' => 'string'),
+                        'activity' => array('type' => 'string'),
+                    ),
+                ),
+            ),
+        ),
+        'single' => true,
+        'type' => 'array',
+        'auth_callback' => function () {
+            return current_user_can('edit_posts');
+        }
+    ));
+
+    // Remaining Event Meta
+    $meta_keys = [
+        '_event_label' => 'string',
+        '_event_location' => 'string',
+        '_event_cta_text' => 'string',
+        '_event_cta_url' => 'string',
+        '_event_is_canceled' => 'boolean',
+    ];
+
+    foreach ($meta_keys as $key => $type) {
+        register_post_meta('event', $key, array(
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => $type,
+            'auth_callback' => function () {
+                return current_user_can('edit_posts'); }
+        ));
+    }
 }
 add_action('init', 'antigravity_register_cpts');
 

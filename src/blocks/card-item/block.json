@@ -10,7 +10,17 @@
   "description": "A single content card with image, label, title, and link.",
   "supports": {
     "html": false,
-    "reusable": false
+    "reusable": false,
+    "typography": {
+        "fontSize": true,
+        "lineHeight": true,
+        "__experimentalFontFamily": true,
+        "fontStyle": true,
+        "fontWeight": true,
+        "letterSpacing": true,
+        "textDecoration": true,
+        "textTransform": true
+    }
   },
   "attributes": {
     "label": {

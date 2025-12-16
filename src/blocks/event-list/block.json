@@ -10,7 +10,7 @@
   "attributes": {
     "sectionTitle": {
       "type": "string",
-      "default": "Upcoming Events"
+      "default": ""
     },
     "sectionSubheader": {
       "type": "string",
@@ -36,5 +36,6 @@
   "textdomain": "antigravity-core-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
-  "style": "file:./style-index.css"
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
 }

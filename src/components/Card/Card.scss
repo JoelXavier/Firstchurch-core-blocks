@@ -116,12 +116,21 @@
 }
 
 .card-title {
-    font-family: var(--wp--preset--font-family--playfair-display);
+    font-family: inherit;
     font-size: var(--wp--preset--font-size--h4); /* ~2rem */
     font-weight: 700;
     line-height: 1.2;
     color: var(--card-title-color, var(--wp--preset--color--neutral-900));
     margin: 0; /* Remove bottom margin to let Grid gap handle it */
+}
+
+.card-excerpt {
+    font-family: var(--wp--preset--font-family--merriweather);
+    font-size: var(--wp--preset--font-size--body);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--wp--preset--color--neutral-600);
+    margin-top: var(--spacing-16, 1rem);
 }
 
 /* --- CTA Button --- */
@@ -154,14 +163,4 @@
     margin-bottom: 2px; /* Optical alignment */
 }
 
-/* --- Bottom Border --- */
-.card-bottom-border {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-color: var(--wp--preset--color--cardinal);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-}
+

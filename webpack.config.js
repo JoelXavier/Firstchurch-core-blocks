@@ -26,15 +26,20 @@ module.exports = {
 		'blocks/listing/index': path.resolve( process.cwd(), 'src/blocks/listing/index.js' ),
 		// Manual Events
 		'blocks/event-list/index': path.resolve( process.cwd(), 'src/blocks/event-list/index.js' ),
+        'blocks/event-item/index': path.resolve( process.cwd(), 'src/blocks/event-item/index.js' ),
 		// Article Suite
 		'blocks/article-hero/index': path.resolve( process.cwd(), 'src/blocks/article-hero/index.js' ),
 		'blocks/article-body/index': path.resolve( process.cwd(), 'src/blocks/article-body/index.js' ),
         // Footer (New)
         'blocks/footer/index': path.resolve( process.cwd(), 'src/blocks/footer/index.js' ),
         'blocks/footer-column/index': path.resolve( process.cwd(), 'src/blocks/footer-column/index.js' ),
+        'blocks/section/index': path.resolve( process.cwd(), 'src/blocks/section/index.js' ),
+        'blocks/breadcrumbs/index': path.resolve( process.cwd(), 'src/blocks/breadcrumbs/index.js' ),
+        'blocks/event-feed/index': path.resolve( process.cwd(), 'src/blocks/event-feed/index.js' ),
 
         // Global Extensions
         'extensions/separator/index': path.resolve( process.cwd(), 'src/extensions/separator/index.js' ),
+        'extensions/event-settings/index': path.resolve( process.cwd(), 'src/extensions/event-settings/index.js' ),
 	},
     output: {
         path: path.resolve( process.cwd(), 'build' ),

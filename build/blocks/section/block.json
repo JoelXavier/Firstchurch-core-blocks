@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/section",
+  "version": "1.0.0",
+  "title": "Section Container",
+  "category": "antigravity",
+  "icon": "layout",
+  "description": "A structural wrapper for organizing content with consistent spacing and backgrounds.",
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ],
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    }
+  },
+  "attributes": {
+    "layoutMode": {
+      "type": "string",
+      "default": "contained"
+    },
+    "verticalSpacing": {
+      "type": "string",
+      "default": "medium"
+    },
+    "hasDecoration": {
+      "type": "boolean",
+      "default": false
+    },
+    "decorationPosition": {
+      "type": "string",
+      "default": "bottom"
+    }
+  },
+  "textdomain": "antigravity",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

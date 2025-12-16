@@ -1,62 +1,81 @@
 import React from 'react';
 import { Listing } from './Listing';
-import '../../tokens.css';
 
 export default {
-    title: 'Core/Content Listing',
+    title: 'Components/Listing Feed',
     component: Listing,
     argTypes: {
-        layout: {
-            control: { type: 'select' },
-            options: ['grid', 'list'],
+        filterStyle: { 
+            control: { type: 'select' }, 
+            options: ['pills', 'sidebar'] 
         },
         columns: {
-            control: { type: 'range', min: 2, max: 4, step: 1 },
-        },
-    },
+            control: { type: 'range', min: 1, max: 4, step: 1 }
+        }
+    }
 };
 
-const MOCK_ITEMS = [
-    {
-        title: "2025 Holy Convocation Dates Announced",
-        excerpt: "Join us for a week of spiritual renewal and community gathering as we celebrate our annual convocation with special guests.",
-        date: "Oct 12, 2025",
-        category: "Events",
-        image: "https://images.unsplash.com/photo-1519817650390-64a93db51149?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+const CATEGORIES = [
+    { id: 1, name: 'Testimonies', count: 12 },
+    { id: 2, name: 'Psalm 102', count: 5 },
+    { id: 3, name: 'Success stories', count: 8 },
+    { id: 4, name: 'New goals to share', count: 3 },
+    { id: 5, name: 'Love and marriage', count: 4 }
+];
+
+const ITEMS = [
+    { 
+        id: 101, 
+        title: 'Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia', 
+        categoryIds: [1], 
+        image: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        category: 'Testimonies'
     },
-    {
-        title: "Community Outreach Program Launches",
-        excerpt: "Our new initiative aims to provide essential resources and support to families in need within our local neighborhood.",
-        date: "Oct 10, 2025",
-        category: "News",
-        image: "https://images.unsplash.com/photo-1544427920-ca14a224a331?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    { 
+        id: 102, 
+        title: 'Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia', 
+        categoryIds: [2], 
+        image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        category: 'Psalm 102'
     },
-    {
-        title: "Sunday Service: The Power of Faith",
-        excerpt: "This Sunday's sermon will explore the transformative power of faith in overcoming life's challenges.",
-        date: "Oct 05, 2025",
-        category: "Sermons",
-        image: "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    { 
+        id: 103, 
+        title: 'Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia', 
+        categoryIds: [3], 
+        image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        category: 'Success stories'
     },
-    {
-        title: "Youth Choir Rehearsals Resume",
-        excerpt: "Calling all young singers! Rehearsals for the upcoming holiday concert begin next week in the main sanctuary.",
-        date: "Oct 01, 2025",
-        category: "Music",
-        image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+    { 
+        id: 104, 
+        title: 'Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia', 
+        categoryIds: [4], 
+        image: 'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        category: 'New goals to share'
+    },
+    { 
+        id: 105, 
+        title: 'Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia', 
+        categoryIds: [5], 
+        image: 'https://images.unsplash.com/photo-1507434965515-61970f2bd7c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        category: 'Love and marriage'
+    },
+    { 
+        id: 106, 
+        title: 'Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia', 
+        categoryIds: [1], 
+        image: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+        category: 'Testimonies'
     }
 ];
 
-const Template = (args) => <div style={{ padding: '20px' }}><Listing {...args} /></div>;
+const Template = (args) => <Listing {...args} />;
 
-export const GridView = Template.bind({});
-GridView.args = {
-    layout: 'grid',
-    items: MOCK_ITEMS
-};
-
-export const ListView = Template.bind({});
-ListView.args = {
-    layout: 'list',
-    items: MOCK_ITEMS
+export const RegalSidebar = Template.bind({});
+RegalSidebar.args = {
+    filterStyle: 'sidebar',
+    items: ITEMS,
+    categories: CATEGORIES,
+    columns: 3,
+    title: "Content Listings",
+    subtitle: "From testimonials, to success stories"
 };

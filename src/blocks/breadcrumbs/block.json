@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/breadcrumbs",
+  "version": "1.0.0",
+  "title": "Breadcrumbs",
+  "category": "antigravity",
+  "icon": "saved",
+  "description": "Auto-generated navigation trail.",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "typography": {
+        "fontSize": true
+    }
+  },
+  "attributes": {
+    "separator": {
+        "type": "string",
+        "default": "/"
+    },
+    "showHome": {
+        "type": "boolean",
+        "default": true
+    }
+  },
+  "textdomain": "antigravity-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

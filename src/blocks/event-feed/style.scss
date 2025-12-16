@@ -1,0 +1,42 @@
+/* Import shared listing styles */
+@import '../listing/style.scss';
+@import '../../components/EventCard/EventCard.scss';
+
+/* Event Feed Overrides */
+.antigravity-event-feed {
+    padding: var(--spacing-64, 4rem) var(--wp--layout--margin);
+}
+
+.event-feed-header {
+    margin-bottom: var(--spacing-48, 3rem);
+    max-width: 800px;
+}
+
+.event-feed-body {
+    display: flex;
+    gap: var(--spacing-48, 3rem);
+}
+
+.placeholder-sidebar {
+    width: 250px;
+    flex-shrink: 0; /* Prevent squashing */
+    background: #f0f0f0;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.placeholder-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.placeholder-card {
+    background: #eee;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #ccc;
+}

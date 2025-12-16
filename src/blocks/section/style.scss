@@ -1,0 +1,47 @@
+.antigravity-section {
+    position: relative;
+    width: 100%;
+    
+    /* Spacing Modes */
+    &.spacing-none { padding-top: 0; padding-bottom: 0; }
+    &.spacing-small { padding-top: var(--wp--preset--spacing--32); padding-bottom: var(--wp--preset--spacing--32); }
+    &.spacing-medium { padding-top: var(--wp--preset--spacing--64); padding-bottom: var(--wp--preset--spacing--64); }
+    &.spacing-large { padding-top: 128px; padding-bottom: 128px; }
+
+    /* Decoration (Gold Borders) */
+    &.has-decoration {
+        &.decoration-top, &.decoration-both {
+            border-top: 4px solid var(--wp--preset--color--divine-gold);
+        }
+        &.decoration-bottom, &.decoration-both {
+            border-bottom: 4px solid var(--wp--preset--color--divine-gold);
+        }
+    }
+
+    /* Inner Layout Container */
+    .antigravity-section-inner {
+        margin: 0 auto;
+        width: 100%;
+        padding-left: var(--wp--layout--margin);
+        padding-right: var(--wp--layout--margin);
+    }
+
+    /* Layout Modes */
+    &.mode-contained {
+        .antigravity-section-inner {
+            max-width: var(--wp--style--global--wide-size, 1200px);
+        }
+    }
+
+    &.mode-narrow {
+        .antigravity-section-inner {
+            max-width: var(--wp--style--global--content-size, 800px);
+        }
+    }
+
+    &.mode-full {
+        .antigravity-section-inner {
+            max-width: 100%;
+        }
+    }
+}

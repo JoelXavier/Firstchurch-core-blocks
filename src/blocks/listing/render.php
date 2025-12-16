@@ -1,13 +1,20 @@
 <?php
 /**
- * Render callback for the Content Listing block (Feed Engine).
+ * Render callback for the Content Listing block (SSR / PHP Version).
+ * Matches the HTML structure of Listing.jsx for consistent styling.
  */
 
 $attributes = isset($attributes) ? $attributes : [];
 $post_type = isset($attributes['postType']) ? $attributes['postType'] : 'post';
-$per_page = isset($attributes['perPage']) ? $attributes['perPage'] : 3;
+$per_page = isset($attributes['perPage']) ? $attributes['perPage'] : 9;
 $layout = isset($attributes['layout']) ? $attributes['layout'] : 'grid';
 $columns = isset($attributes['columns']) ? $attributes['columns'] : 3;
+
+// Block specific attribs
+$filter_style = isset($attributes['filterStyle']) ? $attributes['filterStyle'] : 'sidebar';
+$block_title = isset($attributes['blockTitle']) ? $attributes['blockTitle'] : '';
+$block_subtitle = isset($attributes['blockSubtitle']) ? $attributes['blockSubtitle'] : '';
+$card_type = isset($attributes['cardType']) ? $attributes['cardType'] : 'standard';
 
 // Display Settings
 $show_date = isset($attributes['showDate']) ? $attributes['showDate'] : true;
@@ -15,20 +22,38 @@ $show_cat = isset($attributes['showCategory']) ? $attributes['showCategory'] : t
 $show_excerpt = isset($attributes['showExcerpt']) ? $attributes['showExcerpt'] : true;
 $show_media = isset($attributes['showMedia']) ? $attributes['showMedia'] : true;
 
-// Engine Settings
-$card_type = isset($attributes['cardType']) ? $attributes['cardType'] : 'standard';
-$taxonomy = isset($attributes['selectedTaxonomy']) ? $attributes['selectedTaxonomy'] : '';
-$term_ids = isset($attributes['selectedTermIds']) ? $attributes['selectedTermIds'] : [];
+// 1. Determine "Active" category from URL ?filter_cat=ID or fallback to 'all'
+$active_cat_id = isset($_GET['filter_cat']) ? intval($_GET['filter_cat']) : 0;
 
-// 1. Build Query
+// Filter Terms
+$cat_args = [
+    'taxonomy' => !empty($taxonomy) ? $taxonomy : 'category',
+    'number' => 10,
+    'hide_empty' => true
+];
+$filter_terms = get_terms($cat_args);
+
+// 2. Build Query
 $args = array(
     'post_type' => $post_type,
     'posts_per_page' => $per_page,
     'post_status' => 'publish',
+    'orderby' => 'date',
+    'order' => 'DESC'
 );
 
-// Taxonomy Filter
-if (!empty($taxonomy) && !empty($term_ids)) {
+// If URL has filter, use that.
+if ($active_cat_id > 0) {
+    $args['tax_query'] = array(
+        array(
+            'taxonomy' => !empty($taxonomy) ? $taxonomy : 'category',
+            'field' => 'term_id',
+            'terms' => $active_cat_id,
+        ),
+    );
+}
+// Else if Editor defined a preset filter, use that (only if URL param isn't overriding)
+else if (!empty($taxonomy) && !empty($term_ids)) {
     $args['tax_query'] = array(
         array(
             'taxonomy' => $taxonomy,
@@ -39,178 +64,144 @@ if (!empty($taxonomy) && !empty($term_ids)) {
 }
 
 $query = new WP_Query($args);
+?>
 
-// 2. Determine Wrapper Classes
-$wrapper_classes = "antigravity-listing antigravity-listing--layout-{$layout}";
-if ($card_type === 'event') {
-    $wrapper_classes .= " antigravity-listing--event-feed";
-    // Force specific layout for events? Or let user choose List/Grid?
-    // User requested "stack vertically", so if layout is 'list', it works.
-}
-
+<?php
 $wrapper_attributes = get_block_wrapper_attributes(array(
-    'class' => $wrapper_classes,
-    'style' => "--columns: {$columns}"
+    'class' => 'antigravity-listing-component layout-' . esc_attr($filter_style)
 ));
+?>
 
-if ($query->have_posts()):
-    ?>
-    <section <?php echo $wrapper_attributes; ?>>
-        <?php while ($query->have_posts()):
-            $query->the_post();
-            $post_id = get_the_ID();
-            $title = get_the_title();
-            $excerpt = get_the_excerpt();
-            $permalink = get_permalink();
-            $thumbnail = get_the_post_thumbnail_url($post_id, 'medium_large'); // 3:2 or similar
-    
-            // Standard Meta
-            $date = get_the_date();
-            $categories = get_the_category();
-            $category_name = !empty($categories) ? $categories[0]->name : '';
+<div <?php echo $wrapper_attributes; ?>>
 
-            // --- RENDER LOGIC SWITCH ---
-            if ($card_type === 'event'):
-                // [EVENT CARD]
-    
-                // For now, map standard post data to "Event" slots
-                // In Phase 2, we hook up real ACF/Meta fields here.
-    
-                // Date logic helpers (PHP equivalents of JS)
-                $ts = get_post_time('U', true);
-                $month_short = date('M', $ts);
-                $day_numeric = date('j', $ts);
-                $time_str = date('g:i A', $ts);
-                $location = "Location TBD"; // Placeholder until meta field exists
-    
-                $label = !empty($category_name) ? $category_name : 'Event';
-                ?>
-                <article class="antigravity-event-card">
-                    <!-- 1. Date Badge -->
-                    <div class="event-date-badge">
-                        <span class="event-month"><?php echo esc_html($month_short); ?></span>
-                        <span class="event-day"><?php echo esc_html($day_numeric); ?></span>
-                    </div>
+    <!-- Header Section -->
+    <div class="listing-header">
+        <?php if ($block_title): ?>
+            <h2 class="listing-title"><?php echo esc_html($block_title); ?></h2>
+        <?php endif; ?>
+        <?php if ($block_subtitle): ?>
+            <p class="listing-subtitle"><?php echo esc_html($block_subtitle); ?></p>
+        <?php endif; ?>
+        <div class="listing-decoration"></div>
+    </div>
 
-                    <!-- 2. Media -->
-                    <?php if ($show_media && $thumbnail): ?>
-                        <div class="event-media">
-                            <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy" />
-                        </div>
-                    <?php endif; ?>
+    <div class="listing-body">
 
-                    <!-- 3. Content -->
-                    <div class="event-content">
-                        <?php if ($show_cat): ?>
-                            <span class="event-label"><?php echo esc_html($label); ?></span>
-                        <?php endif; ?>
+        <!-- Sidebar (Left) -->
+        <?php if ($filter_style === 'sidebar'): ?>
+            <div class="listing-sidebar">
+                <div class="listing-sidebar-sticky">
+                    <div class="listing-filters listing-filters--sidebar">
 
-                        <h3 class="event-title">
-                            <a href="<?php echo esc_url($permalink); ?>" class="event-link"><?php echo esc_html($title); ?></a>
-                        </h3>
-
-                        <div class="event-meta">
-                            <span class="event-location"><?php echo esc_html($location); ?></span>
-                            <?php if ($show_date): ?>
-                                <span class="event-time"> • <?php echo esc_html($time_str); ?></span>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-
-                    <!-- 4. Action -->
-                    <div class="event-action">
-                        <a href="<?php echo esc_url($permalink); ?>" class="event-button">
-                            Get Tickets
+                        <!-- 'All' Button -->
+                        <?php $all_link = remove_query_arg('filter_cat'); ?>
+                        <a href="<?php echo esc_url($all_link); ?>"
+                            class="filter-btn <?php echo ($active_cat_id === 0) ? 'is-active' : ''; ?>">
+                            <span class="filter-label">All</span>
                         </a>
-                    </div>
-                </article>
 
-            <?php else:
-                // [STANDARD CARD]
-                ?>
-                <article class="antigravity-card">
-                    <?php if ($show_media && $thumbnail): ?>
-                        <div class="antigravity-card__media">
-                            <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy" />
-                        </div>
-                    <?php endif; ?>
-
-                    <div class="antigravity-card__content">
-                        <header class="antigravity-card__header">
-                            <?php if ($show_cat && $category_name): ?>
-                                <span class="antigravity-card__category"><?php echo esc_html($category_name); ?></span>
-                            <?php endif; ?>
-
-                            <?php if ($show_date): ?>
-                                <time class="antigravity-card__date"><?php echo esc_html($date); ?></time>
-                            <?php endif; ?>
-
-                            <h3 class="antigravity-card__title">
-                                <a href="<?php echo esc_url($permalink); ?>"><?php echo esc_html($title); ?></a>
-                            </h3>
-                        </header>
-
-                        <?php if ($show_excerpt && $excerpt): ?>
-                            <div class="antigravity-card__excerpt"><?php echo wp_kses_post($excerpt); ?></div>
+                        <?php if (!empty($filter_terms) && !is_wp_error($filter_terms)): ?>
+                            <?php foreach ($filter_terms as $term):
+                                $is_active = ($term->term_id === $active_cat_id);
+                                $link = add_query_arg('filter_cat', $term->term_id);
+                                ?>
+                                <a href="<?php echo esc_url($link); ?>"
+                                    class="filter-btn <?php echo $is_active ? 'is-active' : ''; ?>">
+                                    <span class="filter-label"><?php echo esc_html($term->name); ?></span>
+                                </a>
+                            <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
-                </article>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Main Content -->
+        <div class="listing-main">
+
+            <!-- Pills Top Level -->
+            <?php if ($filter_style === 'pills'): ?>
+                <div class="listing-top-bar">
+                    <div class="listing-filters listing-filters--pills">
+                        <!-- 'All' Button -->
+                        <?php $all_link = remove_query_arg('filter_cat'); ?>
+                        <a href="<?php echo esc_url($all_link); ?>"
+                            class="filter-btn <?php echo ($active_cat_id === 0) ? 'is-active' : ''; ?>">
+                            <span class="filter-label">All</span>
+                        </a>
+
+                        <?php if (!empty($filter_terms) && !is_wp_error($filter_terms)): ?>
+                            <?php foreach ($filter_terms as $term):
+                                $is_active = ($term->term_id === $active_cat_id);
+                                $link = add_query_arg('filter_cat', $term->term_id);
+                                ?>
+                                <a href="<?php echo esc_url($link); ?>"
+                                    class="filter-btn <?php echo $is_active ? 'is-active' : ''; ?>">
+                                    <span class="filter-label"><?php echo esc_html($term->name); ?></span>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
             <?php endif; ?>
 
-        <?php endwhile; ?>
-    </section>
-    <?php
-    wp_reset_postdata();
-else:
-    ?>
-    <div <?php echo $wrapper_attributes; ?>>
-        <!-- Fallback / Placeholder for Editor -->
-        <?php
-        // Check if we are in the Block Editor context
-        $is_editor = (defined('REST_REQUEST') && REST_REQUEST) || (isset($_GET['context']) && $_GET['context'] === 'edit');
+            <!-- Grid -->
+            <div class="listing-grid" style="--columns: <?php echo esc_attr($columns); ?>">
+                <?php if ($query->have_posts()): ?>
+                    <?php while ($query->have_posts()):
+                        $query->the_post();
+                        $pid = get_the_ID();
+                        $title = get_the_title();
+                        $permalink = get_permalink();
+                        $excerpt = get_the_excerpt();
+                        $thumb = get_the_post_thumbnail_url($pid, 'large');
+                        $cat_obj = get_the_category();
+                        $cat_name = !empty($cat_obj) ? $cat_obj[0]->name : 'Uncategorized';
 
-        if ($is_editor):
-            ?>
-            <!-- Show MOCK Data in Editor so user can see design even with no posts -->
-            <?php for ($i = 0; $i < $columns; $i++): ?>
-                <?php if ($card_type === 'event'): ?>
-                    <article class="antigravity-event-card">
-                        <div class="event-date-badge">
-                            <span class="event-month">OCT</span>
-                            <span class="event-day"><?php echo 12 + $i; ?></span>
+                        // Render standard card HTML
+                        ?>
+                        <div class="antigravity-card-item">
+                            <a href="<?php echo esc_url($permalink); ?>" class="card-link-wrapper">
+                                <?php if ($show_media && $thumb): ?>
+                                    <div class="card-image-wrapper">
+                                        <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($title); ?>" />
+                                    </div>
+                                <?php endif; ?>
+
+                                <div class="card-content">
+                                    <div class="card-text-group">
+                                        <?php if ($show_cat): ?>
+                                            <span
+                                                class="card-label"><?php echo esc_html($card_type === 'event' ? 'Event' : $cat_name); ?></span>
+                                        <?php endif; ?>
+
+                                        <h3 class="card-title"><?php echo esc_html($title); ?></h3>
+
+                                        <?php if ($show_excerpt && $excerpt): ?>
+                                            <div class="card-excerpt"><?php echo wp_kses_post($excerpt); ?></div>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <span class="card-cta">LEARN MORE ></span>
+                                </div>
+                            </a>
                         </div>
-                        <?php if ($show_media): ?>
-                            <div class="event-media" style="background: #eee;"></div>
-                        <?php endif; ?>
-                        <div class="event-content">
-                            <?php if ($show_cat): ?><span class="event-label">Preview Event</span><?php endif; ?>
-                            <h3 class="event-title"><a href="#" class="event-link">Example Event Title</a></h3>
-                            <div class="event-meta">
-                                <span class="event-location">City, State</span>
-                                <?php if ($show_date): ?><span class="event-time"> • 7:00 PM</span><?php endif; ?>
-                            </div>
-                        </div>
-                        <div class="event-action"><a href="#" class="event-button">Get Tickets</a></div>
-                    </article>
+                    <?php endwhile;
+                    wp_reset_postdata(); ?>
                 <?php else: ?>
-                    <article class="antigravity-card">
-                        <?php if ($show_media): ?>
-                            <div class="antigravity-card__media" style="background:#ddd; height:200px;"></div><?php endif; ?>
-                        <div class="antigravity-card__content">
-                            <header class="antigravity-card__header">
-                                <?php if ($show_cat): ?><span class="antigravity-card__category">Category</span><?php endif; ?>
-                                <h3 class="antigravity-card__title">Example Post Title</h3>
-                            </header>
-                            <?php if ($show_excerpt): ?>
-                                <div class="antigravity-card__excerpt">This is a placeholder excerpt to show you how the design looks.</div>
-                            <?php endif; ?>
-                        </div>
-                    </article>
+                    <div class="no-results">
+                        <p>No content found.</p>
+                    </div>
                 <?php endif; ?>
-            <?php endfor; ?>
-        <?php else: ?>
-            <p>No content found.</p>
-        <?php endif; ?>
+            </div>
+
+            <!-- Pagination (Visual) -->
+            <div class="listing-pagination">
+                <button class="pagination-btn is-active">1</button>
+                <span class="pagination-ellipsis">...</span>
+                <button class="pagination-btn">Next &gt;</button>
+            </div>
+
+        </div>
     </div>
-    <?php
-endif;
+</div>

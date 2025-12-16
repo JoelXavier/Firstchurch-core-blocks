@@ -54,6 +54,18 @@
     "showMedia": {
       "type": "boolean",
       "default": true
+    },
+    "filterStyle": {
+      "type": "string",
+      "default": "sidebar"
+    },
+    "blockTitle": {
+      "type": "string",
+      "default": "Content Listings"
+    },
+    "blockSubtitle": {
+      "type": "string",
+      "default": "From testimonials, to success stories"
     }
   },
   "supports": {

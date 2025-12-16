@@ -4,6 +4,7 @@ import './Card.scss';
 export function CardItem({ 
   label = "LABEL", 
   title = "Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia", 
+  excerpt,
   linkText = "LEARN MORE >", 
   image, 
   href = "#" 
@@ -20,11 +21,13 @@ export function CardItem({
         </div>
 
         <div className="card-content">
-          {label && <span className="card-label">{label}</span>}
-          {title && <h3 className="card-title" dangerouslySetInnerHTML={{ __html: title }} />}
+          <div className="card-text-group">
+            {label && <span className="card-label">{label}</span>}
+            {title && <h3 className="card-title" dangerouslySetInnerHTML={{ __html: title }} />}
+            {excerpt && <div className="card-excerpt" dangerouslySetInnerHTML={{ __html: excerpt }} />}
+          </div>
           
           <span className="card-cta">{linkText}</span>
-          <div className="card-bottom-border"></div>
         </div>
       </a>
     </div>
