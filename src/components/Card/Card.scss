@@ -15,8 +15,14 @@
 
 @media (min-width: 768px) {
     .card-grid-container {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: var(--wp--preset--spacing--32, 2rem);
+    }
+}
+
+@media (min-width: 1024px) {
+    .card-grid-container {
+        grid-template-columns: repeat(var(--grid-columns, 3), 1fr);
     }
 }
 
@@ -31,7 +37,7 @@
     font-size: var(--wp--preset--font-size--h2);
     font-weight: 700;
     line-height: 1.1;
-    color: var(--wp--preset--color--burgundy);
+    color: var(--card-section-title-color, var(--wp--preset--color--burgundy));
     margin: 0 0 var(--spacing-24, 1.5rem) 0;
 }
 
@@ -42,12 +48,17 @@
 }
 
 /* --- Card Link Hover Group --- */
+.antigravity-card-item {
+    height: 100%; /* Restore equal height for balanced bars */
+}
+
 .card-link-wrapper {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr; /* Image natural, Content fills rest */
     text-decoration: none;
     color: inherit;
-    height: 100%;
+    height: 100%; 
     position: relative;
     cursor: pointer;
 }
@@ -81,11 +92,16 @@
 
 /* --- Content Styles --- */
 .card-content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    position: relative;
+    display: grid;
+    grid-template-rows: 1fr auto; 
+    height: 100%;
     padding-bottom: var(--spacing-16, 1rem);
+    gap: var(--spacing-24, 1.5rem); /* Consistent spacing between Text Group and Link */
+}
+
+/* New Group Wrapper */
+.card-text-group {
+    display: block; /* Ensure it behaves as a block */
 }
 
 .card-label {
@@ -94,7 +110,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--wp--preset--color--neutral-900);
+    color: var(--card-label-color, var(--wp--preset--color--neutral-900));
     margin-bottom: var(--spacing-16, 1rem);
     display: block;
 }
@@ -104,8 +120,8 @@
     font-size: var(--wp--preset--font-size--h4); /* ~2rem */
     font-weight: 700;
     line-height: 1.2;
-    color: var(--wp--preset--color--neutral-900);
-    margin: 0 0 var(--spacing-24, 1.5rem) 0;
+    color: var(--card-title-color, var(--wp--preset--color--neutral-900));
+    margin: 0; /* Remove bottom margin to let Grid gap handle it */
 }
 
 /* --- CTA Button --- */
@@ -115,8 +131,8 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--wp--preset--color--neutral-900);
-    margin-top: auto; 
+    color: var(--card-link-color, var(--wp--preset--color--neutral-900));
+    /* margin-top: auto; Removed redundant margin */
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -124,7 +140,9 @@
 }
 
 .card-link-wrapper:hover .card-cta {
-    color: var(--wp--preset--color--burgundy); /* Change to Burgundy on hover */
+    /* color: var(--wp--preset--color--burgundy); Removed to support custom text colors */
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 /* Arrow Icon */

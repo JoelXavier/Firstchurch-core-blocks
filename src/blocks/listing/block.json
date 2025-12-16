@@ -4,10 +4,25 @@
   "name": "antigravity/listing",
   "version": "1.0.0",
   "title": "Content Listing",
-  "category": "widgets",
+  "category": "antigravity",
   "icon": "grid-view",
   "description": "Display a dynamic list or grid of posts.",
   "attributes": {
+    "cardType": {
+      "type": "string",
+      "default": "standard"
+    },
+    "selectedTaxonomy": {
+      "type": "string",
+      "default": "category"
+    },
+    "selectedTermIds": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "number"
+      }
+    },
     "postType": {
       "type": "string",
       "default": "post"
@@ -33,6 +48,10 @@
       "default": true
     },
     "showExcerpt": {
+      "type": "boolean",
+      "default": true
+    },
+    "showMedia": {
       "type": "boolean",
       "default": true
     }

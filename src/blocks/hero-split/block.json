@@ -39,6 +39,10 @@
       "type": "string",
       "default": "left"
     },
+    "imageAspectRatio": {
+      "type": "string",
+      "default": "landscape"
+    },
     "backgroundColor": {
       "type": "string",
       "default": "#1a1a1a"

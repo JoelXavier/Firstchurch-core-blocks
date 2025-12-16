@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Antigravity: Blank Canvas
+ * Template Name: First Church: Blank Canvas
  * Description: A raw canvas with no theme header or footer.
  */
 ?>

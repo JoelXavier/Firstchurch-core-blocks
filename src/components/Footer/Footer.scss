@@ -1,0 +1,161 @@
+.antigravity-footer {
+  background-color: var(--wp--preset--color--neutral-900);
+  color: var(--wp--preset--color--neutral-50);
+  padding: 0; /* Reset parent padding to let children handle spacing */
+  font-family: var(--wp--preset--font-family--ui);
+  width: 100%;
+}
+
+.footer-content {
+  max-width: var(--wp--style--global--wide-size, 1200px);
+  margin: 0 auto;
+  /* Generous breathing room for the main content area */
+  padding: 5rem var(--wp--layout--margin) 5rem var(--wp--layout--margin);
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--spacing-48);
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    gap: var(--wp--preset--spacing--spacing-64);
+    align-items: flex-start;
+  }
+}
+
+/* Brand Column (Left) */
+.footer-brand-col {
+  flex: 1;
+  max-width: 400px; /* Don't get too wide on large screens */
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  img {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+    /* Optional: Brighten logo if it's dark, or assume provided logo works on dark bg */
+  }
+
+  .footer-logo-text {
+    display: flex;
+    flex-direction: column;
+    
+    .primary {
+      font-family: var(--wp--preset--font-family--brand);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--wp--preset--color--divine-gold); /* Gold pops on dark */
+      line-height: 1.1;
+    }
+    
+    .secondary {
+      font-family: var(--wp--preset--font-family--brand);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--wp--preset--color--neutral-200);
+      line-height: 1;
+    }
+  }
+}
+
+.footer-mission {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--wp--preset--color--neutral-300);
+  max-width: 300px;
+}
+
+/* Nav Grid (Right) */
+.footer-nav-grid {
+  flex: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.footer-nav-col {
+  .footer-heading {
+    color: var(--wp--preset--color--divine-gold);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    
+    li {
+      margin-bottom: 0.75rem;
+      
+      a {
+        color: var(--wp--preset--color--neutral-300);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+        
+        &:hover {
+          color: var(--wp--preset--color--white);
+        }
+      }
+    }
+  }
+}
+
+/* Bottom Bar */
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: 0; /* Removed margin since we added padding to parent */
+  padding: 2rem var(--wp--layout--margin);
+  background-color: rgba(0,0,0,0.2);
+}
+
+.footer-bottom-inner {
+  max-width: var(--wp--style--global--wide-size, 1200px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.footer-copyright {
+  font-size: 0.75rem;
+  color: var(--wp--preset--color--neutral-400);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1.5rem;
+  
+  .footer-social-icon {
+    color: var(--wp--preset--color--neutral-400);
+    transition: color 0.2s, transform 0.2s;
+    
+    &:hover {
+      color: var(--wp--preset--color--divine-gold);
+      transform: translateY(-2px);
+    }
+    
+    svg {
+      display: block;
+    }
+  }
+}

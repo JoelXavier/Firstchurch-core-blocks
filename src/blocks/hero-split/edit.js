@@ -18,7 +18,7 @@ export default function Edit({ attributes, setAttributes }) {
     };
 
     const blockProps = useBlockProps({
-        className: `antigravity-hero-split ${imagePosition === 'right' ? 'image-right' : ''}`,
+        className: `antigravity-hero-split ${imagePosition === 'right' ? 'image-right' : ''} aspect-ratio-${attributes.imageAspectRatio}`,
         style: {
             '--hero-split-bg': backgroundColor,
             '--hero-split-text': textColor,
@@ -38,6 +38,17 @@ export default function Edit({ attributes, setAttributes }) {
                             { label: 'Right', value: 'right' },
                         ]}
                         onChange={(value) => setAttributes({ imagePosition: value })}
+                    />
+                    <SelectControl
+                        label={__('Image Aspect Ratio', 'antigravity-core')}
+                        value={attributes.imageAspectRatio}
+                        options={[
+                            { label: 'Landscape (16:9)', value: 'landscape' },
+                            { label: 'Portrait (3:4)', value: 'portrait' },
+                            { label: 'Square (1:1)', value: 'square' },
+                        ]}
+                        onChange={(value) => setAttributes({ imageAspectRatio: value })}
+                        help={__('Controls the shape of the image area.', 'antigravity-core')}
                     />
                     <MediaUploadCheck>
                         <MediaUpload

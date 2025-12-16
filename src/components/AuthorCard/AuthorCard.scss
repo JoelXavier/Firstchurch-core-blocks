@@ -1,0 +1,88 @@
+/* Author Card Styles */
+
+.antigravity-author-card {
+    display: flex;
+    flex-direction: column; /* Stacked by default for sidebar */
+    align-items: center; /* Center align text */
+    text-align: center;
+    gap: 1rem;
+    /* User requested removing L/R padding to shorten lines */
+    padding: 1.5rem 0;
+    width: fit-content; /* Shrink border to content width */
+    max-width: 100%;
+    border-top: 1px solid var(--wp--preset--color--neutral-300);
+    border-bottom: 1px solid var(--wp--preset--color--neutral-300);
+    /* background-color: var(--wp--preset--color--white); REMOVED for transparency */
+}
+
+.author-card-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    /* background-color: var(--wp--preset--color--neutral-200); REMOVED */
+    flex-shrink: 0;
+}
+
+.author-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.author-card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-size: 2rem;
+    color: var(--wp--preset--color--neutral-500);
+}
+
+.author-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.author-card-name {
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-weight: 700;
+    font-size: 1.125rem;
+    color: var(--wp--preset--color--neutral-900);
+    line-height: 1.2;
+}
+
+.author-card-team {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--wp--preset--color--cardinal);
+    font-weight: 700;
+}
+
+.author-card-location {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.75rem;
+    color: var(--wp--preset--color--neutral-600);
+}
+
+/* On Mobile/Tablet where it drops to bottom, maybe row layout? */
+@media (max-width: 768px) {
+    .antigravity-author-card {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        border: none;
+        border-top: 1px solid var(--wp--preset--color--neutral-300);
+        padding: 2rem 0;
+        width: 100%;
+    }
+    
+    .antigravity-author-card .author-card-info {
+        align-items: flex-start;
+    }
+}

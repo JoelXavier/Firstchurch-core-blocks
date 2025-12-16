@@ -1,0 +1,145 @@
+/* Article Hero Styles */
+
+.antigravity-article-hero {
+    position: relative;
+    width: 100%;
+    color: var(--wp--preset--color--neutral-900);
+    overflow: hidden;
+    
+    /* Variables */
+    --hero-padding: var(--spacing-64, 4rem);
+    --title-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+.article-hero-container {
+    max-width: var(--wp--style--global--wide-size, 1200px);
+    margin: 0 auto;
+    padding: var(--hero-padding) var(--wp--layout--margin);
+    position: relative;
+    z-index: 2;
+}
+
+/* --- Typography --- */
+.article-meta-top {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.article-category {
+    color: var(--wp--preset--color--cardinal);
+}
+
+.article-title {
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0 0 2rem 0;
+    max-width: 900px; /* Optimal reading width for title */
+}
+
+.article-meta-bottom {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 1rem;
+    border-top: 4px solid var(--wp--preset--color--divine-gold);
+    display: inline-block;
+    padding-top: 1rem;
+}
+
+.author-name {
+    font-weight: 700;
+    color: var(--wp--preset--color--cardinal);
+}
+
+/* --- Variant: Standard --- */
+.antigravity-article-hero.variant-standard {
+    /* background-color: var(--wp--preset--color--white); REMOVED */
+    text-align: center;
+}
+
+.variant-standard .article-hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.article-hero-standard-image {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    /* Responsive Aspect Ratio Strategy */
+    /* Mobile: 16:9 (Standard video) */
+    aspect-ratio: 16 / 9;
+    /* Cap height to prevent it getting absurdly tall on large mobiles/tablets */
+    max-height: 500px; 
+    
+    padding: 0 var(--wp--layout--margin) var(--spacing-64);
+}
+
+@media (min-width: 768px) {
+    .article-hero-standard-image {
+        /* Desktop: 21:9 (Cinematic/Ultrawide) */
+        /* This keeps the image substantial but not "tall", inviting the user to scroll to body text. */
+        aspect-ratio: 21 / 9; 
+        max-height: 700px;
+        height: auto; /* Override any fixed heights */
+    }
+}
+
+.article-hero-standard-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+/* --- Variant: Immersive --- */
+.antigravity-article-hero.variant-immersive {
+    color: var(--wp--preset--color--white);
+    /* Reduced from 80vh to 60vh to keep "below the fold" content hintable? 
+       Or maybe users want full impact? 
+       "prevent images from being too large in height" suggests reducing this too. */
+    min-height: 60vh; 
+    display: flex;
+    align-items: center;
+}
+
+.article-hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.article-hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Gradient: Dark at bottom to make text pop */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+}
+
+.variant-immersive .article-category {
+    color: var(--wp--preset--color--divine-gold); /* Gold on dark */
+}
+
+.variant-immersive .author-name {
+    color: var(--wp--preset--color--white);
+}

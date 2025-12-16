@@ -1,0 +1,49 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/footer",
+  "version": "1.0.0",
+  "title": "Footer",
+  "category": "antigravity",
+  "icon": "layout",
+  "description": "Site footer with 4-column grid, mission statement, and social links.",
+  "supports": {
+    "html": false,
+    "align": ["full"]
+  },
+  "attributes": {
+    "logoId": {
+      "type": "number"
+    },
+    "logoUrl": {
+      "type": "string"
+    },
+    "logoTextPrimary": {
+      "type": "string",
+      "default": "First Church"
+    },
+    "logoTextSecondary": {
+      "type": "string",
+      "default": "Of Our Lord Jesus Christ"
+    },
+    "missionText": {
+      "type": "string",
+      "default": "A community dedicated to the glory of God and the service of our neighbors."
+    },
+    "copyrightText": {
+      "type": "string",
+      "default": "© 2024 First Church. All rights reserved."
+    },
+    "socialLinks": {
+        "type": "array",
+        "default": [
+            { "icon": "youtube", "url": "#", "label": "YouTube" },
+            { "icon": "facebook", "url": "#", "label": "Facebook" }
+        ]
+    }
+  },
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

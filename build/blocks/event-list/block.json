@@ -1,0 +1,43 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/event-list",
+  "version": "1.0.0",
+  "title": "Event List (Manual)",
+  "category": "antigravity",
+  "icon": "calendar-alt",
+  "description": "A manually curated list of events. Drag and drop Event Item blocks inside.",
+  "attributes": {
+    "sectionTitle": {
+      "type": "string",
+      "default": "Upcoming Events"
+    },
+    "sectionSubheader": {
+      "type": "string",
+      "default": ""
+    },
+    "viewAllText": {
+      "type": "string",
+      "default": "See All Events"
+    },
+    "viewAllLink": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ],
+    "color": {
+      "background": true,
+      "text": true
+    }
+  },
+  "textdomain": "antigravity-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}

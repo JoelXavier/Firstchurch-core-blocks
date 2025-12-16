@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/article-body",
+  "version": "0.1.0",
+  "title": "Article Body",
+  "category": "antigravity",
+  "icon": "align-wide",
+  "description": "The main content area with side-column author card and reading layout.",
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ],
+    "color": {
+      "background": true,
+      "text": false,
+      "link": false
+    }
+  },
+  "attributes": {
+    "authorName": {
+      "type": "string",
+      "default": "Author Name"
+    },
+    "authorTeam": {
+      "type": "string",
+      "default": "Team Name"
+    },
+    "authorLocation": {
+      "type": "string",
+      "default": "Location"
+    },
+    "authorImageId": {
+      "type": "number",
+      "default": 0
+    },
+    "authorImageUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "showAuthor": {
+      "type": "boolean",
+      "default": true
+    },
+    "dropCapColor": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "textdomain": "antigravity",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

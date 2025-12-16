@@ -1,0 +1,5 @@
+/* Fix editor width to match frontend max-width/grids if needed */
+.wp-block-antigravity-article-body {
+    /* Ensure grid behaves in editor */
+    max-width: 100%;
+}

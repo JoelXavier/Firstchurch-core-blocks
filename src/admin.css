@@ -1,0 +1,87 @@
+/* ========================================= */
+/* ANTIGRAVITY ADMIN THEME                   */
+/* ========================================= */
+
+:root {
+  --ag-cardinal: #8A1538;
+  --ag-burgundy: #68121D;
+  --ag-gold: #C5A059;
+  --ag-sandwood: #F4F1EA;
+  --ag-rich-black: #1a1a1a;
+  --ag-neutral-50: #FAFAFA;
+}
+
+/* 1. Sidebar Background (Rich Black) */
+#adminmenuback,
+#adminmenuwrap,
+#adminmenu {
+    background-color: var(--ag-rich-black) !important;
+}
+
+/* 2. Top Bar (Cardinal Red) */
+#wpadminbar {
+    background-color: var(--ag-cardinal) !important;
+    border-bottom: 2px solid var(--ag-gold);
+}
+
+/* 3. Active Menu Item (Cardinal Red) */
+#adminmenu li.wp-has-current-submenu a.wp-has-current-submenu,
+#adminmenu li.current a.menu-top,
+#adminmenu .wp-submenu,
+.folded #adminmenu .wp-has-current-submenu .wp-submenu {
+    background-color: var(--ag-cardinal) !important;
+    color: #fff !important;
+}
+
+/* 4. Active Menu Arrow */
+#adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head,
+#adminmenu .wp-menu-arrow,
+#adminmenu .wp-menu-arrow div {
+    background-color: var(--ag-cardinal) !important;
+}
+
+/* 5. Hover States (Burgundy) */
+#adminmenu li.menu-top:hover,
+#adminmenu li.opensub > a.menu-top,
+#adminmenu li > a.menu-top:focus {
+    background-color: var(--ag-burgundy) !important;
+    color: var(--ag-gold) !important;
+}
+
+/* 6. Main Dashboard Background (Sandwood Tint) */
+/* Optional: Tints the grey background slightly towards Sandwood for warmth */
+body.wp-admin {
+    background-color: #f7f6f4 !important; /* Very transparent Sandwood */
+}
+
+/* 7. Primary Buttons (Cardinal) */
+.wp-core-ui .button-primary {
+    background: var(--ag-cardinal) !important;
+    border-color: var(--ag-cardinal) !important;
+    color: #fff !important;
+    transition: all 0.2s ease;
+}
+
+.wp-core-ui .button-primary:hover,
+.wp-core-ui .button-primary:focus {
+    background: var(--ag-burgundy) !important;
+    border-color: var(--ag-burgundy) !important;
+    color: var(--ag-gold) !important;
+}
+
+/* 8. Links (Cardinal) */
+a {
+    color: var(--ag-cardinal);
+}
+
+a:hover, a:active, a:focus {
+    color: var(--ag-burgundy);
+}
+
+/* 9. Notices / Alerts (Styled) */
+.notice-success {
+    border-left-color: var(--ag-gold) !important;
+}
+.notice-error {
+    border-left-color: var(--ag-cardinal) !important;
+}

@@ -4,7 +4,9 @@ node_modules
 .pnp.js
 
 # Build Output
-build
+# Build Output (Uncomment to ignore if you build on server)
+# build
+dist
 dist
 
 # OS

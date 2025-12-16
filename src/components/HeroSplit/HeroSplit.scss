@@ -34,17 +34,35 @@
 .hero-split-image-wrapper {
     width: 100%;
     position: relative;
-    /* Use aspect ratio for better mobile/tablet scaling */
+    /* Default Mobile Aspect Ratio (Landscape) */
     aspect-ratio: 16 / 9;
-    min-height: 300px; 
+    min-height: 300px;
+}
+
+/* Aspect Ratio Modifiers */
+.antigravity-hero-split.aspect-ratio-portrait .hero-split-image-wrapper {
+    aspect-ratio: 3 / 4;
+}
+
+.antigravity-hero-split.aspect-ratio-square .hero-split-image-wrapper {
+    aspect-ratio: 1 / 1;
 }
 
 @media (min-width: 960px) {
     .hero-split-image-wrapper {
         width: 50%;
         min-height: auto; /* Let flex stretch it */
-        aspect-ratio: auto; /* Reset aspect ratio for split view */
+        /* On desktop, we inherently want the height to track the content... 
+           UNLESS the user explicitly sets an aspect ratio that demands it be taller.
+           If we leave aspect-ratio active on desktop, it will force the section height.
+        */
     }
+    
+    /* If Portrait/Square, enforcing aspect-ratio on a 50% width element ensures it is tall enough. */
+    /* If Landscape, we reset to auto so it doesn't force a huge height if content is short? 
+       Actually, standard behavior for "Split" is usually covering full height. 
+       Let's keep the aspect ratio mainly for the 'shape' and let object-fit cover fill gaps.
+    */
 }
 
 .hero-split-image {

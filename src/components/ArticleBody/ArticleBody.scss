@@ -1,0 +1,209 @@
+/* Article Body Layout */
+@import '../AuthorCard/AuthorCard.scss';
+
+.antigravity-article-body {
+    width: 100%;
+    padding: var(--spacing-48, 3rem) var(--wp--layout--margin);
+    /* background-color: var(--wp--preset--color--white); <-- REMOVED to allow user override */
+}
+
+.article-body-grid {
+    display: flex;
+    flex-direction: column;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 3rem;
+}
+
+/* Mobile First: Content on Top, Author Last */
+.article-content {
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto; /* Center content on mobile too */
+}
+
+.article-sidebar {
+    order: 2; /* Drops to bottom on mobile */
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Desktop: 3-Column Grid or similar */
+@media (min-width: 960px) {
+    .article-body-grid {
+        display: grid;
+        /* Desktop: 12-Column Grid for precision */
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem; /* Standard column gap */
+        align-items: stretch;
+    }
+
+    .article-sidebar {
+        order: 0;
+        /* moved to span 2 to create a full column gap (Col 3) between author and content */
+        grid-column: 1 / span 2;
+        grid-row: 1; 
+        width: 100%; 
+        justify-self: end; /* Keep it right-aligned to the new boundary (Line 3) */
+        text-align: right; 
+        display: flex;
+        justify-content: flex-end; 
+        
+        padding-top: 0.75rem; 
+    }
+
+    .article-content {
+        order: 1;
+        /* 
+           Center Alignment:
+           Grid is 12 Cols.
+           Content spans 6 Cols.
+           To be dead center, it must occupy cols 4, 5, 6, 7, 8, 9.
+           (Leaving 3 cols on Left for Sidebar, and 3 cols on Right for balance).
+        */
+        grid-column: 4 / span 6;
+        grid-row: 1; /* Force row 1 */
+        margin: 0; 
+        max-width: none;
+    }
+    
+    .article-right-spacer {
+        /* Span last 3 columns (Col 10-12) to force symmetry */
+        grid-column: 10 / span 3;
+    }
+    
+    .sidebar-sticky {
+        position: sticky;
+        top: 2rem;
+    }
+}
+
+/* --- Typography / InnerBlocks Styling --- */
+.article-typography {
+    font-family: var(--wp--preset--font-family--inter);
+    color: var(--wp--preset--color--neutral-900);
+    font-size: 1.125rem;
+    line-height: 1.7;
+    display: block;
+}
+
+/* Ensure the very first element aligns to the top */
+.article-typography > *:first-child {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Dropcap for the FIRST paragraph */
+.article-typography > p:first-of-type::first-letter {
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-size: 3.5rem;
+    line-height: 0.8;
+    float: left;
+    margin-right: 0.5rem;
+    margin-top: 0; 
+    /* Use the variable if set, otherwise fallback to Cardinal */
+    color: var(--dropcap-color, var(--wp--preset--color--cardinal));
+    font-weight: 700;
+}
+
+/* Spacing between blocks */
+.article-typography > * {
+    margin-bottom: 1.5rem;
+}
+
+/* --- Inner Blocks Customization --- */
+
+/* Headers */
+.article-typography h2,
+.article-typography h3,
+.article-typography h4 {
+    font-family: var(--wp--preset--font-family--playfair-display);
+    color: var(--wp--preset--color--rich-black);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    /* The Unique Style: Gold Border Left */
+    border-left: 4px solid var(--wp--preset--color--divine-gold);
+    padding-left: 1rem;
+}
+
+.article-typography h2 { font-size: 2rem; }
+.article-typography h3 { font-size: 1.5rem; }
+.article-typography h4 { font-size: 1.25rem; }
+
+/* Blockquote & Pullquote */
+.article-typography .wp-block-quote,
+.article-typography .wp-block-pullquote {
+    border-left: 4px solid var(--wp--preset--color--divine-gold);
+    border-top: none; /* Reset Pullquote default */
+    border-bottom: none; /* Reset Pullquote default */
+    border-right: none;
+    margin: 2rem 0;
+    padding-left: 1.5rem;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-size: 1.5rem;
+    font-weight: 700; /* Pullquotes usually slightly bolder */
+    font-style: italic;
+    color: var(--wp--preset--color--neutral-700);
+    text-align: left; /* Enforce left align for the border to make sense */
+}
+
+/* Cite styling for both */
+.article-typography .wp-block-quote cite,
+.article-typography .wp-block-pullquote cite {
+    display: block;
+    margin-top: 1rem;
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.875rem;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--wp--preset--color--cardinal);
+    text-align: left;
+}
+
+/* Images & Captions */
+.article-typography figure {
+    margin: 2rem 0;
+}
+
+.article-typography figcaption,
+.article-typography .wp-element-caption {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.875rem;
+    color: var(--wp--preset--color--neutral-600);
+    margin-top: 0.75rem;
+    padding-right: 1rem;
+    text-align: right; 
+    border-right: 3px solid var(--wp--preset--color--divine-gold);
+    display: block; 
+    width: 100%;
+    min-height: 1.5rem; 
+}
+
+/* Separators */
+.article-typography hr.wp-block-separator {
+    border: none;
+    height: 1px;
+    background: var(--wp--preset--color--neutral-300);
+    margin: 3rem auto;
+    width: 100px; /* Elegant short line */
+}
+
+/* Embeds / Iframes */
+.article-typography .wp-block-embed {
+    margin: 2rem 0;
+}
+
+/* Tombstone */
+.article-tombstone {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    color: var(--wp--preset--color--divine-gold);
+    font-size: 1.5rem;
+}

@@ -1,0 +1,172 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/global-nav",
+  "version": "1.0.0",
+  "title": "Global Navigation",
+  "category": "antigravity",
+  "icon": "menu",
+  "description": "A site-wide navigation bar.with mega menu and announcements.",
+  "supports": {
+    "html": false,
+    "align": [
+      "full",
+      "wide"
+    ],
+    "typography": {
+      "fontFamily": true
+    }
+  },
+  "textdomain": "antigravity-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./view.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php",
+  "attributes": {
+    "logoTextPrimary": {
+      "type": "string",
+      "default": "First Church"
+    },
+    "logoTextSecondary": {
+      "type": "string",
+      "default": "Of Our Lord Jesus Christ"
+    },
+    "logoId": {
+      "type": "number"
+    },
+    "logoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "ctaLabel": {
+      "type": "string",
+      "default": "GIVE"
+    },
+    "ctaUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "items": {
+      "type": "array",
+      "default": [
+        {
+          "label": "About",
+          "url": "#",
+          "hasSubmenu": true
+        },
+        {
+          "label": "Ministries",
+          "url": "#",
+          "hasSubmenu": true
+        },
+        {
+          "label": "Sermons",
+          "url": "#",
+          "hasSubmenu": false
+        },
+        {
+          "label": "Events",
+          "url": "#",
+          "hasSubmenu": false
+        },
+        {
+          "label": "Contact",
+          "url": "#",
+          "hasSubmenu": false
+        }
+      ]
+    },
+    "announcements": {
+      "type": "array",
+      "default": [
+        "Welcome to First Church - Service starts at 10:00 AM",
+        "Join our Bible Study every Wednesday at 7:00 PM",
+        "Youth Retreat Registration is now open!"
+      ]
+    },
+    "menuData": {
+      "type": "object",
+      "default": {
+        "mainLinks": [
+          {
+            "label": "Branch Temples",
+            "url": "#"
+          },
+          {
+            "label": "Scheduled Events",
+            "url": "#"
+          },
+          {
+            "label": "Locations",
+            "url": "#"
+          },
+          {
+            "label": "Store",
+            "url": "#"
+          },
+          {
+            "label": "Literature",
+            "url": "#"
+          },
+          {
+            "label": "ByLaws",
+            "url": "#"
+          },
+          {
+            "label": "Donation",
+            "url": "#"
+          }
+        ],
+        "newsItems": [
+          {
+            "category": "FROM THE TEMPLE",
+            "title": "24 baptized in the Greenwich temple",
+            "image": "",
+            "link": "#"
+          },
+          {
+            "category": "COMMUNITY",
+            "title": "First Church Taskforce is seeking volunteers to help out Jamaica",
+            "image": "",
+            "link": "#"
+          }
+        ],
+        "quickLinks": [
+          {
+            "label": "F.C Calendar of events",
+            "url": "#"
+          },
+          {
+            "label": "First Church Newsletter",
+            "url": "#"
+          },
+          {
+            "label": "Truth of God Times Magazine",
+            "url": "#"
+          },
+          {
+            "label": "Youtube - Watch First Church Videos",
+            "url": "#"
+          },
+          {
+            "label": "Minister evaluation form",
+            "url": "#"
+          },
+          {
+            "label": "History of the Ministry",
+            "url": "#"
+          },
+          {
+            "label": "Terms and privacy",
+            "url": "#"
+          },
+          {
+            "label": "Contact",
+            "url": "#"
+          }
+        ]
+      }
+    }
+  }
+}

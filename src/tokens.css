@@ -7,14 +7,19 @@
   /* ========================================= */
   
   /* 1. Core Brand Palette */
-  --wp--preset--color--ink-black: #1A1A1A;
-  --wp--preset--color--cardinal: #8A1C26;
-  --wp--preset--color--burgundy: #560D1A;
-  --wp--preset--color--divine-gold: #B08D55;
-  --wp--preset--color--navy-grey: #344152;
-  --wp--preset--color--sandwood: #F3F0E6;
-  --wp--preset--color--cloud-blue: #E3F4F6;
-  --wp--preset--color--white: #FFFFFF;
+  /* Colors */
+  --wp--preset--color--divine-gold: #C5A059;
+  --wp--preset--color--gold-metallic: #D4AF37;
+  --wp--preset--color--cardinal: #8A1538;
+  --wp--preset--color--burgundy: #68121D;
+  --wp--preset--color--sandwood: #F4F1EA;
+  --wp--preset--color--rich-black: #0A0A0A;
+  
+  /* Neutrals */
+  --wp--preset--color--neutral-50: #FAFAFA;
+  --wp--preset--color--neutral-100: #F5F5F5;
+  --wp--preset--color--neutral-200: #E5E5E5;
+  --wp--preset--color--neutral-900: #171717;
 
   /* 2. Semantic Palette (Functional) */
   /* Elegance & Trust: Muted, natural tones aligned with brand */

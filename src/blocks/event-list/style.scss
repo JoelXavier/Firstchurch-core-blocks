@@ -1,0 +1,85 @@
+.antigravity-event-list {
+    /* Standard Design System Padding */
+    padding: var(--spacing-64, 4rem) var(--wp--layout--margin);
+}
+
+/* --- Header Section (Same as Card Grid) --- */
+.antigravity-event-list-header {
+    margin-bottom: var(--wp--preset--spacing--48, 3rem);
+    max-width: 800px;
+}
+
+.antigravity-event-list-header .section-title {
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-size: var(--wp--preset--font-size--h2);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--wp--preset--color--burgundy);
+    margin: 0 0 var(--wp--preset--spacing--24, 1.5rem) 0;
+}
+
+.antigravity-event-list-header .section-line {
+    width: 60px;
+    height: 4px;
+    background-color: var(--wp--preset--color--divine-gold);
+    margin: 0;
+    border-radius: 2px; /* Re-adding per user preference */
+}
+
+.antigravity-event-list-header .section-subheader {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: var(--wp--preset--font-size--body);
+    color: var(--wp--preset--color--neutral-600);
+    margin: var(--wp--preset--spacing--24, 1.5rem) 0 0 0;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+/* --- Grid Container --- */
+.antigravity-event-list-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Events stack with their own borders */
+    
+    /* Centering & Alignment Rules (Matching Card Grid) */
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto; 
+}
+
+/* --- Footer (See All Button) --- */
+.antigravity-event-list-footer {
+    width: 100%;
+    max-width: 1400px;
+    margin: var(--wp--preset--spacing--32, 2rem) auto 0;
+    display: flex;
+    justify-content: flex-start; /* Left aligned as requested */
+}
+
+.view-all-button {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--wp--preset--color--burgundy);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.view-all-button:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    color: var(--wp--preset--color--cardinal);
+}
+
+.view-all-button::after {
+    content: "›"; 
+    font-size: 1.25em;
+    line-height: 1;
+    font-weight: 400; 
+    margin-bottom: 2px; 
+}

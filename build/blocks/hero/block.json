@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/hero",
+  "version": "1.0.0",
+  "title": "Hero Section",
+  "category": "antigravity",
+  "icon": "cover-image",
+  "description": "A full-width hero section with slideshow support and locked content areas.",
+  "supports": {
+    "html": false,
+    "align": [
+      "full"
+    ],
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true
+    },
+    "typography": {
+      "fontFamily": true,
+      "fontSize": true,
+      "customFontSize": true
+    }
+  },
+  "textdomain": "antigravity-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./view.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php",
+  "attributes": {
+    "mode": {
+      "type": "string",
+      "default": "static"
+    },
+    "layout": {
+      "type": "string",
+      "default": "bottom-left"
+    },
+    "overlayOpacity": {
+      "type": "number",
+      "default": 80
+    },
+    "media": {
+      "type": "array",
+      "default": []
+    }
+  }
+}

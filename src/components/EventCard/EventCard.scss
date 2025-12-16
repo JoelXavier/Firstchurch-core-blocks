@@ -1,0 +1,249 @@
+/* Event Card Component Styles */
+@import '../../tokens.css'; /* Ensure tokens are available if not globally loaded */
+
+.antigravity-event-card {
+    display: flex;
+    gap: var(--wp--preset--spacing--24, 1.5rem);
+    align-items: center;
+    background: white;
+    padding: var(--wp--preset--spacing--24, 1.5rem);
+    border-bottom: 1px solid var(--wp--preset--color--neutral-200);
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.antigravity-event-card:hover {
+    background-color: var(--wp--preset--color--neutral-50);
+}
+
+/* --- 1. Date Badge --- */
+.event-date-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80px; 
+    height: 80px;
+    background-color: var(--wp--preset--color--neutral-100);
+    border-radius: 4px;
+    border: 1px solid var(--wp--preset--color--divine-gold);
+    color: var(--wp--preset--color--burgundy);
+    font-family: var(--wp--preset--font-family--playfair-display);
+    line-height: 1;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.event-month {
+    font-size: 0.85rem; 
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.event-day {
+    font-size: 2rem; 
+    font-weight: 700;
+}
+
+/* --- 2. Media --- */
+.event-media {
+    width: 140px; 
+    height: 90px; 
+    overflow: hidden;
+    border-radius: 4px;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.event-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- 3. Content --- */
+.event-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; 
+    flex-grow: 1; /* Take up remaining space */
+}
+
+.event-label {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.85rem; 
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--wp--preset--color--neutral-500);
+    font-weight: 700;
+}
+
+.event-title {
+    margin: 0;
+    font-family: var(--wp--preset--font-family--playfair-display);
+    font-size: 1.75rem; 
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.event-link {
+    text-decoration: none;
+    color: var(--wp--preset--color--neutral-900);
+    transition: color 0.2s ease;
+}
+
+.event-title:hover .event-link {
+    color: var(--wp--preset--color--burgundy);
+}
+
+.event-meta {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 1rem; 
+    color: var(--wp--preset--color--neutral-600);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.event-schedule-list {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.event-schedule-item {
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.9rem; 
+    color: var(--wp--preset--color--neutral-600);
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--wp--preset--color--divine-gold);
+    line-height: 1.4;
+}
+
+/* --- 4. Action --- */
+.event-action {
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.event-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem; 
+    background-color: transparent;
+    border: 1px solid var(--wp--preset--color--neutral-300);
+    color: var(--wp--preset--color--neutral-900);
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 1rem; 
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.event-button:hover {
+    border-color: var(--wp--preset--color--burgundy);
+    color: var(--wp--preset--color--burgundy);
+}
+
+/* --- State: Canceled --- */
+.is-canceled .event-title {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.event-status-badge {
+    color: #e53935; /* Standard red */
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    background: #ffebee;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* --- Responsive --- */
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .antigravity-event-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    /* Row 1: Media (if present) + Badge + Content */
+    /* We want Media to be roughly full width or large on mobile? 
+       Actually, standard mobile pattern is often:
+       [Media]
+       [Badge | Content]
+       [Action]
+    */
+
+    /* To achieve [Badge | Content] side-by-side inside a vertical card, 
+       we unfortunately have a flat DOM structure: Media, Badge, Content, Action.
+       
+       With flex-direction: column:
+       1. Media
+       2. Badge
+       3. Content
+       4. Action
+       
+       This stacks Badge on top of Content, which wastes vertical space.
+       The user likely wants:
+       [Media]
+       [Badge] [Content]
+       
+       We can wrap Badge and Content in a virtual row using `display: flex; flex-wrap: wrap` on the parent?
+       No, `flex-direction: column` prevents wrapping in rows.
+       
+       Better approach for flat DOM Mobile layout:
+       Keep `flex-direction: row; flex-wrap: wrap;`
+    */
+
+    .antigravity-event-card {
+        flex-wrap: wrap;
+        align-items: flex-start; /* Top align */
+    }
+
+    /* 1. Media: Force full width row */
+    .event-media {
+        width: 100%; /* Break to new row */
+        height: 200px; /* Taller image on mobile */
+        order: -1; /* Ensure it stays first */
+        margin-bottom: 0.5rem;
+    }
+
+    /* 2. Badge: Keep as is, but maybe adjust size? */
+    .event-date-badge {
+        width: 60px;
+        height: 60px;
+    }
+    .event-month { font-size: 0.75rem; }
+    .event-day { font-size: 1.5rem; }
+
+    /* 3. Content: Fill remaining space next to badge */
+    .event-content {
+        flex-grow: 1;
+        width: calc(100% - 80px); /* Math to ensure wrapping logic works if needed, but flex-grow usually handles it */
+        /* If we want Badge and Content on one row, and Media on top row:
+           Media { width: 100% }
+           Badge { width: auto }
+           Content { width: auto (flex) }
+           Action { width: 100% }
+        */
+    }
+
+    /* 4. Action: Force full width row at bottom */
+    .event-action {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .event-button {
+        width: 100%;
+        justify-content: center;
+        background-color: var(--wp--preset--color--neutral-100);
+        border: none;
+    }
+}

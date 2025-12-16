@@ -1,0 +1,37 @@
+{
+  "apiVersion": 3,
+  "name": "antigravity/quick-link-item",
+  "version": "1.0.0",
+  "title": "Quick Link Item",
+  "category": "antigravity",
+  "parent": [
+    "antigravity/quick-links"
+  ],
+  "icon": "admin-links",
+  "description": "A single link with a circular image stamp.",
+  "supports": {
+    "html": false,
+    "reusable": false
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "Link Label"
+    },
+    "url": {
+      "type": "string",
+      "default": "#"
+    },
+    "mediaId": {
+      "type": "number",
+      "default": 0
+    },
+    "mediaUrl": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "textdomain": "antigravity-core",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php"
+}

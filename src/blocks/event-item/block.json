@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "antigravity/event-item",
+  "version": "1.0.0",
+  "title": "Event Item",
+  "category": "antigravity",
+  "parent": ["antigravity/event-list"],
+  "icon": "calendar-alt",
+  "description": "A single event card for manual entry.",
+  "attributes": {
+    "title": { "type": "string", "default": "Event Title" },
+    "label": { "type": "string", "default": "Event Type" },
+    "dateStart": { "type": "string" },
+    "dateEnd": { "type": "string" },
+    "location": { "type": "string", "default": "Location" },
+    "isCanceled": { "type": "boolean", "default": false },
+    "mediaUrl": { "type": "string" },
+    "mediaId": { "type": "number" },
+    "ctaText": { "type": "string", "default": "Get Tickets" },
+    "ctaUrl": { "type": "string", "default": "#" },
+    "schedule": { "type": "array", "default": [], "items": { "type": "string" } }
+  },
+  "supports": {
+    "html": false
+  },
+  "textdomain": "antigravity-core-blocks",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

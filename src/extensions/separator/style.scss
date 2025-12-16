@@ -1,0 +1,10 @@
+.wp-block-separator.is-style-elegant-fade {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, currentColor, transparent);
+    opacity: 0.6;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    width: 100% !important; /* Ensure it stretches if user sets it wide */
+    max-width: 100% !important;
+}

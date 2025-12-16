@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "antigravity/article-hero",
+	"version": "0.1.0",
+	"title": "Article Hero",
+	"category": "antigravity",
+	"icon": "cover-image",
+	"description": "A cinematic hero section for articles with Standard and Immersive variants.",
+	"supports": {
+		"html": false,
+		"align": [ "full", "wide" ],
+		"color": {
+			"background": true,
+			"text": true,
+			"link": true
+		}
+	},
+	"attributes": {
+		"variant": {
+			"type": "string",
+			"default": "standard"
+		},
+		"title": {
+			"type": "string",
+			"default": "Article Headline Goes Here"
+		},
+		"authorName": {
+			"type": "string",
+			"default": "Author Name"
+		},
+		"category": {
+			"type": "string",
+			"default": "Category"
+		},
+		"date": {
+			"type": "string",
+			"default": "October 24, 2024"
+		},
+		"heroImageId": {
+			"type": "number",
+			"default": 0
+		},
+		"heroImageUrl": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"textdomain": "antigravity",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

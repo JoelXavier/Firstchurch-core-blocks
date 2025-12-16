@@ -44,6 +44,21 @@ function antigravity_core_blocks_init()
 
     // Register Hero Split
     register_block_type(__DIR__ . '/build/blocks/hero-split');
+
+    // Register Content Listing / Feed
+    register_block_type(__DIR__ . '/build/blocks/listing');
+
+    // Register Manual Event List & Item
+    register_block_type(__DIR__ . '/build/blocks/event-list');
+    register_block_type(__DIR__ . '/build/blocks/event-item');
+
+    // Register Article Blocks
+    register_block_type(__DIR__ . '/build/blocks/article-hero');
+    register_block_type(__DIR__ . '/build/blocks/article-body');
+
+    // Register Footer Blocks
+    register_block_type(__DIR__ . '/build/blocks/footer');
+    register_block_type(__DIR__ . '/build/blocks/footer-column');
 }
 add_action('init', 'antigravity_core_blocks_init');
 
@@ -89,6 +104,24 @@ function antigravity_core_blocks_assets()
         [],
         '1.0.0'
     );
+
+    // Enqueue Global Extensions (Block Styles)
+    // JS for Editor
+    wp_enqueue_script(
+        'antigravity-separator-style',
+        plugins_url('build/extensions/separator/index.js', __FILE__),
+        ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'],
+        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/separator/index.js'),
+        true
+    );
+
+    // CSS for Frontend & Editor
+    wp_enqueue_style(
+        'antigravity-separator-style-css',
+        plugins_url('build/extensions/separator/style-index.css', __FILE__),
+        [],
+        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/separator/style-index.css')
+    );
 }
 add_action('wp_enqueue_scripts', 'antigravity_core_blocks_assets');
 add_action('enqueue_block_editor_assets', 'antigravity_core_blocks_assets'); // Ensure fonts load in editor too
@@ -103,12 +136,16 @@ add_action('enqueue_block_editor_assets', 'antigravity_core_blocks_assets'); // 
  * Register custom font families via Theme JSON API.
  * This ensures they appear in the editor controls cleanly.
  */
-/* DISABLED: Handing control to WP Font Library (User Request)
+/**
+ * Register custom font families via Theme JSON API.
+ * This ensures they appear in the editor controls cleanly.
+ */
 add_filter('wp_theme_json_data_theme', function ($theme_json) {
     $new_data = [
         'version' => 2,
         'settings' => [
             'typography' => [
+                'lineHeight' => true, // Explicitly enable Line Height control
                 'fontFamilies' => [
                     [
                         'name' => 'Merriweather',
@@ -159,12 +196,13 @@ add_filter('wp_theme_json_data_theme', function ($theme_json) {
                     ]
                 ]
             ],
+            // Enable all appearance tools (spacing, etc.) to ensure comprehensive control
+            'appearanceTools' => true,
         ],
     ];
 
     return $theme_json->update_with($new_data);
 });
-*/
 
 /**
  * Curator Mode: Disable Default Patterns
@@ -221,3 +259,145 @@ add_action('wp_head', function () {
     </style>
     <?php
 });
+
+/**
+ * Register Custom Post Types (Events, Locations)
+ */
+function antigravity_register_cpts()
+{
+    // Events
+    register_post_type('event', array(
+        'labels' => array(
+            'name' => 'Events',
+            'singular_name' => 'Event',
+            'add_new_item' => 'Add New Event',
+            'edit_item' => 'Edit Event',
+        ),
+        'public' => true,
+        'show_in_rest' => true, // Essential for Block Editor
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'menu_icon' => 'dashicons-calendar-alt',
+        'has_archive' => true,
+        'rewrite' => array('slug' => 'events'),
+    ));
+
+    // Locations
+    register_post_type('location', array(
+        'labels' => array(
+            'name' => 'Locations',
+            'singular_name' => 'Location',
+            'add_new' => 'Add New',
+            'add_new_item' => 'Add New Location',
+            'edit_item' => 'Edit Location',
+            'new_item' => 'New Location',
+            'view_item' => 'View Location',
+            'view_items' => 'View Locations',
+            'search_items' => 'Search Locations',
+            'not_found' => 'No locations found',
+            'not_found_in_trash' => 'No locations found in Trash',
+            'all_items' => 'All Locations',
+            'archives' => 'Location Archives',
+            'attributes' => 'Location Attributes',
+            'insert_into_item' => 'Insert into location',
+            'uploaded_to_this_item' => 'Uploaded to this location',
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'menu_icon' => 'dashicons-location',
+        'has_archive' => true,
+        'rewrite' => array('slug' => 'locations'),
+    ));
+}
+add_action('init', 'antigravity_register_cpts');
+
+/**
+ * Rename "Posts" to "Articles" in Admin Menu
+ */
+function antigravity_rename_post_menu()
+{
+    global $menu, $submenu;
+
+    $menu[5][0] = 'Articles';
+    $submenu['edit.php'][5][0] = 'Articles';
+    $submenu['edit.php'][10][0] = 'Add New Article';
+}
+add_action('admin_menu', 'antigravity_rename_post_menu', 999);
+
+/**
+ * Rename "Posts" to "Articles" in Post Type Labels
+ */
+function antigravity_rename_post_object()
+{
+    global $wp_post_types;
+
+    if (empty($wp_post_types['post'])) {
+        return;
+    }
+
+    $labels = &$wp_post_types['post']->labels;
+    $labels->name = 'Articles';
+    $labels->singular_name = 'Article';
+    $labels->add_new = 'Add New Article';
+    $labels->add_new_item = 'Add New Article';
+    $labels->edit_item = 'Edit Article';
+    $labels->new_item = 'New Article';
+    $labels->view_item = 'View Article';
+    $labels->search_items = 'Search Articles';
+    $labels->not_found = 'No articles found';
+    $labels->not_found_in_trash = 'No articles found in Trash';
+    $labels->all_items = 'All Articles';
+    $labels->menu_name = 'Articles';
+    $labels->name_admin_bar = 'Article';
+}
+add_action('init', 'antigravity_rename_post_object', 999);
+
+/**
+ * Admin Dashboard Branding
+ * Styles the WordPress Admin (Sidebar, Top Bar) to match the Antigravity Brand.
+ */
+function antigravity_enqueue_admin_branding()
+{
+    wp_enqueue_style(
+        'antigravity-admin-theme',
+        plugins_url('src/admin.css', __FILE__),
+        [],
+        '1.0.0'
+    );
+}
+add_action('admin_enqueue_scripts', 'antigravity_enqueue_admin_branding');
+
+/**
+ * Register "Blank Canvas" Template for Posts (Articles) & Pages
+ * Since this is a plugin, we must manually inject the template into the dropdown.
+ */
+function antigravity_register_templates($templates)
+{
+    $templates['antigravity_blank_canvas'] = 'First Church: Blank Canvas';
+    return $templates;
+}
+add_filter('theme_post_templates', 'antigravity_register_templates');
+add_filter('theme_page_templates', 'antigravity_register_templates');
+
+/**
+ * Load the "Blank Canvas" Template file
+ */
+function antigravity_load_template($template)
+{
+    $post_id = get_the_ID();
+    if (!$post_id) {
+        return $template;
+    }
+
+    $slug = get_post_meta($post_id, '_wp_page_template', true);
+
+    if ($slug === 'antigravity_blank_canvas') {
+        $file = plugin_dir_path(__FILE__) . 'templates/blank-canvas.php';
+        if (file_exists($file)) {
+            return $file;
+        }
+    }
+
+    return $template;
+}
+add_filter('template_include', 'antigravity_load_template');
