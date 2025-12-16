@@ -1,10 +1,10 @@
 /* Card Grid & Item Component Styles */
 
-.antigravity-card-grid {
+.fc-card-grid {
     padding: var(--spacing-64, 4rem) var(--wp--layout--margin);
 }
 
-.card-grid-container {
+.fc-card-grid__container {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-32, 2rem);
@@ -14,25 +14,25 @@
 }
 
 @media (min-width: 768px) {
-    .card-grid-container {
+    .fc-card-grid__container {
         grid-template-columns: repeat(2, 1fr);
         gap: var(--wp--preset--spacing--32, 2rem);
     }
 }
 
 @media (min-width: 1024px) {
-    .card-grid-container {
+    .fc-card-grid__container {
         grid-template-columns: repeat(var(--grid-columns, 3), 1fr);
     }
 }
 
 /* --- Section Header --- */
-.card-grid-header {
+.fc-card-grid__header {
     margin-bottom: var(--spacing-48, 3rem);
-    max-width: 800px; /* Keep title from getting too wide */
+    max-width: 800px;
 }
 
-.card-grid-header .section-title {
+.fc-card-grid__header .fc-section-title {
     font-family: var(--wp--preset--font-family--playfair-display);
     font-size: var(--wp--preset--font-size--h2);
     font-weight: 700;
@@ -41,21 +41,21 @@
     margin: 0 0 var(--spacing-24, 1.5rem) 0;
 }
 
-.card-grid-header .section-line {
+.fc-card-grid__header .fc-section-line {
     width: 60px;
     height: 4px;
     background-color: var(--wp--preset--color--divine-gold);
 }
 
 /* --- Card Link Hover Group --- */
-.antigravity-card-item {
-    height: 100%; /* Restore equal height for balanced bars */
+.fc-card-item {
+    height: 100%;
 }
 
-.card-link-wrapper {
+.fc-card-link-wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr; /* Image natural, Content fills rest */
+    grid-template-rows: auto 1fr;
     text-decoration: none;
     color: inherit;
     height: 100%; 
@@ -64,7 +64,7 @@
 }
 
 /* --- Image Styles --- */
-.card-image-container {
+.fc-card-image-wrapper {
     width: 100%;
     aspect-ratio: 16 / 9;
     overflow: hidden;
@@ -72,39 +72,39 @@
     background-color: var(--wp--preset--color--neutral-200);
 }
 
-.card-image-placeholder {
+.fc-card-image-placeholder {
     width: 100%;
     aspect-ratio: 16 / 9;
     background-color: var(--wp--preset--color--neutral-200);
     margin-bottom: var(--spacing-24, 1.5rem);
 }
 
-.card-image {
+.fc-card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.4s ease;
 }
 
-.card-link-wrapper:hover .card-image {
+.fc-card-link-wrapper:hover .fc-card-image {
     transform: scale(1.05); /* Zoom effect */
 }
 
 /* --- Content Styles --- */
-.card-content {
+.fc-card-content {
     display: grid;
     grid-template-rows: 1fr auto; 
     height: 100%;
     padding-bottom: var(--spacing-16, 1rem);
-    gap: var(--spacing-24, 1.5rem); /* Consistent spacing between Text Group and Link */
+    gap: var(--spacing-24, 1.5rem);
 }
 
 /* New Group Wrapper */
-.card-text-group {
-    display: block; /* Ensure it behaves as a block */
+.fc-card-text-group {
+    display: block;
 }
 
-.card-label {
+.fc-card-label {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 0.75rem; 
     font-weight: 700;
@@ -115,16 +115,16 @@
     display: block;
 }
 
-.card-title {
+.fc-card-title {
     font-family: inherit;
-    font-size: var(--wp--preset--font-size--h4); /* ~2rem */
+    font-size: var(--wp--preset--font-size--h4);
     font-weight: 700;
     line-height: 1.2;
     color: var(--card-title-color, var(--wp--preset--color--neutral-900));
-    margin: 0; /* Remove bottom margin to let Grid gap handle it */
+    margin: 0;
 }
 
-.card-excerpt {
+.fc-card-excerpt {
     font-family: var(--wp--preset--font-family--merriweather);
     font-size: var(--wp--preset--font-size--body);
     font-weight: 300;
@@ -134,33 +134,31 @@
 }
 
 /* --- CTA Button --- */
-.card-cta {
+.fc-card-cta {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 0.875rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--card-link-color, var(--wp--preset--color--neutral-900));
-    /* margin-top: auto; Removed redundant margin */
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     transition: color 0.3s ease;
 }
 
-.card-link-wrapper:hover .card-cta {
-    /* color: var(--wp--preset--color--burgundy); Removed to support custom text colors */
+.fc-card-link-wrapper:hover .fc-card-cta {
     text-decoration: underline;
     text-underline-offset: 4px;
 }
 
 /* Arrow Icon */
-.card-cta::after {
-    content: "›"; /* Simple, font-agnostic arrow */
+.fc-card-cta::after {
+    content: "›"; 
     font-size: 1.25em;
     line-height: 1;
-    font-weight: 400; /* Lighter than text */
-    margin-bottom: 2px; /* Optical alignment */
+    font-weight: 400; 
+    margin-bottom: 2px;
 }
 
 

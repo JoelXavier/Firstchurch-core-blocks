@@ -5,7 +5,7 @@ import { createRoot } from '@wordpress/element';
 import { Listing } from '../../components/Listing/Listing'; // Adjust path if needed
 
 document.addEventListener('DOMContentLoaded', () => {
-    const containers = document.querySelectorAll('.antigravity-listing-root');
+    const containers = document.querySelectorAll('.fc-listing-root');
 
     containers.forEach(container => {
         if (!container.dataset.props) return;
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const root = createRoot(container);
             root.render(<Listing {...props} />);
         } catch (e) {
-            console.error('Error mounting Antigravity Listing block:', e);
+            console.error('Error mounting First Church Listing block:', e);
         }
     });
 });

@@ -1,8 +1,8 @@
 /* Main Child Block Styles */
-@import '../../tokens.css';
+
 @import '../../components/EventCard/EventCard.scss';
 
 /* Any edit-mode specific overrides */
-.wp-block-antigravity-event-item {
+.wp-block-fc-event-item {
     cursor: default;
 }

@@ -10,24 +10,24 @@ export function CardItem({
   href = "#" 
 }) {
   return (
-    <div className="antigravity-card-item">
-      <a href={href} className="card-link-wrapper">
-        <div className="card-image-container">
+    <div className="fc-card-item">
+      <a href={href} className="fc-card-link-wrapper">
+        <div className="fc-card-image-wrapper">
           {image ? (
-            <img src={image} alt={title} className="card-image" />
+            <img src={image} alt={title} className="fc-card-image" />
           ) : (
-             <div className="card-image-placeholder" />
+             <div className="fc-card-image-placeholder" />
           )}
         </div>
 
-        <div className="card-content">
-          <div className="card-text-group">
-            {label && <span className="card-label">{label}</span>}
-            {title && <h3 className="card-title" dangerouslySetInnerHTML={{ __html: title }} />}
-            {excerpt && <div className="card-excerpt" dangerouslySetInnerHTML={{ __html: excerpt }} />}
+        <div className="fc-card-content">
+          <div className="fc-card-text-group">
+            {label && <span className="fc-card-label">{label}</span>}
+            {title && <h3 className="fc-card-title" dangerouslySetInnerHTML={{ __html: title }} />}
+            {excerpt && <div className="fc-card-excerpt" dangerouslySetInnerHTML={{ __html: excerpt }} />}
           </div>
           
-          <span className="card-cta">{linkText}</span>
+          <span className="fc-card-cta">{linkText}</span>
         </div>
       </a>
     </div>
@@ -36,14 +36,14 @@ export function CardItem({
 
 export function CardGrid({ children, sectionTitle = "Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia" }) {
   return (
-    <div className="antigravity-card-grid">
+    <div className="fc-card-grid">
       
-      <div className="card-grid-header">
-        <h2 className="section-title">{sectionTitle}</h2>
-        <div className="section-line"></div>
+      <div className="fc-card-grid__header">
+        <h2 className="fc-section-title">{sectionTitle}</h2>
+        <div className="fc-section-line"></div>
       </div>
 
-      <div className="card-grid-container">
+      <div className="fc-card-grid__container">
         {children}
       </div>
     </div>

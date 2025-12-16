@@ -7,60 +7,59 @@ export default function Edit({ attributes, setAttributes }) {
     const { sectionTitle, sectionSubheader, viewAllText, viewAllLink } = attributes;
     
     const blockProps = useBlockProps({
-        className: 'antigravity-event-list'
+        className: 'fc-event-list'
     });
 
     return (
         <>
             <InspectorControls>
-                <PanelBody title={__('Section Settings', 'antigravity-core')}>
+                <PanelBody title={__('Section Settings', 'first-church-core-blocks')}>
                     <TextControl
-                        label={__('View All Button Text', 'antigravity-core')}
+                        label={__('View All Button Text', 'first-church-core-blocks')}
                         value={viewAllText}
                         onChange={(value) => setAttributes({ viewAllText: value })}
                     />
                     <TextControl
-                        label={__('View All Button Link', 'antigravity-core')}
+                        label={__('View All Button Link', 'first-church-core-blocks')}
                         value={viewAllLink}
                         onChange={(value) => setAttributes({ viewAllLink: value })}
-                        help={__('Enter the URL where the button should link to.', 'antigravity-core')}
+                        help={__('Enter the URL where the button should link to.', 'first-church-core-blocks')}
                     />
                 </PanelBody>
             </InspectorControls>
 
             <section {...blockProps}>
-                <div className="antigravity-event-list-header">
+                <div className="fc-event-list__header">
                     <RichText
                         tagName="h2"
-                        className="section-title"
+                        className="fc-event-list__title"
                         value={sectionTitle}
                         onChange={(value) => setAttributes({ sectionTitle: value })}
-                        placeholder={__('Upcoming Events...', 'antigravity-core')}
+                        placeholder={__('Upcoming Events...', 'first-church-core-blocks')}
                     />
-                    <div className="section-line"></div>
-                    {attributes.sectionSubheader !== undefined && (
-                         <div className="section-subheader-container">
-                            <RichText
-                                tagName="p"
-                                className="section-subheader"
-                                value={attributes.sectionSubheader}
-                                onChange={(value) => setAttributes({ sectionSubheader: value })}
-                                placeholder={__('Add a description...', 'antigravity-core')}
-                            />
-                         </div>
-                    )}
+                    <div className="fc-event-list__line"></div>
+                    {/* Using a check for undefined/null is safer than just truthy to allow empty string updates if needed */}
+                    <div className="fc-event-list__subheader-container">
+                        <RichText
+                            tagName="p"
+                            className="fc-event-list__subheader"
+                            value={sectionSubheader}
+                            onChange={(value) => setAttributes({ sectionSubheader: value })}
+                            placeholder={__('Add a description...', 'first-church-core-blocks')}
+                        />
+                    </div>
                 </div>
 
-                <div className="antigravity-event-list-grid">
+                <div className="fc-event-list__grid">
                     <InnerBlocks 
-                        allowedBlocks={['antigravity/event-item']}
-                        template={[['antigravity/event-item'], ['antigravity/event-item'], ['antigravity/event-item']]}
+                        					allowedBlocks={ [ 'firstchurch/event-item' ] }
+                        template={[['firstchurch/event-item'], ['firstchurch/event-item'], ['firstchurch/event-item']]}
                     />
                 </div>
 
                 {viewAllText && (
-                    <div className="antigravity-event-list-footer">
-                        <span className="view-all-button placeholder">
+                    <div className="fc-event-list__footer">
+                        <span className="fc-view-all-btn placeholder">
                             {viewAllText}
                         </span>
                     </div>

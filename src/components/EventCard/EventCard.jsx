@@ -38,50 +38,50 @@ export const EventCard = ({
     }
 
     return (
-        <article className={`antigravity-event-card ${isCanceled ? 'is-canceled' : ''}`}>
+        <article className={`fc-event-card ${isCanceled ? 'fc-event-card--canceled' : ''}`}>
              
             {/* 1. Media (Optional) - Now First */}
             {mediaUrl && (
-                <div className="event-media">
+                <div className="fc-event-card__media">
                     <img src={mediaUrl} alt={title} />
                 </div>
             )}
 
              {/* 2. Date Badge */}
-             <div className="event-date-badge">
-                <span className="event-month">{month}</span>
-                <span className="event-day">{day}</span>
+             <div className="fc-event-card__date-badge">
+                <span className="fc-event-card__month">{month}</span>
+                <span className="fc-event-card__day">{day}</span>
              </div>
 
             {/* 3. Content */}
-            <div className="event-content">
-                {label && <span className="event-label">{label}</span>}
+            <div className="fc-event-card__content">
+                {label && <span className="fc-event-card__label">{label}</span>}
                 
-                <h3 className="event-title">
-                    <a href={linkUrl} className="event-link">{title}</a>
+                <h3 className="fc-event-card__title">
+                    <a href={linkUrl} className="fc-event-card__link">{title}</a>
                 </h3>
                 
-                <div className="event-meta">
-                    {isCanceled && <span className="event-status-badge">Canceled</span>}
-                    <span className="event-location">{location}</span>
+                <div className="fc-event-card__meta">
+                    {isCanceled && <span className="fc-event-card__status-badge">Canceled</span>}
+                    <span className="fc-event-card__location">{location}</span>
                     {timeDisplay && (
-                        <span className="event-time"> • {timeDisplay}</span>
+                        <span className="fc-event-card__time"> • {timeDisplay}</span>
                     )}
                 </div>
                 
                 {/* Multi-Schedule Support */}
                 {schedule && schedule.length > 0 && (
-                    <div className="event-schedule-list">
+                    <div className="fc-event-card__schedule-list">
                         {schedule.map((item, index) => (
-                            <div key={index} className="event-schedule-item">{item}</div>
+                            <div key={index} className="fc-event-card__schedule-item">{item}</div>
                         ))}
                     </div>
                 )}
             </div>
 
             {/* 4. Action */}
-            <div className="event-action">
-                <a href={linkUrl} className="event-button">
+            <div className="fc-event-card__action">
+                <a href={linkUrl} className="fc-event-card__button">
                     {linkText}
                 </a>
             </div>

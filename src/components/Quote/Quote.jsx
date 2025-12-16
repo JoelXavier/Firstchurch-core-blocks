@@ -16,17 +16,17 @@ export const Quote = ({
   showIcon = true
 }) => {
   return (
-    <div className={`antigravity-quote-wrapper layout-${layout} variant-${variant}`}>
-      <div className="antigravity-quote-container">
+    <div className={`fc-quote fc-quote--layout-${layout} fc-quote--variant-${variant}`}>
+      <div className="fc-quote__container">
         
         {/* Decorative Icon */}
-        {showIcon && <div className="quote-icon" aria-hidden="true">“</div>}
+        {showIcon && <div className="fc-quote__icon" aria-hidden="true">“</div>}
 
-        <blockquote className="antigravity-quote-content">
-          <p className="quote-text">{quote}</p>
+        <blockquote className="fc-quote__content">
+          <p className="fc-quote__text">{quote}</p>
           {citation && (
-            <footer className="quote-citation">
-              <span className="citation-line"></span>
+            <footer className="fc-quote__citation">
+              <span className="fc-quote__line"></span>
               <cite>{citation}</cite>
             </footer>
           )}

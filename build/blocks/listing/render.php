@@ -23,7 +23,8 @@ $show_excerpt = isset($attributes['showExcerpt']) ? $attributes['showExcerpt'] :
 $show_media = isset($attributes['showMedia']) ? $attributes['showMedia'] : true;
 
 // 1. Determine "Active" category from URL ?filter_cat=ID or fallback to 'all'
-$active_cat_id = isset($_GET['filter_cat']) ? intval($_GET['filter_cat']) : 0;
+// SECURITY: Sanitize input
+$active_cat_id = isset($_GET['filter_cat']) ? absint($_GET['filter_cat']) : 0;
 
 // Filter Terms
 $cat_args = [
@@ -58,7 +59,7 @@ else if (!empty($taxonomy) && !empty($term_ids)) {
         array(
             'taxonomy' => $taxonomy,
             'field' => 'term_id',
-            'terms' => $term_ids,
+            'terms' => $term_ids, // Validated via attributes
         ),
     );
 }
@@ -68,36 +69,36 @@ $query = new WP_Query($args);
 
 <?php
 $wrapper_attributes = get_block_wrapper_attributes(array(
-    'class' => 'antigravity-listing-component layout-' . esc_attr($filter_style)
+    'class' => 'fc-listing layout-' . esc_attr($filter_style)
 ));
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
 
     <!-- Header Section -->
-    <div class="listing-header">
+    <div class="fc-listing__header">
         <?php if ($block_title): ?>
-            <h2 class="listing-title"><?php echo esc_html($block_title); ?></h2>
+            <h2 class="fc-listing__title"><?php echo esc_html($block_title); ?></h2>
         <?php endif; ?>
         <?php if ($block_subtitle): ?>
-            <p class="listing-subtitle"><?php echo esc_html($block_subtitle); ?></p>
+            <p class="fc-listing__subtitle"><?php echo esc_html($block_subtitle); ?></p>
         <?php endif; ?>
-        <div class="listing-decoration"></div>
+        <div class="fc-listing__decoration"></div>
     </div>
 
-    <div class="listing-body">
+    <div class="fc-listing__body">
 
         <!-- Sidebar (Left) -->
         <?php if ($filter_style === 'sidebar'): ?>
-            <div class="listing-sidebar">
-                <div class="listing-sidebar-sticky">
-                    <div class="listing-filters listing-filters--sidebar">
+            <div class="fc-listing__sidebar">
+                <div class="fc-listing__sidebar-sticky">
+                    <div class="fc-listing__filters fc-listing__filters--sidebar">
 
                         <!-- 'All' Button -->
                         <?php $all_link = remove_query_arg('filter_cat'); ?>
                         <a href="<?php echo esc_url($all_link); ?>"
-                            class="filter-btn <?php echo ($active_cat_id === 0) ? 'is-active' : ''; ?>">
-                            <span class="filter-label">All</span>
+                            class="fc-filter-btn <?php echo ($active_cat_id === 0) ? 'is-active' : ''; ?>">
+                            <span class="fc-filter-label">All</span>
                         </a>
 
                         <?php if (!empty($filter_terms) && !is_wp_error($filter_terms)): ?>
@@ -106,8 +107,8 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
                                 $link = add_query_arg('filter_cat', $term->term_id);
                                 ?>
                                 <a href="<?php echo esc_url($link); ?>"
-                                    class="filter-btn <?php echo $is_active ? 'is-active' : ''; ?>">
-                                    <span class="filter-label"><?php echo esc_html($term->name); ?></span>
+                                    class="fc-filter-btn <?php echo $is_active ? 'is-active' : ''; ?>">
+                                    <span class="fc-filter-label"><?php echo esc_html($term->name); ?></span>
                                 </a>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -117,17 +118,17 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
         <?php endif; ?>
 
         <!-- Main Content -->
-        <div class="listing-main">
+        <div class="fc-listing__main">
 
             <!-- Pills Top Level -->
             <?php if ($filter_style === 'pills'): ?>
-                <div class="listing-top-bar">
-                    <div class="listing-filters listing-filters--pills">
+                <div class="fc-listing__top-bar">
+                    <div class="fc-listing__filters fc-listing__filters--pills">
                         <!-- 'All' Button -->
                         <?php $all_link = remove_query_arg('filter_cat'); ?>
                         <a href="<?php echo esc_url($all_link); ?>"
-                            class="filter-btn <?php echo ($active_cat_id === 0) ? 'is-active' : ''; ?>">
-                            <span class="filter-label">All</span>
+                            class="fc-filter-btn <?php echo ($active_cat_id === 0) ? 'is-active' : ''; ?>">
+                            <span class="fc-filter-label">All</span>
                         </a>
 
                         <?php if (!empty($filter_terms) && !is_wp_error($filter_terms)): ?>
@@ -136,8 +137,8 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
                                 $link = add_query_arg('filter_cat', $term->term_id);
                                 ?>
                                 <a href="<?php echo esc_url($link); ?>"
-                                    class="filter-btn <?php echo $is_active ? 'is-active' : ''; ?>">
-                                    <span class="filter-label"><?php echo esc_html($term->name); ?></span>
+                                    class="fc-filter-btn <?php echo $is_active ? 'is-active' : ''; ?>">
+                                    <span class="fc-filter-label"><?php echo esc_html($term->name); ?></span>
                                 </a>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -146,7 +147,7 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
             <?php endif; ?>
 
             <!-- Grid -->
-            <div class="listing-grid" style="--columns: <?php echo esc_attr($columns); ?>">
+            <div class="fc-listing__grid" style="--columns: <?php echo esc_attr($columns); ?>">
                 <?php if ($query->have_posts()): ?>
                     <?php while ($query->have_posts()):
                         $query->the_post();
@@ -160,46 +161,47 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
 
                         // Render standard card HTML
                         ?>
-                        <div class="antigravity-card-item">
-                            <a href="<?php echo esc_url($permalink); ?>" class="card-link-wrapper">
+                        <div class="fc-card-item">
+                            <a href="<?php echo esc_url($permalink); ?>" class="fc-card-link-wrapper">
                                 <?php if ($show_media && $thumb): ?>
-                                    <div class="card-image-wrapper">
-                                        <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($title); ?>" />
+                                    <div class="fc-card-image-wrapper">
+                                        <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($title); ?>"
+                                            class="fc-card-image" />
                                     </div>
                                 <?php endif; ?>
 
-                                <div class="card-content">
-                                    <div class="card-text-group">
+                                <div class="fc-card-content">
+                                    <div class="fc-card-text-group">
                                         <?php if ($show_cat): ?>
                                             <span
-                                                class="card-label"><?php echo esc_html($card_type === 'event' ? 'Event' : $cat_name); ?></span>
+                                                class="fc-card-label"><?php echo esc_html($card_type === 'event' ? 'Event' : $cat_name); ?></span>
                                         <?php endif; ?>
 
-                                        <h3 class="card-title"><?php echo esc_html($title); ?></h3>
+                                        <h3 class="fc-card-title"><?php echo esc_html($title); ?></h3>
 
                                         <?php if ($show_excerpt && $excerpt): ?>
-                                            <div class="card-excerpt"><?php echo wp_kses_post($excerpt); ?></div>
+                                            <div class="fc-card-excerpt"><?php echo wp_kses_post($excerpt); ?></div>
                                         <?php endif; ?>
                                     </div>
 
-                                    <span class="card-cta">LEARN MORE ></span>
+                                    <span class="fc-card-cta">LEARN MORE ></span>
                                 </div>
                             </a>
                         </div>
                     <?php endwhile;
                     wp_reset_postdata(); ?>
                 <?php else: ?>
-                    <div class="no-results">
+                    <div class="fc-no-results">
                         <p>No content found.</p>
                     </div>
                 <?php endif; ?>
             </div>
 
             <!-- Pagination (Visual) -->
-            <div class="listing-pagination">
-                <button class="pagination-btn is-active">1</button>
-                <span class="pagination-ellipsis">...</span>
-                <button class="pagination-btn">Next &gt;</button>
+            <div class="fc-listing__pagination">
+                <button class="fc-pagination-btn is-active">1</button>
+                <span class="fc-pagination-ellipsis">...</span>
+                <button class="fc-pagination-btn">Next &gt;</button>
             </div>
 
         </div>

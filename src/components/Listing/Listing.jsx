@@ -29,23 +29,23 @@ export const Listing = ({
     const filteredItems = useMemo(() => {
         if (selectedCategories.length === 0) return items;
         return items.filter(item => {
-            return item.categoryIds.some(id => selectedCategories.includes(id));
+            return item.categoryIds && item.categoryIds.some(id => selectedCategories.includes(id));
         });
     }, [items, selectedCategories]);
 
     // Render Filters
     const renderFilters = () => {
         return (
-            <div className={`listing-filters listing-filters--${filterStyle}`}>
+            <div className={`fc-listing__filters fc-listing__filters--${filterStyle}`}>
                 {categories.map(cat => {
                     const isActive = selectedCategories.includes(cat.id);
                     return (
                         <button
                             key={cat.id}
-                            className={`filter-btn ${isActive ? 'is-active' : ''}`}
+                            className={`fc-filter-btn ${isActive ? 'is-active' : ''}`}
                             onClick={() => toggleCategory(cat.id)}
                         >
-                            <span className="filter-label">{cat.name}</span>
+                            <span className="fc-filter-label">{cat.name}</span>
                         </button>
                     );
                 })}
@@ -54,60 +54,63 @@ export const Listing = ({
     };
 
     return (
-        <div className={`antigravity-listing-component layout-${filterStyle}`}>
+        <div className={`fc-listing layout-${filterStyle}`}>
             
             {/* Header Section */}
-            <div className="listing-header">
-                {title && <h2 className="listing-title">{title}</h2>}
-                {subtitle && <p className="listing-subtitle">{subtitle}</p>}
-                <div className="listing-decoration"></div>
+            <div className="fc-listing__header">
+                {title && <h2 className="fc-listing__title">{title}</h2>}
+                {subtitle && <p className="fc-listing__subtitle">{subtitle}</p>}
+                <div className="fc-listing__decoration"></div>
             </div>
 
-            <div className="listing-body">
+            <div className="fc-listing__body">
                 {/* Sidebar */}
                 {filterStyle === 'sidebar' && (
-                        <div className="listing-sidebar-sticky">
+                    <div className="fc-listing__sidebar">
+                        <div className="fc-listing__sidebar-sticky">
                              {renderFilters()}
                         </div>
+                    </div>
                 )}
 
                 {/* Main Content */}
-                <div className="listing-main">
+                <div className="fc-listing__main">
                     {/* Top Bar for Pills Layout */}
                     {filterStyle === 'pills' && (
-                        <div className="listing-top-bar">
+                        <div className="fc-listing__top-bar">
                             {renderFilters()}
                         </div>
                     )}
 
                     {/* Grid */}
                     <div 
-                        className="listing-grid"
+                        className="fc-listing__grid"
                         style={{ '--columns': columns }}
                     >
                     {filteredItems.length > 0 ? (
                         filteredItems.map(item => (
-                            <Card 
-                                key={item.id} 
-                                {...item} 
-                                label={item.category || item.label} 
-                            />
+                            <div key={item.id} className="fc-card-item">
+                                <Card 
+                                    {...item} 
+                                    label={item.category || item.label} 
+                                />
+                            </div>
                         ))
                     ) : (
-                        <div className="no-results">
+                        <div className="fc-no-results">
                             <p>No items match your selected filters.</p>
-                            <button onClick={() => setSelectedCategories([])}>View All</button>
+                            <button className="fc-filter-btn" onClick={() => setSelectedCategories([])}>View All</button>
                         </div>
                     )}
                     </div>
 
                     {/* Pagination */}
-                    <div className="listing-pagination">
-                        <button className="pagination-btn is-active">1</button>
-                        <button className="pagination-btn">2</button>
-                        <button className="pagination-btn">3</button>
-                        <span className="pagination-ellipsis">...</span>
-                        <button className="pagination-btn">Next &gt;</button>
+                    <div className="fc-listing__pagination">
+                        <button className="fc-pagination-btn is-active">1</button>
+                        <button className="fc-pagination-btn">2</button>
+                        <button className="fc-pagination-btn">3</button>
+                        <span className="fc-pagination-ellipsis">...</span>
+                        <button className="fc-pagination-btn">Next &gt;</button>
                     </div>
                 </div>
             </div>

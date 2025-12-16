@@ -7,10 +7,8 @@ import metadata from './block.json';
 function Edit({ attributes, setAttributes }) {
     const { label, url, mediaId, mediaUrl } = attributes;
     
-    // We intentionally don't apply the 'quick-link-item' class to the wrapper
-    // because that class is an <a> tag in CSS, which breaks the Editor DIV.
-    // Instead we recreate the visual structure inside.
-    const blockProps = useBlockProps({ className: 'quick-link-item-editor' });
+    // We apply the main class. Note that in Editor we use a div, while render uses 'a'.
+    const blockProps = useBlockProps({ className: 'fc-quick-link-item' });
 
     const onSelectMedia = (media) => {
         setAttributes({
@@ -22,9 +20,9 @@ function Edit({ attributes, setAttributes }) {
     return (
         <>
             <InspectorControls>
-                <PanelBody title={__('Link Settings', 'antigravity-core')}>
+                <PanelBody title={__('Link Settings', 'first-church-core-blocks')}>
                     <TextControl
-                        label={__('Link URL', 'antigravity-core')}
+                        label={__('Link URL', 'first-church-core-blocks')}
                         value={url}
                         onChange={(value) => setAttributes({ url: value })}
                     />
@@ -35,7 +33,7 @@ function Edit({ attributes, setAttributes }) {
                             value={mediaId}
                             render={({ open }) => (
                                 <Button variant="secondary" onClick={open}>
-                                    { mediaId ? __('Replace Image', 'antigravity-core') : __('Upload Image', 'antigravity-core') }
+                                    { mediaId ? __('Replace Image', 'first-church-core-blocks') : __('Upload Image', 'first-church-core-blocks') }
                                 </Button>
                             )}
                         />
@@ -48,9 +46,9 @@ function Edit({ attributes, setAttributes }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     
                     {/* Image Circle */}
-                    <div className="quick-link-image-wrapper" style={{ width: 60, height: 60, flexShrink: 0 }}>
+                    <div className="fc-quick-link-item__image-wrapper" style={{ width: 60, height: 60, flexShrink: 0 }}>
                         { mediaUrl ? (
-                            <img src={mediaUrl} alt="" className="quick-link-image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <img src={mediaUrl} alt="" className="fc-quick-link-item__image" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         ) : (
                             <div style={{ width: '100%', height: '100%', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888', fontSize: '10px' }}>
                                 IMG
@@ -59,13 +57,13 @@ function Edit({ attributes, setAttributes }) {
                     </div>
 
                     {/* Text */}
-                    <div className="quick-link-content">
+                    <div className="fc-quick-link-item__content">
                         <RichText
                             tagName="span"
-                            className="quick-link-label"
+                            className="fc-quick-link-item__label"
                             value={label}
                             onChange={ ( value ) => setAttributes( { label: value } ) }
-                            placeholder={ __( 'Link Label', 'antigravity-core' ) }
+                            placeholder={ __( 'Link Label', 'first-church-core-blocks' ) }
                             allowedFormats={ [] } // Plain text only
                         />
                     </div>

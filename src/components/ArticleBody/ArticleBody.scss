@@ -1,13 +1,16 @@
 /* Article Body Layout */
 @import '../AuthorCard/AuthorCard.scss';
 
-.antigravity-article-body {
+/* Article Body Layout */
+@import '../AuthorCard/AuthorCard.scss';
+
+.fc-article-body {
     width: 100%;
     padding: var(--spacing-48, 3rem) var(--wp--layout--margin);
     /* background-color: var(--wp--preset--color--white); <-- REMOVED to allow user override */
 }
 
-.article-body-grid {
+.fc-article-body__grid {
     display: flex;
     flex-direction: column;
     max-width: 1400px;
@@ -16,13 +19,13 @@
 }
 
 /* Mobile First: Content on Top, Author Last */
-.article-content {
+.fc-article-body__content {
     width: 100%;
     max-width: 650px;
     margin: 0 auto; /* Center content on mobile too */
 }
 
-.article-sidebar {
+.fc-article-body__sidebar {
     order: 2; /* Drops to bottom on mobile */
     width: 100%;
     max-width: 400px;
@@ -31,7 +34,7 @@
 
 /* Desktop: 3-Column Grid or similar */
 @media (min-width: 960px) {
-    .article-body-grid {
+    .fc-article-body__grid {
         display: grid;
         /* Desktop: 12-Column Grid for precision */
         grid-template-columns: repeat(12, 1fr);
@@ -39,7 +42,7 @@
         align-items: stretch;
     }
 
-    .article-sidebar {
+    .fc-article-body__sidebar {
         order: 0;
         /* moved to span 2 to create a full column gap (Col 3) between author and content */
         grid-column: 1 / span 2;
@@ -53,7 +56,7 @@
         padding-top: 0.75rem; 
     }
 
-    .article-content {
+    .fc-article-body__content {
         order: 1;
         /* 
            Center Alignment:
@@ -68,19 +71,19 @@
         max-width: none;
     }
     
-    .article-right-spacer {
+    .fc-article-body__spacer {
         /* Span last 3 columns (Col 10-12) to force symmetry */
         grid-column: 10 / span 3;
     }
     
-    .sidebar-sticky {
+    .fc-article-body__sticky {
         position: sticky;
         top: 2rem;
     }
 }
 
 /* --- Typography / InnerBlocks Styling --- */
-.article-typography {
+.fc-article-body__typography {
     font-family: var(--wp--preset--font-family--inter);
     color: var(--wp--preset--color--neutral-900);
     font-size: 1.125rem;
@@ -89,13 +92,13 @@
 }
 
 /* Ensure the very first element aligns to the top */
-.article-typography > *:first-child {
+.fc-article-body__typography > *:first-child {
     margin-top: 0 !important;
     padding-top: 0 !important;
 }
 
 /* Dropcap for the FIRST paragraph */
-.article-typography > p:first-of-type::first-letter {
+.fc-article-body__typography > p:first-of-type::first-letter {
     font-family: var(--wp--preset--font-family--playfair-display);
     font-size: 3.5rem;
     line-height: 0.8;
@@ -108,16 +111,16 @@
 }
 
 /* Spacing between blocks */
-.article-typography > * {
+.fc-article-body__typography > * {
     margin-bottom: 1.5rem;
 }
 
 /* --- Inner Blocks Customization --- */
 
 /* Headers */
-.article-typography h2,
-.article-typography h3,
-.article-typography h4 {
+.fc-article-body__typography h2,
+.fc-article-body__typography h3,
+.fc-article-body__typography h4 {
     font-family: var(--wp--preset--font-family--playfair-display);
     color: var(--wp--preset--color--rich-black);
     margin-top: 3rem;
@@ -129,13 +132,13 @@
     padding-left: 1rem;
 }
 
-.article-typography h2 { font-size: 2rem; }
-.article-typography h3 { font-size: 1.5rem; }
-.article-typography h4 { font-size: 1.25rem; }
+.fc-article-body__typography h2 { font-size: 2rem; }
+.fc-article-body__typography h3 { font-size: 1.5rem; }
+.fc-article-body__typography h4 { font-size: 1.25rem; }
 
 /* Blockquote & Pullquote */
-.article-typography .wp-block-quote,
-.article-typography .wp-block-pullquote {
+.fc-article-body__typography .wp-block-quote,
+.fc-article-body__typography .wp-block-pullquote {
     border-left: 4px solid var(--wp--preset--color--divine-gold);
     border-top: none; /* Reset Pullquote default */
     border-bottom: none; /* Reset Pullquote default */
@@ -153,8 +156,8 @@
 }
 
 /* Cite styling for both */
-.article-typography .wp-block-quote cite,
-.article-typography .wp-block-pullquote cite {
+.fc-article-body__typography .wp-block-quote cite,
+.fc-article-body__typography .wp-block-pullquote cite {
     display: block;
     margin-top: 1rem;
     font-family: var(--wp--preset--font-family--inter);
@@ -167,12 +170,12 @@
 }
 
 /* Images & Captions */
-.article-typography figure {
+.fc-article-body__typography figure {
     margin: 2rem 0;
 }
 
-.article-typography figcaption,
-.article-typography .wp-element-caption {
+.fc-article-body__typography figcaption,
+.fc-article-body__typography .wp-element-caption {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 0.875rem;
     color: var(--wp--preset--color--neutral-600);
@@ -186,7 +189,7 @@
 }
 
 /* Separators */
-.article-typography hr.wp-block-separator {
+.fc-article-body__typography hr.wp-block-separator {
     border: none;
     height: 1px;
     background: var(--wp--preset--color--neutral-300);
@@ -195,12 +198,12 @@
 }
 
 /* Embeds / Iframes */
-.article-typography .wp-block-embed {
+.fc-article-body__typography .wp-block-embed {
     margin: 2rem 0;
 }
 
 /* Tombstone */
-.article-tombstone {
+.fc-article-body__tombstone {
     margin-top: 3rem;
     display: flex;
     justify-content: center;

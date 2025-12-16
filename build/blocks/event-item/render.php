@@ -17,9 +17,9 @@ $cta_url = isset($attributes['ctaUrl']) ? $attributes['ctaUrl'] : '#';
 $schedule = isset($attributes['schedule']) ? $attributes['schedule'] : [];
 
 // Determine classes
-$classes = 'antigravity-event-card';
+$classes = 'fc-event-card';
 if ($is_canceled) {
-    $classes .= ' is-canceled';
+    $classes .= ' fc-event-card--canceled';
 }
 
 $wrapper_attrs = get_block_wrapper_attributes(array('class' => $classes));
@@ -50,51 +50,51 @@ if ($date_end) {
 <article <?php echo $wrapper_attrs; ?>>
     <!-- 1. Media -->
     <?php if (!empty($media_url)): ?>
-        <div class="event-media">
+        <div class="fc-event-card__media">
             <img src="<?php echo esc_url($media_url); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy" />
         </div>
     <?php endif; ?>
 
     <!-- 2. Date Badge -->
-    <div class="event-date-badge">
-        <span class="event-month"><?php echo esc_html($month_short); ?></span>
-        <span class="event-day"><?php echo esc_html($day_numeric); ?></span>
+    <div class="fc-event-card__date-badge">
+        <span class="fc-event-card__month"><?php echo esc_html($month_short); ?></span>
+        <span class="fc-event-card__day"><?php echo esc_html($day_numeric); ?></span>
     </div>
 
     <!-- 3. Content -->
-    <div class="event-content">
+    <div class="fc-event-card__content">
         <?php if ($label): ?>
-            <span class="event-label"><?php echo esc_html($label); ?></span>
+            <span class="fc-event-card__label"><?php echo esc_html($label); ?></span>
         <?php endif; ?>
 
-        <h3 class="event-title">
-            <a href="<?php echo esc_url($cta_url); ?>" class="event-link"><?php echo esc_html($title); ?></a>
+        <h3 class="fc-event-card__title">
+            <a href="<?php echo esc_url($cta_url); ?>" class="fc-event-card__link"><?php echo esc_html($title); ?></a>
         </h3>
 
-        <div class="event-meta">
+        <div class="fc-event-card__meta">
             <?php if ($is_canceled): ?>
-                <span class="event-status-badge">Canceled</span>
+                <span class="fc-event-card__status-badge">Canceled</span>
             <?php endif; ?>
 
-            <span class="event-location"><?php echo esc_html($location); ?></span>
+            <span class="fc-event-card__location"><?php echo esc_html($location); ?></span>
 
             <?php if ($date_string): ?>
-                <span class="event-time"> • <?php echo esc_html($date_string); ?></span>
+                <span class="fc-event-card__time"> • <?php echo esc_html($date_string); ?></span>
             <?php endif; ?>
         </div>
 
         <?php if (!empty($schedule)): ?>
-            <div class="event-schedule-list">
+            <div class="fc-event-card__schedule-list">
                 <?php foreach ($schedule as $line): ?>
-                    <div class="event-schedule-item"><?php echo esc_html($line); ?></div>
+                    <div class="fc-event-card__schedule-item"><?php echo esc_html($line); ?></div>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
     </div>
 
     <!-- 4. Action -->
-    <div class="event-action">
-        <a href="<?php echo esc_url($cta_url); ?>" class="event-button">
+    <div class="fc-event-card__action">
+        <a href="<?php echo esc_url($cta_url); ?>" class="fc-event-card__button">
             <?php echo esc_html($cta_text); ?>
         </a>
     </div>

@@ -16,18 +16,18 @@ export const AuthorCard = ({
     imageUrl
 }) => {
     return (
-        <div className="antigravity-author-card">
-            <div className="author-card-image">
+        <div className="fc-author-card">
+            <div className="fc-author-card__media">
                 {imageUrl ? (
                     <img src={imageUrl} alt={name} />
                 ) : (
-                    <div className="author-card-placeholder">{name.charAt(0)}</div>
+                    <div className="fc-author-card__placeholder">{name.charAt(0)}</div>
                 )}
             </div>
-            <div className="author-card-info">
-                <span className="author-card-name">{name}</span>
-                <span className="author-card-team">{team}</span>
-                <span className="author-card-location">{location}</span>
+            <div className="fc-author-card__info">
+                <span className="fc-author-card__name">{name}</span>
+                <span className="fc-author-card__team">{team}</span>
+                <span className="fc-author-card__location">{location}</span>
             </div>
         </div>
     );

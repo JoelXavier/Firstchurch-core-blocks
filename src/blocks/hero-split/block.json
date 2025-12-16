@@ -1,9 +1,9 @@
 {
   "apiVersion": 3,
-  "name": "antigravity/hero-split",
-  "version": "1.0.0",
-  "title": "Hero Split (Image 50/50)",
-  "category": "antigravity",
+  "name": "firstchurch/hero-split",
+  "version": "0.1.0",
+  "title": "Hero Split",
+  "category": "firstchurch",
   "icon": "columns",
   "description": "A 50/50 split section with image and content.",
   "supports": {
@@ -56,7 +56,7 @@
       "default": "#ffffff"
     }
   },
-  "textdomain": "antigravity-core",
+  "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

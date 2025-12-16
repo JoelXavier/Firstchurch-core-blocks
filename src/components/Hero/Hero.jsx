@@ -37,7 +37,7 @@ export const Hero = ({
     // For slideshow, we map all images and fade them.
     const renderMedia = () => {
         if (!hasMedia) {
-            return <div className="antigravity-hero__image" style={{ backgroundColor: '#2c2c2c' }} />;
+            return <div className="fc-hero__image" style={{ backgroundColor: '#2c2c2c' }} />;
         }
 
         return media.map((item, index) => {
@@ -47,7 +47,7 @@ export const Hero = ({
                     key={index}
                     src={item.url}
                     alt={item.alt || 'Hero Background'}
-                    className="antigravity-hero__image"
+                    className="fc-hero__image"
                     style={{ 
                         opacity: isActive ? 1 : 0,
                         zIndex: isActive ? 1 : 0
@@ -64,27 +64,27 @@ export const Hero = ({
     // For MVP, we will stick to the CSS classes for simplicity, but we could use inline styles for fine-tuning.
 
     return (
-        <header className={`antigravity-hero antigravity-hero--layout-${layout} antigravity-hero--mode-${mode}`}>
+        <header className={`fc-hero fc-hero--layout-${layout} fc-hero--mode-${mode}`}>
             
             {/* 1. Media Layer */}
-            <div className="antigravity-hero__media">
+            <div className="fc-hero__media">
                 {renderMedia()}
             </div>
 
             {/* 2. Overlay Layer */}
             <div 
-                className="antigravity-hero__overlay" 
+                className="fc-hero__overlay" 
                 style={{ opacity: overlayOpacity / 100 }}
             />
 
             {/* 3. Content Layer (InnerBlocks) */}
-            <div className="antigravity-hero__content">
+            <div className="fc-hero__content">
                 {children}
             </div>
 
             {/* 4. Slideshow Controls (Optional, usually dots at bottom) */}
             {mode === 'slideshow' && media.length > 1 && (
-                <div className="antigravity-hero__dots" style={{ 
+                <div className="fc-hero__dots" style={{ 
                     /* Positioning handled in CSS for responsiveness */
                     zIndex: 3, 
                     display: 'flex', 

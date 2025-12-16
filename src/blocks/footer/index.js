@@ -31,19 +31,19 @@ const SocialLinksControl = ({ values, onChange }) => {
     );
 };
 
-registerBlockType('antigravity/footer', {
+registerBlockType( 'firstchurch/footer', {
     edit: ({ attributes, setAttributes }) => {
         const { logoId, logoUrl, logoTextPrimary, logoTextSecondary, missionText, copyrightText, socialLinks } = attributes;
 
         const blockProps = useBlockProps({
-            className: 'antigravity-footer' // Match the component class
+            className: 'fc-footer' // Match the component class
         });
 
         const TEMPLATE = [
-            ['antigravity/footer-column', { title: 'The Church' }, [['core/list', {}, [['core/list-item', { content: 'Our History' }]]]]],
-            ['antigravity/footer-column', { title: 'Ministries' }, [['core/list', {}]]],
-            ['antigravity/footer-column', { title: 'Connect' }, [['core/list', {}]]],
-            ['antigravity/footer-column', { title: 'Give' }, [['core/list', {}]]],
+            ['firstchurch/footer-column', { title: 'The Church' }, [['core/list', {}, [['core/list-item', { content: 'Our History' }]]]]],
+            ['firstchurch/footer-column', { title: 'Ministries' }, [['core/list', {}]]],
+            ['firstchurch/footer-column', { title: 'Connect' }, [['core/list', {}]]],
+            ['firstchurch/footer-column', { title: 'Give' }, [['core/list', {}]]],
         ];
 
         return (
@@ -102,32 +102,32 @@ registerBlockType('antigravity/footer', {
                 </InspectorControls>
 
                 <footer {...blockProps}>
-                    <div className="footer-content">
+                    <div className="fc-footer__content">
                         {/* Fake Brand Col for Editor Context */}
-                        <div className="footer-brand-col">
-                             <div className="footer-logo">
+                        <div className="fc-footer__brand-col">
+                             <div className="fc-footer__logo">
                                 {logoUrl && <img src={logoUrl} alt="Logo" />}
-                                <div className="footer-logo-text">
+                                <div className="fc-footer__logo-text">
                                     <span className="primary">{logoTextPrimary}</span>
                                     <span className="secondary">{logoTextSecondary}</span>
                                 </div>
                              </div>
-                             <p className="footer-mission">{missionText}</p>
+                             <p className="fc-footer__mission">{missionText}</p>
                         </div>
 
                         {/* Editable Grid */}
-                        <div className="footer-nav-grid" style={{ flex: 2 }}>
+                        <div className="fc-footer__nav-grid" style={{ flex: 2 }}>
                             <InnerBlocks 
                                 template={TEMPLATE} 
-                                allowedBlocks={['antigravity/footer-column']}
+                                allowedBlocks={['firstchurch/footer-column']}
                                 templateLock={false} // Allow adding/removing columns if needed, though 4 is standard
                             />
                         </div>
                     </div>
-                     <div className="footer-bottom">
-                         <div className="footer-bottom-inner">
-                             <div className="footer-copyright">{copyrightText}</div>
-                             <div className="footer-socials">
+                     <div className="fc-footer__bottom">
+                         <div className="fc-footer__bottom-inner">
+                             <div className="fc-footer__copyright">{copyrightText}</div>
+                             <div className="fc-footer__socials">
                                  {/* Visual placeholder for socials */}
                                  <span style={{opacity: 0.5}}>(Social Icons will render on frontend)</span>
                              </div>

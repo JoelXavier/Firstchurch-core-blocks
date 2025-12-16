@@ -3,7 +3,7 @@ import { Hero } from './Hero';
 import '../../tokens.css'; // Import tokens for font styles
 
 export default {
-    title: 'Core/Hero',
+    title: 'First Church/Hero',
     component: Hero,
     parameters: {
         layout: 'fullscreen',
@@ -51,7 +51,7 @@ const SAMPLE_CONTENT = (
 );
 
 const Template = (args) => (
-    <div className="wp-block-antigravity-hero">
+    <div className="wp-block-fc-hero">
         <Hero {...args}>{SAMPLE_CONTENT}</Hero>
     </div>
 );

@@ -1,10 +1,10 @@
 /* GlobalNavigation.css */
 
-.antigravity-global-nav-root {
+.fc-global-nav-root {
   margin-bottom: 0 !important; /* Force flush with next block (Hero) */
 }
 
-.global-nav-link {
+.fc-global-nav-link {
   text-decoration: none;
   color: var(--wp--preset--color--ink-black);
   font-family: var(--wp--preset--font-family--ui);
@@ -22,14 +22,14 @@
 }
 
 /* Hover State: Subtle Background + Color Shift */
-.global-nav-link:hover {
+.fc-global-nav-link:hover {
   background-color: rgba(86, 13, 26, 0.05); /* Very subtle Burgundy wash */
   color: var(--wp--preset--color--burgundy);
   transform: translateY(-1px); /* Slight lift */
 }
 
 /* Underline Animation */
-.global-nav-link::after {
+.fc-global-nav-link::after {
   content: '';
   position: absolute;
   bottom: 6px; /* Inside the padding */
@@ -43,13 +43,13 @@
   opacity: 0;
 }
 
-.global-nav-link:hover::after {
+.fc-global-nav-link:hover::after {
   transform: scaleX(1);
   opacity: 1;
 }
 
 /* Chevron Rotation on Group Hover */
-.global-nav-item:hover .nav-chevron {
+.fc-global-nav-item:hover .nav-chevron {
   transform: rotate(180deg);
   opacity: 1;
 }
@@ -59,7 +59,7 @@
 }
 
 /* Accessibility: Focus Visible */
-.global-nav-link:focus-visible {
+.fc-global-nav-link:focus-visible {
   outline: 2px solid var(--wp--preset--color--burgundy);
   outline-offset: 2px;
   background-color: rgba(86, 13, 26, 0.1);
@@ -69,11 +69,11 @@
 /* HEADER DROPDOWNS (Easy Hover)             */
 /* ========================================= */
 
-.global-nav-item {
+.fc-global-nav-item {
   position: relative; /* Anchor for dropdown */
 }
 
-.global-nav-dropdown {
+.fc-global-nav-dropdown {
   position: absolute;
   top: 100%; /* Below link */
   left: 50%;
@@ -92,7 +92,7 @@
 }
 
 /* Show Dropdown on Hover */
-.global-nav-item:hover .global-nav-dropdown {
+.fc-global-nav-item:hover .fc-global-nav-dropdown {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
@@ -100,7 +100,7 @@
 }
 
 /* Dropdown items */
-.global-nav-dropdown li a {
+.fc-global-nav-dropdown li a {
   display: block;
   padding: 10px 16px;
   color: var(--wp--preset--color--ink-black);
@@ -111,23 +111,23 @@
   font-weight: 500;
 }
 
-.global-nav-dropdown li a:hover {
+.fc-global-nav-dropdown li a:hover {
   background-color: rgba(86, 13, 26, 0.05);
   color: var(--wp--preset--color--burgundy);
 }
 
 /* CTA Button Hover */
-.global-cta-button {
+.fc-global-cta-button {
   transition: all 0.2s ease;
 }
 
-.global-cta-button:hover {
+.fc-global-cta-button:hover {
   background-color: var(--wp--preset--color--cardinal) !important; /* Darker red */
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(86, 13, 26, 0.2) !important;
 }
 
-.global-cta-button:active {
+.fc-global-cta-button:active {
   transform: translateY(0);
 }
 
@@ -135,7 +135,7 @@
 /* FULL PAGE MENU OVERLAY                    */
 /* ========================================= */
 
-.full-page-menu {
+.fc-full-page-menu {
   position: fixed;
   top: 0;
   left: 0;
@@ -154,14 +154,14 @@
   justify-content: center;
 }
 
-.full-page-menu.is-open {
+.fc-full-page-menu.is-open {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
 /* Close Button */
-.menu-close-btn {
+.fc-menu-close-btn {
   position: absolute;
   top: 40px;
   right: 40px;
@@ -174,19 +174,19 @@
   transition: transform 0.3s ease;
 }
 
-.menu-close-btn:hover {
+.fc-menu-close-btn:hover {
   transform: rotate(90deg);
 }
 
 /* Full Menu Logo */
-.menu-logo {
+.fc-menu-logo {
   position: absolute;
   top: 40px;
   left: 40px;
 }
 
 /* Menu Layout (Grid) */
-.menu-container {
+.fc-full-page-menu__container {
   display: grid;
   grid-template-columns: 1fr 1fr 0.8fr; /* 3 Columns: Main, News, Quick */
   gap: 64px;
@@ -195,12 +195,12 @@
   padding: 80px 40px;
 }
 
-.menu-col {
+.fc-full-page-menu__col {
   display: flex;
   flex-direction: column;
 }
 
-.menu-heading {
+.fc-menu-heading {
   font-family: var(--wp--preset--font-family--heading);
   font-size: 12px;
   letter-spacing: 0.15em;
@@ -213,7 +213,7 @@
 }
 
 /* Fading Divider Line */
-.menu-heading::after {
+.fc-menu-heading::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -230,7 +230,7 @@
 }
 
 /* Column 1: Main Links */
-.full-nav-list {
+.fc-full-nav-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -239,7 +239,7 @@
   gap: 16px;
 }
 
-.full-nav-list a {
+.fc-full-nav-list a {
   font-family: var(--wp--preset--font-family--heading); /* Playfair */
   font-size: 40px; /* Big Impact */
   font-weight: 700;
@@ -249,25 +249,25 @@
   display: inline-block;
 }
 
-.full-nav-list a:hover {
+.fc-full-nav-list a:hover {
   color: #B08D55; /* Gold Hover */
   transform: translateX(10px);
 }
 
 /* Column 2: News Items */
-.news-grid {
+.fc-news-grid {
   display: flex;
   flex-direction: column;
   gap: 32px;
 }
 
-.news-item {
+.fc-news-item {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.news-image img {
+.fc-news-image img {
   width: 100%;
   height: 180px;
   object-fit: cover;
@@ -275,7 +275,7 @@
   margin-bottom: 8px;
 }
 
-.news-cat {
+.fc-news-cat {
   font-family: var(--wp--preset--font-family--ui);
   font-size: 10px;
   text-transform: uppercase;
@@ -284,7 +284,7 @@
   opacity: 0.7;
 }
 
-.news-title {
+.fc-news-title {
   font-family: var(--wp--preset--font-family--heading);
   font-size: 20px;
   color: #fff;
@@ -292,7 +292,7 @@
   line-height: 1.3;
 }
 
-.news-read-more {
+.fc-news-read-more {
   font-family: var(--wp--preset--font-family--ui);
   font-size: 11px;
   text-transform: uppercase;
@@ -309,7 +309,7 @@
   align-items: flex-end;
 }
 
-.quick-nav-list {
+.fc-quick-nav-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -318,7 +318,7 @@
   gap: 24px; /* Increased from 12px for better touch targets */
 }
 
-.quick-nav-list a {
+.fc-quick-nav-list a {
   font-family: var(--wp--preset--font-family--heading);
   font-size: 16px;
   color: #fff;
@@ -327,12 +327,12 @@
   transition: opacity 0.3s;
 }
 
-.quick-nav-list a:hover {
+.fc-quick-nav-list a:hover {
   opacity: 1;
   color: #B08D55;
 }
 
-.menu-socials {
+.fc-menu-socials {
   margin-top: 48px;
   display: flex;
   gap: 24px; /* Increased gap for icons */
@@ -361,7 +361,7 @@
 /* Responsive */
 @media (max-width: 1218px) {
   /* Hide Desktop Nav for Intermediate Screens */
-  .desktop-nav,
+  .fc-desktop-nav,
   .desktop-nav-separator {
     display: none;
   }
@@ -369,11 +369,11 @@
 
 @media (max-width: 900px) {
   /* Fix vertical alignment for long content */
-  .full-page-menu {
+  .fc-full-page-menu {
     align-items: flex-start; /* Start from top instead of centering */
   }
 
-  .menu-container {
+  .fc-full-page-menu__container {
     grid-template-columns: 1fr;
     padding: 140px 24px 40px; /* Increased top padding to clear Logo/Close button */
     gap: 40px;
@@ -384,40 +384,40 @@
     align-items: flex-start;
   }
   
-  .menu-socials {
+  .fc-menu-socials {
     justify-content: flex-start;
   }
 
-  .full-nav-list a {
+  .fc-full-nav-list a {
     font-size: 32px;
   }
 
   /* Make close button sticky or ensure z-index if content scrolls behind */
-  .menu-close-btn, .menu-logo {
+  .fc-menu-close-btn, .fc-menu-logo {
     z-index: 1001; /* Ensure above scrolling content if overlapping */
   }
 }
 
 @media (max-width: 649px) {
   /* Hide Elements on Mobile */
-  .global-cta-button {
+  .fc-global-cta-button {
     display: none;
   }
 
-  .global-header__brand-text {
+  .fc-global-header__brand-text {
     display: none !important; /* Force hide inline style */
   }
 
-  .announcement-indicators {
+  .fc-announcement-indicators {
     display: none !important;
   }
 
   /* Adjust Header Height if needed */
-  .global-header__top {
+  .fc-global-header__top {
     min-height: 100px !important; /* Smaller on mobile */
   }
 
-  .global-header__brand img {
+  .fc-global-header__brand img {
     height: 70px !important; /* Smaller logo */
   }
 }

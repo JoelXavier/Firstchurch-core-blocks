@@ -21,20 +21,17 @@ const EventSettingsPanel = () => {
     // Note: 'meta' is nested props, useEntityProp handles it if meta key is registered.
     const [meta, setMeta] = useEntityProp('postType', 'event', 'meta');
     
-    // Safety check
-    if (!meta) return null;
-
     const startDate = meta['_event_start_date'];
 
     return (
         <PluginDocumentSettingPanel
-            name="antigravity-event-settings"
-            title={__('Event Settings', 'antigravity-core-blocks')}
+            name="firstchurch-event-settings"
+            title={__('Event Settings', 'first-church-core-blocks')}
             icon="calendar-alt"
         >
             <PanelRow>
                 <div style={{ width: '100%' }}>
-                    <p><strong>{__('Start Date & Time', 'antigravity-core-blocks')}</strong></p>
+                    <p><strong>{__('Start Date & Time', 'first-church-core-blocks')}</strong></p>
                     <DateTimePicker
                         currentDate={startDate}
                         onChange={(newDate) => setMeta({ ...meta, _event_start_date: newDate })}
@@ -45,7 +42,7 @@ const EventSettingsPanel = () => {
 
             <PanelRow>
                 <div style={{ width: '100%' }}>
-                    <p><strong>{__('End Date & Time (Optional)', 'antigravity-core-blocks')}</strong></p>
+                    <p><strong>{__('End Date & Time (Optional)', 'first-church-core-blocks')}</strong></p>
                     <DateTimePicker
                         currentDate={meta['_event_end_date']}
                         onChange={(newDate) => setMeta({ ...meta, _event_end_date: newDate })}
@@ -56,8 +53,8 @@ const EventSettingsPanel = () => {
 
             <PanelRow>
                 <TextControl
-                    label={__('Event Label', 'antigravity-core-blocks')}
-                    help={__('e.g. "Worship", "Concert", "Outreach"', 'antigravity-core-blocks')}
+                    label={__('Event Label', 'first-church-core-blocks')}
+                    help={__('e.g. "Worship", "Concert", "Outreach"', 'first-church-core-blocks')}
                     value={meta['_event_label'] || ''}
                     onChange={(newValue) => setMeta({ ...meta, _event_label: newValue })}
                 />
@@ -65,7 +62,7 @@ const EventSettingsPanel = () => {
 
             <PanelRow>
                 <TextControl
-                    label={__('Location', 'antigravity-core-blocks')}
+                    label={__('Location', 'first-church-core-blocks')}
                     value={meta['_event_location'] || ''}
                     onChange={(newValue) => setMeta({ ...meta, _event_location: newValue })}
                 />
@@ -73,8 +70,8 @@ const EventSettingsPanel = () => {
 
             <PanelRow>
                 <TextControl
-                    label={__('CTA Text', 'antigravity-core-blocks')}
-                    help={__('Button text. Default: "Get Tickets"', 'antigravity-core-blocks')}
+                    label={__('CTA Text', 'first-church-core-blocks')}
+                    help={__('Button text. Default: "Get Tickets"', 'first-church-core-blocks')}
                     value={meta['_event_cta_text'] || ''}
                     onChange={(newValue) => setMeta({ ...meta, _event_cta_text: newValue })}
                 />
@@ -82,8 +79,8 @@ const EventSettingsPanel = () => {
 
              <PanelRow>
                 <TextControl
-                    label={__('CTA URL', 'antigravity-core-blocks')}
-                    help={__('External link for tickets. If empty, links to the event page.', 'antigravity-core-blocks')}
+                    label={__('CTA URL', 'first-church-core-blocks')}
+                    help={__('External link for tickets. If empty, links to the event page.', 'first-church-core-blocks')}
                     value={meta['_event_cta_url'] || ''}
                     onChange={(newValue) => setMeta({ ...meta, _event_cta_url: newValue })}
                 />
@@ -93,7 +90,7 @@ const EventSettingsPanel = () => {
 
             <PanelRow>
                 <div style={{ width: '100%', marginTop: '20px', borderTop: '1px solid #ddd', paddingTop: '20px' }}>
-                    <p><strong>{__('Event Schedule', 'antigravity-core-blocks')}</strong></p>
+                    <p><strong>{__('Event Schedule', 'first-church-core-blocks')}</strong></p>
                     <p style={{ fontSize: '12px', color: '#666' }}>Add specific times for multi-day events.</p>
                     
                     {/* Schedule Repeater */}
@@ -146,7 +143,7 @@ const EventSettingsPanel = () => {
     );
 };
 
-registerPlugin('antigravity-event-settings', {
+registerPlugin('firstchurch-event-settings', {
     render: EventSettingsPanel,
     icon: 'calendar-alt'
 });

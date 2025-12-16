@@ -1,10 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "antigravity/location",
+  "name": "firstchurch/location",
   "version": "0.1.0",
   "title": "Location / Visit Us",
-  "category": "antigravity",
+  "category": "firstchurch",
   "icon": "location-alt",
   "description": "A high-impact 'Visit Us' module with location info and map.",
   "supports": {
@@ -61,7 +61,7 @@
       "default": "sandwood"
     }
   },
-  "textdomain": "antigravity-core",
+  "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

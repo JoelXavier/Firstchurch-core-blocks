@@ -8,7 +8,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { authorName, authorTeam, authorLocation, authorImageId, authorImageUrl, showAuthor, dropCapColor } = attributes;
 
 	const blockProps = useBlockProps({
-		className: 'antigravity-article-body',
+		className: 'fc-article-body',
 		style: { '--dropcap-color': dropCapColor }
 	});
 
@@ -37,9 +37,9 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<div { ...blockProps }>
 			<InspectorControls>
-				<PanelBody title={ __( 'Author Card', 'antigravity' ) }>
+				<PanelBody title={ __( 'Author Card', 'first-church-core-blocks' ) }>
 					<ToggleControl
-						label={ __( 'Show Author Card', 'antigravity' ) }
+						label={ __( 'Show Author Card', 'first-church-core-blocks' ) }
 						checked={ showAuthor }
 						onChange={ ( val ) => setAttributes( { showAuthor: val } ) }
 					/>
@@ -60,7 +60,7 @@ export default function Edit( { attributes, setAttributes } ) {
 													<div style={{width:'50px', height:'50px', borderRadius:'50%', background:'#eee'}}></div>
 												)}
 												<Button variant="secondary" onClick={ open }>
-													{ authorImageId ? __( 'Replace', 'antigravity' ) : __( 'Upload', 'antigravity' ) }
+													{ authorImageId ? __( 'Replace', 'first-church-core-blocks' ) : __( 'Upload', 'first-church-core-blocks' ) }
 												</Button>
 											</div>
 										</div>
@@ -68,17 +68,17 @@ export default function Edit( { attributes, setAttributes } ) {
 								/>
 							</MediaUploadCheck>
 							<TextControl
-								label={ __( 'Name', 'antigravity' ) }
+								label={ __( 'Name', 'first-church-core-blocks' ) }
 								value={ authorName }
 								onChange={ ( val ) => setAttributes( { authorName: val } ) }
 							/>
 							<TextControl
-								label={ __( 'Team', 'antigravity' ) }
+								label={ __( 'Team', 'first-church-core-blocks' ) }
 								value={ authorTeam }
 								onChange={ ( val ) => setAttributes( { authorTeam: val } ) }
 							/>
 							<TextControl
-								label={ __( 'Location', 'antigravity' ) }
+								label={ __( 'Location', 'first-church-core-blocks' ) }
 								value={ authorLocation }
 								onChange={ ( val ) => setAttributes( { authorLocation: val } ) }
 							/>
@@ -86,46 +86,40 @@ export default function Edit( { attributes, setAttributes } ) {
 					) }
 				</PanelBody>
 				<PanelColorSettings
-					title={ __( 'Dropcap Color', 'antigravity' ) }
+					title={ __( 'Dropcap Color', 'first-church-core-blocks' ) }
 					colorSettings={ [
 						{
 							value: dropCapColor,
 							onChange: ( colorValue ) => setAttributes( { dropCapColor: colorValue } ),
-							label: __( 'Dropcap Color', 'antigravity' ),
+							label: __( 'Dropcap Color', 'first-church-core-blocks' ),
 						},
 					] }
 				/>
 			</InspectorControls>
 
-			{/* 
-				We cannot use the React Component directly here cleanly because 
-				it expects `children` prop, but InnerBlocks doesn't pass itself as children simply.
-				Also we want WYSIWYG editing.
-				So we replicate the Component's structure but put <InnerBlocks /> inside the typography container.
-			*/}
-			<div className="article-body-grid">
+			<div className="fc-article-body__grid">
 				{/* Sidebar */}
 				{ showAuthor && (
-					<aside className="article-sidebar">
-						<div className="sidebar-sticky">
+					<aside className="fc-article-body__sidebar">
+						<div className="fc-article-body__sticky">
 							{/* Using the React Component for the card is fine */}
-							<div className="antigravity-author-card">
-								<div className="author-card-image">
+							<div className="fc-author-card">
+								<div className="fc-author-card__media">
 									{authorImageUrl ? (
 										<img src={authorImageUrl} alt={authorName} />
 									) : (
-										<div className="author-card-placeholder">{authorName.charAt(0)}</div>
+										<div className="fc-author-card__placeholder">{authorName.charAt(0)}</div>
 									)}
 								</div>
-								<div className="author-card-info">
-									<span className="author-card-name">{authorName}</span>
-									<span className="author-card-team">{authorTeam}</span>
-									<span className="author-card-location">{authorLocation}</span>
+								<div className="fc-author-card__info">
+									<span className="fc-author-card__name">{authorName}</span>
+									<span className="fc-author-card__team">{authorTeam}</span>
+									<span className="fc-author-card__location">{authorLocation}</span>
 								</div>
 							</div>
 							
 							{/* Share Button Placeholder (Editor Visual) */}
-							<div className="article-share-button" style={{marginTop:'1rem', textAlign:'center', opacity:0.5}}>
+							<div className="fc-article-body__share" style={{marginTop:'1rem', textAlign:'center', opacity:0.5}}>
 								<span className="dashicons dashicons-share"></span> Share
 							</div>
 						</div>
@@ -133,18 +127,18 @@ export default function Edit( { attributes, setAttributes } ) {
 				)}
 
 				{/* Content */}
-				<article className="article-content">
-					<div className="article-typography">
+				<article className="fc-article-body__content">
+					<div className="fc-article-body__typography">
 						<InnerBlocks />
 						
-						<div className="article-tombstone">
-							<span className="tombstone-icon">❖</span>
+						<div className="fc-article-body__tombstone">
+							<span className="fc-article-body__tombstone-icon">❖</span>
 						</div>
 					</div>
 				</article>
 
 				{/* Spacer */}
-				<div className="article-right-spacer"></div>
+				<div className="fc-article-body__spacer"></div>
 			</div>
 		</div>
 	);

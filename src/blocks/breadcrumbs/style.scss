@@ -1,4 +1,4 @@
-.antigravity-breadcrumbs {
+.fc-breadcrumbs {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 0.75rem;
     font-weight: 600;
@@ -12,23 +12,23 @@
     padding: var(--wp--preset--spacing--16, 1rem) 0;
 }
 
-.breadcrumb-item {
+.fc-breadcrumbs__item {
     color: inherit;
     text-decoration: none;
     transition: color 0.2s;
 }
 
-.breadcrumb-item:hover:not(.current) {
+.fc-breadcrumbs__item:hover:not(.fc-breadcrumbs__item--current) {
     color: var(--wp--preset--color--burgundy);
     text-decoration: underline;
 }
 
-.breadcrumb-item.current {
+.fc-breadcrumbs__item--current {
     color: var(--wp--preset--color--neutral-400); /* Slightly lighter for active non-link */
     cursor: default;
 }
 
-.breadcrumb-separator {
+.fc-breadcrumbs__separator {
     color: var(--wp--preset--color--neutral-400);
     opacity: 0.7;
 }

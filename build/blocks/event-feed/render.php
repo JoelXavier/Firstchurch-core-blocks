@@ -95,7 +95,7 @@ foreach ($raw_months as $row) {
 }
 
 $wrapper_attributes = get_block_wrapper_attributes(array(
-    'class' => 'antigravity-listing-component antigravity-event-feed layout-' . esc_attr($filter_style)
+    'class' => 'fc-listing-component fc-event-feed layout-' . esc_attr($filter_style)
 ));
 ?>
 
@@ -205,7 +205,7 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
                         $target_attr = $cta_url ? 'target="_blank" rel="noopener noreferrer"' : '';
                         ?>
                         <!-- Event Card Markup (Matches EventCard.scss) -->
-                        <div class="antigravity-event-card <?php echo $is_canceled ? 'is-canceled' : ''; ?>">
+                        <div class="fc-event-card <?php echo $is_canceled ? 'is-canceled' : ''; ?>">
                             <a href="<?php echo esc_url($link_url); ?>" class="event-card-link" style="display:contents;" <?php echo $target_attr; ?>>
                                 <!-- 1. Media -->
                                 <?php if ($img_url): ?>

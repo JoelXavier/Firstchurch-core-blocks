@@ -9,33 +9,33 @@ $schedule = $attributes['schedule'] ?? [];
 $mapEmbedIframe = $attributes['mapEmbedIframe'] ?? '';
 
 // Get Wrapper Attributes (supports alignment, anchor, etc.)
-$wrapper_attributes = get_block_wrapper_attributes(['class' => 'antigravity-location-wrapper']);
+$wrapper_attributes = get_block_wrapper_attributes(['class' => 'fc-location']);
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
-    <div class="antigravity-location-grid">
+    <div class="fc-location__grid">
 
         <!-- Left Column: Info -->
-        <div class="antigravity-location-info">
+        <div class="fc-location__info">
 
             <div class="location-header-group">
                 <?php if (!empty($subHeading)): ?>
-                    <h4 class="antigravity-location-subheading"><?php echo esc_html($subHeading); ?></h4>
+                    <h4 class="fc-location__subheading"><?php echo esc_html($subHeading); ?></h4>
                 <?php endif; ?>
 
                 <?php if (!empty($heading)): ?>
-                    <h2 class="antigravity-location-heading"><?php echo esc_html($heading); ?></h2>
+                    <h2 class="fc-location__heading"><?php echo esc_html($heading); ?></h2>
                 <?php endif; ?>
 
-                <div class="antigravity-location-divider"></div>
+                <div class="fc-location__divider"></div>
             </div>
 
             <?php if (!empty($schedule)): ?>
-                <ul class="antigravity-location-schedule">
+                <ul class="fc-location__schedule">
                     <?php foreach ($schedule as $item): ?>
-                        <li class="antigravity-location-schedule-item">
-                            <span class="schedule-day"><?php echo esc_html($item['label'] ?? ''); ?></span>
-                            <span class="schedule-time"><?php echo esc_html($item['time'] ?? ''); ?></span>
+                        <li class="fc-location__schedule-item">
+                            <span class="fc-location__schedule-day"><?php echo esc_html($item['label'] ?? ''); ?></span>
+                            <span class="fc-location__schedule-time"><?php echo esc_html($item['time'] ?? ''); ?></span>
                         </li>
                     <?php endforeach; ?>
                 </ul>
@@ -44,7 +44,7 @@ $wrapper_attributes = get_block_wrapper_attributes(['class' => 'antigravity-loca
         </div>
 
         <!-- Right Column: Map -->
-        <div class="antigravity-location-map">
+        <div class="fc-location__map">
             <!-- Render Iframe (Sanitization needed in real world, but trusting admin input for now or using wp_kses_post if possible, though iframes are tricky) -->
             <!-- We assume the mapEmbedCode is a trusted iframe string from admin -->
             <div class="map-embed-container" style="width: 100%; height: 100%;">
@@ -53,8 +53,8 @@ $wrapper_attributes = get_block_wrapper_attributes(['class' => 'antigravity-loca
 
             <!-- Floating Address Card -->
             <?php if (!empty($addressLines)): ?>
-                <div class="location-map-card">
-                    <div class="map-card-address">
+                <div class="fc-location__map-card">
+                    <div class="fc-location__map-card-address">
                         <?php foreach ($addressLines as $line): ?>
                             <div><?php echo esc_html($line); ?></div>
                         <?php endforeach; ?>

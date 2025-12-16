@@ -12,26 +12,26 @@ $show_icon = $attributes['showIcon'] ?? true;
 
 // Wrapper Attributes
 $wrapper_attributes = get_block_wrapper_attributes([
-    'class' => "antigravity-quote-wrapper layout-{$layout} variant-{$variant}"
+    'class' => "fc-quote fc-quote--layout-{$layout} fc-quote--variant-{$variant}"
 ]);
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
-    <div class="antigravity-quote-container">
+    <div class="fc-quote__container">
 
         <!-- Decorative Icon -->
         <?php if ($show_icon): ?>
-            <div class="quote-icon" aria-hidden="true">“</div>
+            <div class="fc-quote__icon" aria-hidden="true">“</div>
         <?php endif; ?>
 
-        <blockquote class="antigravity-quote-content">
+        <blockquote class="fc-quote__content">
             <?php if (!empty($quote)): ?>
-                <p class="quote-text"><?php echo wp_kses_post($quote); ?></p>
+                <p class="fc-quote__text"><?php echo wp_kses_post($quote); ?></p>
             <?php endif; ?>
 
             <?php if (!empty($citation)): ?>
-                <footer class="quote-citation">
-                    <span class="citation-line"></span>
+                <footer class="fc-quote__citation">
+                    <span class="fc-quote__line"></span>
                     <cite><?php echo esc_html($citation); ?></cite>
                 </footer>
             <?php endif; ?>

@@ -17,12 +17,17 @@ $text_color = $attributes['textColor'] ?? '#f1eadd';
 $link_color = $attributes['linkColor'] ?? '#ffffff';
 
 // Build classes
-$wrapper_classes = 'antigravity-hero-split';
+$wrapper_classes = 'fc-hero-split';
 if ($image_position === 'right') {
-    $wrapper_classes .= ' image-right';
+    $wrapper_classes .= ' fc-hero-split--right';
 }
 if ($image_aspect_ratio) {
-    $wrapper_classes .= ' aspect-ratio-' . esc_attr($image_aspect_ratio);
+    if ($image_aspect_ratio === 'portrait') {
+        $wrapper_classes .= ' fc-hero-split--portrait';
+    } elseif ($image_aspect_ratio === 'square') {
+        $wrapper_classes .= ' fc-hero-split--square';
+    }
+    // Landscape is default, no class needed
 }
 
 $wrapper_attributes = get_block_wrapper_attributes([
@@ -33,22 +38,22 @@ $wrapper_attributes = get_block_wrapper_attributes([
 
 <section <?php echo $wrapper_attributes; ?>>
     <!-- Image Side -->
-    <div class="hero-split-image-wrapper">
+    <div class="fc-hero-split__media">
         <?php if (!empty($image_url)): ?>
-            <img src="<?php echo esc_url($image_url); ?>" alt="" class="hero-split-image" />
+            <img src="<?php echo esc_url($image_url); ?>" alt="" class="fc-hero-split__image" />
         <?php endif; ?>
     </div>
 
     <!-- Content Side -->
-    <div class="hero-split-content">
+    <div class="fc-hero-split__content">
         <?php if (!empty($label)): ?>
-            <span class="hero-split-label"><?php echo esc_html($label); ?></span>
+            <span class="fc-hero-split__label"><?php echo esc_html($label); ?></span>
         <?php endif; ?>
 
-        <h2 class="hero-split-title"><?php echo wp_kses_post($title); ?></h2>
+        <h2 class="fc-hero-split__title"><?php echo wp_kses_post($title); ?></h2>
 
         <?php if (!empty($link_text)): ?>
-            <a href="<?php echo esc_url($link_url); ?>" class="hero-split-link">
+            <a href="<?php echo esc_url($link_url); ?>" class="fc-hero-split__link">
                 <?php echo esc_html($link_text); ?>
                 <!-- Simple chevron arrow SVG -->
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -58,6 +63,7 @@ $wrapper_attributes = get_block_wrapper_attributes([
             </a>
         <?php endif; ?>
 
-        <div class="hero-split-bar"></div>
+        <div class="fc-hero-split__bar"></div>
     </div>
+
 </section>

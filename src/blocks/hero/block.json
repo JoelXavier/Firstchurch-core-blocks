@@ -1,10 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "antigravity/hero",
+  "name": "firstchurch/hero",
   "version": "1.0.0",
   "title": "Hero Section",
-  "category": "antigravity",
+  "category": "firstchurch",
   "icon": "cover-image",
   "description": "A full-width hero section with slideshow support and locked content areas.",
   "supports": {
@@ -21,7 +21,7 @@
       "customFontSize": true
     }
   },
-  "textdomain": "antigravity-core-blocks",
+  "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./view.css", 

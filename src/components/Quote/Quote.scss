@@ -1,6 +1,6 @@
 /* Quote Component Styles */
 
-.antigravity-quote-wrapper {
+.fc-quote {
   padding: var(--spacing-64, 4rem) var(--wp--layout--margin);
   position: relative;
   /* Remove default background to allow modular placement */
@@ -8,7 +8,7 @@
   color: var(--wp--preset--color--burgundy);
 }
 
-.antigravity-quote-container {
+.fc-quote__container {
   max-width: 900px;
   margin: 0 auto;
   position: relative;
@@ -17,7 +17,7 @@
 
 /* --- Typography --- */
 
-.quote-text {
+.fc-quote__text {
   font-family: var(--wp--preset--font-family--playfair-display);
   font-size: clamp(22px, 3.5vw, 40px);
   font-style: italic;
@@ -26,7 +26,7 @@
   margin: 0 0 var(--spacing-32, 2rem) 0;
 }
 
-.quote-citation {
+.fc-quote__citation {
   display: flex;
   align-items: center;
   gap: var(--spacing-16, 1rem);
@@ -38,7 +38,7 @@
   opacity: 0.9;
 }
 
-.citation-line {
+.fc-quote__line {
   display: block;
   width: 40px;
   height: 2px;
@@ -47,7 +47,7 @@
 
 /* --- Decorative Elements --- */
 
-.quote-icon {
+.fc-quote__icon {
   font-family: var(--font-playfair, 'Playfair Display', serif);
   font-weight: 500;
   font-style: italic;
@@ -65,21 +65,21 @@
 /* --- Layout Variants --- */
 
 /* 1. Center Layout */
-.layout-center {
+.fc-quote--layout-center {
   text-align: center;
 }
 
-.layout-center .antigravity-quote-container {
+.fc-quote--layout-center .fc-quote__container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.layout-center .quote-citation {
+.fc-quote--layout-center .fc-quote__citation {
   justify-content: center;
 }
 
-.layout-center .quote-icon {
+.fc-quote--layout-center .fc-quote__icon {
   top: -50px; /* Tighter to text */
   left: 50%;
   transform: translateX(-50%);
@@ -88,16 +88,16 @@
 }
 
 /* 2. Side-Line Layout */
-.layout-side-line {
+.fc-quote--layout-side-line {
   text-align: left;
 }
 
-.layout-side-line .antigravity-quote-container {
+.fc-quote--layout-side-line .fc-quote__container {
   border-left: 5px solid var(--wp--preset--color--divine-gold);
   padding-left: var(--spacing-40, 2.5rem);
 }
 
-.layout-side-line .quote-icon {
+.fc-quote--layout-side-line .fc-quote__icon {
   left: 20px; /* Inside the padding relative to container */
   top: -30px;
   font-size: 8rem;
@@ -107,7 +107,7 @@
 /* --- Style Variants --- */
 
 /* Card Variant */
-.variant-card .antigravity-quote-container {
+.fc-quote--variant-card .fc-quote__container {
   background-color: white;
   padding: clamp(1.5rem, 5vw, 4rem); /* 24px mobile -> 64px desktop */
   border-radius: 4px;
@@ -116,25 +116,25 @@
 }
 
 /* Adjust Icon for Card Variant specifically */
-.variant-card .quote-icon {
+.fc-quote--variant-card .fc-quote__icon {
   top: -20px; /* Bring it inside slightly */
   left: 20px;
   opacity: 0.1; /* Even more subtle on white */
 }
 
 /* Adjust side-line inside card */
-.variant-card.layout-side-line .antigravity-quote-container {
+.fc-quote--variant-card.fc-quote--layout-side-line .fc-quote__container {
   border-left: none; /* Remove default border logic */
   display: flex; /* Re-flow for internal border if needed, or just keep simple */
 }
 
-.variant-card.layout-side-line .antigravity-quote-content {
+.fc-quote--variant-card.fc-quote--layout-side-line .fc-quote__content {
   border-left: 5px solid var(--wp--preset--color--divine-gold);
   padding-left: 2.5rem;
 }
 
 /* Ensure padding wrapper doesn't double up too much visually */
-.variant-card.antigravity-quote-wrapper {
+.fc-quote--variant-card.fc-quote {
   padding-top: var(--spacing-32, 2rem);
   padding-bottom: var(--spacing-32, 2rem);
 }

@@ -1,10 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "antigravity/global-nav",
-  "version": "1.0.0",
+  "name": "firstchurch/global-nav",
+  "version": "0.1.0",
   "title": "Global Navigation",
-  "category": "antigravity",
+  "category": "firstchurch",
   "icon": "menu",
   "description": "A site-wide navigation bar.with mega menu and announcements.",
   "supports": {
@@ -17,7 +17,7 @@
       "fontFamily": true
     }
   },
-  "textdomain": "antigravity-core-blocks",
+  "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./view.css",

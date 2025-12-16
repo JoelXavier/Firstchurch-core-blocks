@@ -10,9 +10,9 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={__('Design Settings', 'antigravity-core')}>
+				<PanelBody title={__('Design Settings', 'first-church-core-blocks')}>
 					<SelectControl
-						label={__('Layout', 'antigravity-core')}
+						label={__('Layout', 'first-church-core-blocks')}
 						value={layout}
 						options={[
 							{ label: 'Centered', value: 'center' },
@@ -21,7 +21,7 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={(value) => setAttributes({ layout: value })}
 					/>
 					<SelectControl
-						label={__('Variant', 'antigravity-core')}
+						label={__('Variant', 'first-church-core-blocks')}
 						value={variant}
 						options={[
 							{ label: 'Default (Transparent)', value: 'default' },
@@ -30,8 +30,8 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={(value) => setAttributes({ variant: value })}
 					/>
                     <ToggleControl
-                        label={__('Show Quote Icon', 'antigravity-core')}
-                        help={__('Disable for general statements.', 'antigravity-core')}
+                        label={__('Show Quote Icon', 'first-church-core-blocks')}
+                        help={__('Disable for general statements.', 'first-church-core-blocks')}
                         checked={showIcon}
                         onChange={(value) => setAttributes({ showIcon: value })}
                     />
@@ -44,27 +44,27 @@ export default function Edit({ attributes, setAttributes }) {
                     instead of the static Quote component strings.
                     This ensures "What You See Is What You Edit".
                 */}
-				<div className={`antigravity-quote-wrapper layout-${layout} variant-${variant}`}>
-					<div className="antigravity-quote-container">
+				<div className={`fc-quote fc-quote--layout-${layout} fc-quote--variant-${variant}`}>
+					<div className="fc-quote__container">
 						
                         {/* Decorative Icon */}
-						{showIcon && <div className="quote-icon" aria-hidden="true">“</div>}
+						{showIcon && <div className="fc-quote__icon" aria-hidden="true">“</div>}
 
-						<blockquote className="antigravity-quote-content">
+						<blockquote className="fc-quote__content">
 							<RichText
 								tagName="p"
-								className="quote-text"
+								className="fc-quote__text"
 								value={quote}
 								onChange={(value) => setAttributes({ quote: value })}
-								placeholder={__('Enter quote...', 'antigravity-core')}
+								placeholder={__('Enter quote...', 'first-church-core-blocks')}
 							/>
-							<footer className="quote-citation">
-								<span className="citation-line"></span>
+							<footer className="fc-quote__citation">
+								<span className="fc-quote__line"></span>
 								<RichText
 									tagName="cite"
 									value={citation}
 									onChange={(value) => setAttributes({ citation: value })}
-									placeholder={__('Author / Source', 'antigravity-core')}
+									placeholder={__('Author / Source', 'first-church-core-blocks')}
 								/>
 							</footer>
 						</blockquote>

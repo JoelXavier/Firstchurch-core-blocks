@@ -1,12 +1,12 @@
 @import 'style.scss';
 
 /* Dashed outline for child blocks in editor visibility */
-.wp-block-antigravity-quick-link-item {
+.fc-quick-link-item {
     border: 1px dashed rgba(255, 255, 255, 0.2);
     border-radius: 4px;
     padding: 0.5rem;
 }
 
-.wp-block-antigravity-quick-link-item.is-selected {
+.fc-quick-link-item.is-selected {
     border-color: var(--wp--preset--color--divine-gold);
 }

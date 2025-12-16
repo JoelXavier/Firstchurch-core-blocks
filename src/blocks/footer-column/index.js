@@ -3,11 +3,11 @@ import { useBlockProps, InnerBlocks, InspectorControls, RichText } from '@wordpr
 import { PanelBody, TextControl } from '@wordpress/components';
 import './style.scss';
 
-registerBlockType('antigravity/footer-column', {
+registerBlockType('firstchurch/footer-column', {
     edit: ({ attributes, setAttributes }) => {
         const { title } = attributes;
         const blockProps = useBlockProps({
-            className: 'footer-nav-col'
+            className: 'fc-footer__nav-col'
         });
 
         return (
@@ -25,7 +25,7 @@ registerBlockType('antigravity/footer-column', {
                 <div {...blockProps}>
                     <RichText
                         tagName="h4"
-                        className="footer-heading"
+                        className="fc-footer__heading"
                         value={title}
                         onChange={(val) => setAttributes({ title: val })}
                         placeholder="Column Title"
@@ -42,12 +42,12 @@ registerBlockType('antigravity/footer-column', {
     save: ({ attributes }) => {
         const { title } = attributes;
         const blockProps = useBlockProps.save({
-            className: 'footer-nav-col'
+            className: 'fc-footer__nav-col'
         });
 
         return (
             <div {...blockProps}>
-                <h4 className="footer-heading">{title}</h4>
+                <h4 className="fc-footer__heading">{title}</h4>
                 <InnerBlocks.Content />
             </div>
         );

@@ -13,7 +13,7 @@ $author_location = isset($attributes['authorLocation']) ? $attributes['authorLoc
 $author_image_url = isset($attributes['authorImageUrl']) ? $attributes['authorImageUrl'] : '';
 $dropcap_color = isset($attributes['dropCapColor']) ? $attributes['dropCapColor'] : '';
 
-$wrapper_class = 'antigravity-article-body';
+$wrapper_class = 'fc-article-body';
 $style_string = '';
 
 if ($dropcap_color) {
@@ -28,30 +28,31 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
 
 ?>
 <section <?php echo $wrapper_attributes; ?>>
-    <div class="article-body-grid">
+    <div class="fc-article-body__grid">
 
         <?php if ($show_author): ?>
-            <aside class="article-sidebar">
-                <div class="sidebar-sticky">
+            <aside class="fc-article-body__sidebar">
+                <div class="fc-article-body__sticky">
                     <!-- Author Card -->
-                    <div class="antigravity-author-card">
-                        <div class="author-card-image">
+                    <div class="fc-author-card">
+                        <div class="fc-author-card__media">
                             <?php if ($author_image_url): ?>
                                 <img src="<?php echo esc_url($author_image_url); ?>"
                                     alt="<?php echo esc_attr($author_name); ?>" />
                             <?php else: ?>
-                                <div class="author-card-placeholder"><?php echo esc_html(substr($author_name, 0, 1)); ?></div>
+                                <div class="fc-author-card__placeholder"><?php echo esc_html(substr($author_name, 0, 1)); ?>
+                                </div>
                             <?php endif; ?>
                         </div>
-                        <div class="author-card-info">
-                            <span class="author-card-name"><?php echo esc_html($author_name); ?></span>
-                            <span class="author-card-team"><?php echo esc_html($author_team); ?></span>
-                            <span class="author-card-location"><?php echo esc_html($author_location); ?></span>
+                        <div class="fc-author-card__info">
+                            <span class="fc-author-card__name"><?php echo esc_html($author_name); ?></span>
+                            <span class="fc-author-card__team"><?php echo esc_html($author_team); ?></span>
+                            <span class="fc-author-card__location"><?php echo esc_html($author_location); ?></span>
                         </div>
                     </div>
 
                     <!-- Share Button -->
-                    <button class="article-share-button"
+                    <button class="fc-article-body__share"
                         onclick="navigator.share ? navigator.share({title: document.title, url: window.location.href}) : navigator.clipboard.writeText(window.location.href).then(() => alert('Link copied!'))"
                         aria-label="Share Article">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
@@ -68,20 +69,20 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
         <?php endif; ?>
 
         <!-- Main Content (Center) -->
-        <article class="article-content">
+        <article class="fc-article-body__content">
             <!-- InnerBlocks Content -->
-            <div class="article-typography">
+            <div class="fc-article-body__typography">
                 <?php echo $content; ?>
 
                 <!-- Tombstone -->
-                <div class="article-tombstone">
-                    <span class="tombstone-icon">❖</span>
+                <div class="fc-article-body__tombstone">
+                    <span class="fc-article-body__tombstone-icon">❖</span>
                 </div>
             </div>
         </article>
 
         <!-- Empty Right Column for Balance -->
-        <div class="article-right-spacer"></div>
+        <div class="fc-article-body__spacer"></div>
 
     </div>
 </section>

@@ -7,34 +7,34 @@ import metadata from './block.json';
 
 // Defined Template
 const TEMPLATE = [
-    [ 'antigravity/quick-link-item', { label: 'New Link' } ],
-    [ 'antigravity/quick-link-item', { label: 'New Link' } ],
-    [ 'antigravity/quick-link-item', { label: 'New Link' } ],
+    [ 'firstchurch/quick-link-item', { label: 'New Link' } ],
+    [ 'firstchurch/quick-link-item', { label: 'New Link' } ],
+    [ 'firstchurch/quick-link-item', { label: 'New Link' } ],
 ];
 
-const ALLOWED_BLOCKS = [ 'antigravity/quick-link-item' ];
+const ALLOWED_BLOCKS = [ 'firstchurch/quick-link-item' ];
 
 function Edit({ attributes, setAttributes }) {
     const { title } = attributes;
-    const blockProps = useBlockProps({ className: 'antigravity-quick-links' });
+    const blockProps = useBlockProps({ className: 'fc-quick-links' });
 
     return (
         <section { ...blockProps }>
-            <div className="quick-links-inner">
+            <div className="fc-quick-links__inner">
                 {/* Header */}
-                <div className="quick-links-header">
+                <div className="fc-quick-links__header">
                     <RichText
                         tagName="h2"
-                        className="quick-links-title"
+                        className="fc-quick-links__title"
                         value={title}
                         onChange={ ( value ) => setAttributes( { title: value } ) }
-                        placeholder={ __( 'Title...', 'antigravity-core' ) }
+                        placeholder={ __( 'Title...', 'first-church-core-blocks' ) }
                     />
-                    <div className="quick-links-underline"></div>
+                    <div className="fc-quick-links__underline"></div>
                 </div>
 
                 {/* Links List */}
-                <div className="quick-links-list">
+                <div className="fc-quick-links__list">
                     <InnerBlocks
                         allowedBlocks={ ALLOWED_BLOCKS }
                         template={ TEMPLATE }

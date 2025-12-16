@@ -4,7 +4,7 @@ import { Hero } from '../../components/Hero/Hero';
 import '../../tokens.css';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const roots = document.querySelectorAll('.antigravity-hero-background-root');
+    const roots = document.querySelectorAll('.fc-hero-background-root');
     
     roots.forEach((rootEl) => {
         const props = JSON.parse(rootEl.dataset.props);

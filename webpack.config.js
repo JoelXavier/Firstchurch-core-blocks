@@ -1,48 +1,11 @@
-const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
-const path = require( 'path' );
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 
 module.exports = {
-	...defaultConfig,
-	entry: {
-		'blocks/global-nav/index': path.resolve( process.cwd(), 'src/blocks/global-nav/index.js' ),
-		'blocks/global-nav/view': path.resolve( process.cwd(), 'src/blocks/global-nav/view.js' ),
-		'blocks/hero/index': path.resolve( process.cwd(), 'src/blocks/hero/index.js' ),
-		'blocks/hero/index': path.resolve( process.cwd(), 'src/blocks/hero/index.js' ),
-		'blocks/hero/view': path.resolve( process.cwd(), 'src/blocks/hero/view.js' ),
-		// Location Block
-		'blocks/location/index': path.resolve( process.cwd(), 'src/blocks/location/index.js' ),
-		'blocks/quote/index': path.resolve( process.cwd(), 'src/blocks/quote/index.js' ),
-		// Cards
-		'blocks/card-grid/index': path.resolve( process.cwd(), 'src/blocks/card-grid/index.js' ),
-		'blocks/card-item/index': path.resolve( process.cwd(), 'src/blocks/card-item/index.js' ),
-		// Fundraiser
-		'blocks/fundraiser/index': path.resolve( process.cwd(), 'src/blocks/fundraiser/index.js' ),
-		// Quick Links
-		'blocks/quick-links/index': path.resolve( process.cwd(), 'src/blocks/quick-links/index.js' ),
-		'blocks/quick-link-item/index': path.resolve( process.cwd(), 'src/blocks/quick-link-item/index.js' ),
-		// Hero Split
-		'blocks/hero-split/index': path.resolve( process.cwd(), 'src/blocks/hero-split/index.js' ),
-		// Listing / Feed
-		'blocks/listing/index': path.resolve( process.cwd(), 'src/blocks/listing/index.js' ),
-		// Manual Events
-		'blocks/event-list/index': path.resolve( process.cwd(), 'src/blocks/event-list/index.js' ),
-        'blocks/event-item/index': path.resolve( process.cwd(), 'src/blocks/event-item/index.js' ),
-		// Article Suite
-		'blocks/article-hero/index': path.resolve( process.cwd(), 'src/blocks/article-hero/index.js' ),
-		'blocks/article-body/index': path.resolve( process.cwd(), 'src/blocks/article-body/index.js' ),
-        // Footer (New)
-        'blocks/footer/index': path.resolve( process.cwd(), 'src/blocks/footer/index.js' ),
-        'blocks/footer-column/index': path.resolve( process.cwd(), 'src/blocks/footer-column/index.js' ),
-        'blocks/section/index': path.resolve( process.cwd(), 'src/blocks/section/index.js' ),
-        'blocks/breadcrumbs/index': path.resolve( process.cwd(), 'src/blocks/breadcrumbs/index.js' ),
-        'blocks/event-feed/index': path.resolve( process.cwd(), 'src/blocks/event-feed/index.js' ),
-
-        // Global Extensions
-        'extensions/separator/index': path.resolve( process.cwd(), 'src/extensions/separator/index.js' ),
-        'extensions/event-settings/index': path.resolve( process.cwd(), 'src/extensions/event-settings/index.js' ),
-	},
-    output: {
-        path: path.resolve( process.cwd(), 'build' ),
-        filename: '[name].js',
-    }
+    ...defaultConfig,
+    entry: {
+        ...defaultConfig.entry(),
+        dashboard: './src/dashboard/index.js',
+        'extensions/separator': './src/extensions/separator/index.js',
+        'extensions/event-settings': './src/extensions/event-settings/index.js',
+    },
 };

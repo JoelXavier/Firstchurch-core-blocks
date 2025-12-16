@@ -17,46 +17,46 @@ $mission_text = isset($attributes['missionText']) ? $attributes['missionText'] :
 $copyright_text = isset($attributes['copyrightText']) ? $attributes['copyrightText'] : '';
 $social_links = isset($attributes['socialLinks']) ? $attributes['socialLinks'] : [];
 
-$wrapper_attributes = get_block_wrapper_attributes(['class' => 'antigravity-footer']);
+$wrapper_attributes = get_block_wrapper_attributes(['class' => 'fc-footer']);
 ?>
 
 <footer <?php echo $wrapper_attributes; ?>>
-    <div class="footer-content">
+    <div class="fc-footer__content">
 
         <!-- Brand Column (Left) -->
-        <div class="footer-brand-col">
-            <div class="footer-logo">
+        <div class="fc-footer__brand-col">
+            <div class="fc-footer__logo">
                 <?php if ($logo_url): ?>
                     <img src="<?php echo esc_url($logo_url); ?>" alt="Church Logo" />
                 <?php endif; ?>
-                <div class="footer-logo-text">
+                <div class="fc-footer__logo-text">
                     <span class="primary"><?php echo esc_html($logo_text_primary); ?></span>
                     <span class="secondary"><?php echo esc_html($logo_text_secondary); ?></span>
                 </div>
             </div>
             <?php if ($mission_text): ?>
-                <p class="footer-mission"><?php echo esc_html($mission_text); ?></p>
+                <p class="fc-footer__mission"><?php echo esc_html($mission_text); ?></p>
             <?php endif; ?>
         </div>
 
         <!-- Navigation Grid (Right) -->
         <!-- InnerBlocks Content (Columns) goes here -->
-        <div class="footer-nav-grid">
+        <div class="fc-footer__nav-grid">
             <?php echo $content; ?>
         </div>
 
     </div>
 
     <!-- Bottom Bar -->
-    <div class="footer-bottom">
-        <div class="footer-bottom-inner">
-            <div class="footer-copyright"><?php echo esc_html($copyright_text); ?></div>
+    <div class="fc-footer__bottom">
+        <div class="fc-footer__bottom-inner">
+            <div class="fc-footer__copyright"><?php echo esc_html($copyright_text); ?></div>
 
-            <div class="footer-socials">
+            <div class="fc-footer__socials">
                 <?php foreach ($social_links as $link): ?>
                     <?php if (!empty($link['url']) && $link['url'] !== '#'): ?>
                         <a href="<?php echo esc_url($link['url']); ?>" aria-label="<?php echo esc_attr($link['label']); ?>"
-                            class="footer-social-icon">
+                            class="fc-footer__social-icon">
                             <?php
                             // Simple switch for icons
                             $icon = $link['icon'];

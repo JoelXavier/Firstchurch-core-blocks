@@ -45,9 +45,9 @@ export default function Edit({ attributes, setAttributes }) {
     return (
         <div {...useBlockProps()}>
             <InspectorControls>
-                <PanelBody title={__('Layout Settings', 'antigravity-core-blocks')}>
+                <PanelBody title={__('Layout Settings', 'first-church-core-blocks')}>
                     <SelectControl
-                        label={__('Function Mode', 'antigravity-core-blocks')}
+                        label={__('Function Mode', 'first-church-core-blocks')}
                         value={mode}
                         options={[
                             { label: 'Static Image', value: 'static' },
@@ -56,7 +56,7 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(val) => setAttributes({ mode: val, media: [] })} // Reset media on mode switch for safety
                     />
                     <SelectControl
-                        label={__('Content Placement', 'antigravity-core-blocks')}
+                        label={__('Content Placement', 'first-church-core-blocks')}
                         value={layout}
                         options={[
                             { label: 'Bottom Left (Immersive)', value: 'bottom-left' },
@@ -66,7 +66,7 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(val) => setAttributes({ layout: val })}
                     />
                     <RangeControl
-                        label={__('Overlay Opacity', 'antigravity-core-blocks')}
+                        label={__('Overlay Opacity', 'first-church-core-blocks')}
                         value={overlayOpacity}
                         onChange={(val) => setAttributes({ overlayOpacity: val })}
                         min={0}
@@ -74,7 +74,7 @@ export default function Edit({ attributes, setAttributes }) {
                     />
                 </PanelBody>
 
-                <PanelBody title={__('Background Media', 'antigravity-core-blocks')}>
+                <PanelBody title={__('Background Media', 'first-church-core-blocks')}>
                     <MediaUploadCheck>
                         <MediaUpload
                             onSelect={onSelectMedia}

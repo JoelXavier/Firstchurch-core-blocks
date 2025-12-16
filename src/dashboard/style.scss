@@ -1,0 +1,148 @@
+/* ========================================= */
+/* MISSION CONTROL DASHBOARD STYLES          */
+/* ========================================= */
+
+.fc-dashboard {
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: var(--wp--preset--font-family--body); /* Merriweather */
+    color: var(--wp--preset--color--rich-black);
+}
+
+/* --- Header Section --- */
+.fc-dashboard__header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.fc-dashboard__header h1 {
+    font-family: var(--wp--preset--font-family--heading); /* Playfair Display */
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--wp--preset--color--cardinal);
+    margin-bottom: 16px;
+    line-height: 1.2;
+}
+
+/* --- Sections --- */
+.fc-dashboard__section {
+    margin-bottom: 80px;
+}
+
+.fc-dashboard__section h2 {
+    font-family: var(--wp--preset--font-family--ui); /* Inter or System */
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--wp--preset--color--neutral-500);
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--wp--preset--color--neutral-200);
+    padding-bottom: 12px;
+}
+
+/* --- Quick Actions (Buttons) --- */
+.fc-dashboard__actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Override WordPress Components Buttons for Branding */
+.fc-dashboard .components-button.is-primary {
+    background-color: var(--wp--preset--color--cardinal);
+    border-color: var(--wp--preset--color--cardinal);
+    color: white;
+    font-family: var(--wp--preset--font-family--ui);
+    font-weight: 500;
+    padding: 8px 16px; /* Slightly larger */
+}
+
+.fc-dashboard .components-button.is-primary:hover,
+.fc-dashboard .components-button.is-primary:focus {
+    background-color: var(--wp--preset--color--burgundy);
+    border-color: var(--wp--preset--color--burgundy);
+    color: white;
+}
+
+.fc-dashboard .components-button.is-secondary {
+    color: var(--wp--preset--color--rich-black);
+    border-color: var(--wp--preset--color--neutral-300);
+    font-family: var(--wp--preset--font-family--ui);
+}
+
+.fc-dashboard .components-button.is-secondary:hover {
+    border-color: var(--wp--preset--color--divine-gold);
+    color: var(--wp--preset--color--divine-gold);
+}
+
+
+/* --- Templates Grid --- */
+.fc-dashboard__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 32px;
+}
+
+/* --- Template Card --- */
+.fc-dashboard__card {
+    border: 1px solid var(--wp--preset--color--neutral-200);
+    background: white;
+    border-radius: 4px; /* Slight rounding */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.fc-dashboard__card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08); /* Soft elegant shadow */
+    border-color: var(--wp--preset--color--divine-gold);
+}
+
+.fc-dashboard__card-preview {
+    height: 160px;
+    background-color: var(--wp--preset--color--neutral-50);
+    border-bottom: 1px solid var(--wp--preset--color--neutral-100);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fc-dashboard__card-thumbnail-placeholder {
+    width: 60px;
+    height: 60px;
+    background-color: var(--wp--preset--color--neutral-200);
+    border-radius: 50%;
+    opacity: 0.5;
+}
+
+/* Card Body Override */
+.fc-dashboard__card .components-card__body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.fc-dashboard__card h3 {
+    font-family: var(--wp--preset--font-family--heading);
+    font-size: 1.4rem;
+    color: var(--wp--preset--color--rich-black);
+    margin: 0 0 8px 0;
+}
+
+.fc-dashboard__card p {
+    color: var(--wp--preset--color--neutral-600);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+    flex-grow: 1; /* Pushes button down */
+}
+
+.fc-dashboard__card .components-button {
+    width: 100%;
+    justify-content: center;
+}

@@ -17,8 +17,19 @@ export default function Edit({ attributes, setAttributes }) {
         });
     };
 
+    // Build class string
+    let className = 'fc-hero-split';
+    if (imagePosition === 'right') {
+        className += ' fc-hero-split--right';
+    }
+    if (attributes.imageAspectRatio === 'portrait') {
+        className += ' fc-hero-split--portrait';
+    } else if (attributes.imageAspectRatio === 'square') {
+        className += ' fc-hero-split--square';
+    }
+
     const blockProps = useBlockProps({
-        className: `antigravity-hero-split ${imagePosition === 'right' ? 'image-right' : ''} aspect-ratio-${attributes.imageAspectRatio}`,
+        className: className,
         style: {
             '--hero-split-bg': backgroundColor,
             '--hero-split-text': textColor,
@@ -29,9 +40,9 @@ export default function Edit({ attributes, setAttributes }) {
     return (
         <>
             <InspectorControls>
-                <PanelBody title={__('Layout', 'antigravity-core')}>
+                <PanelBody title={__('Layout', 'first-church-core-blocks')}>
                     <SelectControl
-                        label={__('Image Position', 'antigravity-core')}
+                        label={__('Image Position', 'first-church-core-blocks')}
                         value={imagePosition}
                         options={[
                             { label: 'Left', value: 'left' },
@@ -40,7 +51,7 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(value) => setAttributes({ imagePosition: value })}
                     />
                     <SelectControl
-                        label={__('Image Aspect Ratio', 'antigravity-core')}
+                        label={__('Image Aspect Ratio', 'first-church-core-blocks')}
                         value={attributes.imageAspectRatio}
                         options={[
                             { label: 'Landscape (16:9)', value: 'landscape' },
@@ -48,7 +59,7 @@ export default function Edit({ attributes, setAttributes }) {
                             { label: 'Square (1:1)', value: 'square' },
                         ]}
                         onChange={(value) => setAttributes({ imageAspectRatio: value })}
-                        help={__('Controls the shape of the image area.', 'antigravity-core')}
+                        help={__('Controls the shape of the image area.', 'first-church-core-blocks')}
                     />
                     <MediaUploadCheck>
                         <MediaUpload
@@ -57,7 +68,7 @@ export default function Edit({ attributes, setAttributes }) {
                             value={imageId}
                             render={({ open }) => (
                                 <Button variant="secondary" onClick={open}>
-                                    { imageId ? __('Replace Image', 'antigravity-core') : __('Upload Image', 'antigravity-core') }
+                                    { imageId ? __('Replace Image', 'first-church-core-blocks') : __('Upload Image', 'first-church-core-blocks') }
                                 </Button>
                             )}
                         />
@@ -65,29 +76,29 @@ export default function Edit({ attributes, setAttributes }) {
                 </PanelBody>
 
                 <PanelColorSettings 
-                    title={__('Colors', 'antigravity-core')}
+                    title={__('Colors', 'first-church-core-blocks')}
                     colorSettings={[
                         {
                             value: backgroundColor,
                             onChange: (value) => setAttributes({ backgroundColor: value }),
-                            label: __('Background Color', 'antigravity-core')
+                            label: __('Background Color', 'first-church-core-blocks')
                         },
                         {
                             value: textColor,
                             onChange: (value) => setAttributes({ textColor: value }),
-                            label: __('Text Color', 'antigravity-core')
+                            label: __('Text Color', 'first-church-core-blocks')
                         },
                         {
                             value: linkColor,
                             onChange: (value) => setAttributes({ linkColor: value }),
-                            label: __('Link Color', 'antigravity-core')
+                            label: __('Link Color', 'first-church-core-blocks')
                         }
                     ]}
                 />
                 
-                <PanelBody title={__('Link Settings', 'antigravity-core')}>
+                <PanelBody title={__('Link Settings', 'first-church-core-blocks')}>
                      <TextControl
-                        label={__('Link URL', 'antigravity-core')}
+                        label={__('Link URL', 'first-church-core-blocks')}
                         value={linkUrl}
                         onChange={(value) => setAttributes({ linkUrl: value })}
                     />
@@ -96,40 +107,40 @@ export default function Edit({ attributes, setAttributes }) {
 
             <div { ...blockProps }>
                 {/* Image Side */}
-                <div className="hero-split-image-wrapper">
+                <div className="fc-hero-split__media">
                     { imageUrl ? (
-                        <img src={imageUrl} alt="" className="hero-split-image" />
+                        <img src={imageUrl} alt="" className="fc-hero-split__image" />
                     ) : (
                         <div style={{ width: '100%', height: '100%', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#888' }}>
-                            {__('Select Image', 'antigravity-core')}
+                            {__('Select Image', 'first-church-core-blocks')}
                         </div>
                     )}
                 </div>
 
                 {/* Content Side */}
-                <div className="hero-split-content">
+                <div className="fc-hero-split__content">
                     <RichText
                         tagName="span"
-                        className="hero-split-label"
+                        className="fc-hero-split__label"
                         value={label}
                         onChange={(value) => setAttributes({ label: value })}
-                        placeholder={__('Label', 'antigravity-core')}
+                        placeholder={__('Label', 'first-church-core-blocks')}
                     />
 
                     <RichText
                         tagName="h2"
-                        className="hero-split-title"
+                        className="fc-hero-split__title"
                         value={title}
                         onChange={(value) => setAttributes({ title: value })}
-                        placeholder={__('Headline...', 'antigravity-core')}
+                        placeholder={__('Headline...', 'first-church-core-blocks')}
                     />
                     
-                    <div className="hero-split-link" style={{ cursor: 'text' }}>
+                    <div className="fc-hero-split__link" style={{ cursor: 'text' }}>
                         <RichText
                             tagName="span"
                             value={linkText}
                             onChange={(value) => setAttributes({ linkText: value })}
-                            placeholder={__('Button Text', 'antigravity-core')}
+                            placeholder={__('Button Text', 'first-church-core-blocks')}
                             allowedFormats={[]}
                         />
                         {/* Static Arrow in Editor for visual fidelity */}
@@ -138,7 +149,7 @@ export default function Edit({ attributes, setAttributes }) {
                         </svg>
                     </div>
 
-                    <div className="hero-split-bar"></div>
+                    <div className="fc-hero-split__bar"></div>
                 </div>
             </div>
         </>

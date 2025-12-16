@@ -22,23 +22,21 @@ if ($card_link_color)
     $style_string .= " --card-link-color: {$card_link_color};";
 
 $wrapper_attributes = get_block_wrapper_attributes([
-    'class' => 'antigravity-card-grid',
+    'class' => 'fc-card-grid',
     'style' => $style_string
 ]);
 ?>
 
 <section <?php echo $wrapper_attributes; ?>>
-    <div class="container">
-        <!-- Note: "className" was used in edit.js JSX but implies "class" in PHP. 
-         However, the original JSX used 'container' div. Let's match it structurally. -->
+    <div class="fc-card-grid__inner">
         <?php if ($section_title): ?>
-            <div class="card-grid-header">
-                <h2 class="section-title"><?php echo wp_kses_post($section_title); ?></h2>
-                <div class="section-line"></div>
+            <div class="fc-card-grid__header">
+                <h2 class="fc-card-grid__title"><?php echo wp_kses_post($section_title); ?></h2>
+                <div class="fc-card-grid__line"></div>
             </div>
         <?php endif; ?>
 
-        <div class="card-grid-container">
+        <div class="fc-card-grid__grid">
             <?php echo $content; ?>
         </div>
     </div>

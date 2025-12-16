@@ -1,21 +1,22 @@
 <?php
 /**
- * Plugin Name: Antigravity Core Blocks
+ * Plugin Name: First Church Core Blocks
  * Description: A suite of dynamic, server-side rendered blocks with a Storybook-first development workflow.
  * Version: 0.1.0
  * Author: Antigravity
  * License: GPL-2.0-or-later
- * Text Domain: antigravity-core
+ * Text Domain: first-church-core-blocks
  */
 
 if (!defined('ABSPATH')) {
     exit;
 }
 
+
 /**
  * Registers all blocks in the plugin.
  */
-function antigravity_core_blocks_init()
+function firstchurch_core_blocks_init()
 {
     // Register the Global Navigation block
     register_block_type(__DIR__ . '/build/blocks/global-nav');
@@ -69,29 +70,63 @@ function antigravity_core_blocks_init()
     // Register Event Feed (Auto)
     register_block_type(__DIR__ . '/build/blocks/event-feed');
 }
-add_action('init', 'antigravity_core_blocks_init');
+add_action('init', 'firstchurch_core_blocks_init');
 
 /**
- * Register Custom Block Category "FC"
+ * Register Custom Block Category "First Church"
  */
-function antigravity_core_blocks_category($categories, $post)
+function firstchurch_core_blocks_category($categories, $post)
 {
     return array_merge(
         $categories,
         [
             [
-                'slug' => 'antigravity',
-                'title' => 'FC',
+                'slug' => 'firstchurch',
+                'title' => 'First Church',
             ],
         ]
     );
 }
-add_filter('block_categories_all', 'antigravity_core_blocks_category', 10, 2);
+add_filter('block_categories_all', 'firstchurch_core_blocks_category', 10, 2);
+
+/**
+ * Register Block Patterns
+ */
+function firstchurch_register_block_patterns()
+{
+    $pattern_categories = [
+        'firstchurch' => ['label' => 'First Church'],
+    ];
+
+    foreach ($pattern_categories as $name => $properties) {
+        if (!WP_Block_Patterns_Registry::get_instance()->is_registered($name)) {
+            register_block_pattern_category($name, $properties);
+        }
+    }
+
+    $patterns = [
+        'article-layout',
+        'mission-statement',
+        'team-profile',
+    ];
+
+    foreach ($patterns as $pattern) {
+        $pattern_file = __DIR__ . '/src/patterns/' . $pattern . '.php';
+
+        if (file_exists($pattern_file)) {
+            register_block_pattern(
+                'firstchurch/' . $pattern,
+                require $pattern_file
+            );
+        }
+    }
+}
+add_action('init', 'firstchurch_register_block_patterns');
 
 /**
  * Enqueue Global Assets (Fonts)
  */
-function antigravity_core_blocks_assets()
+function firstchurch_core_blocks_assets()
 {
     // Load Google Fonts globally for all blocks
     // DISABLED: We now rely on the native WordPress Font Library (Site Editor) to handle this.
@@ -117,32 +152,34 @@ function antigravity_core_blocks_assets()
     // Enqueue Global Extensions (Block Styles)
     // JS for Editor
     wp_enqueue_script(
-        'antigravity-separator-style',
-        plugins_url('build/extensions/separator/index.js', __FILE__),
+        'firstchurch-separator-style',
+        plugins_url('build/extensions/separator.js', __FILE__),
         ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'],
-        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/separator/index.js'),
+        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/separator.js'),
         true
     );
 
     // Event Settings Extension
     wp_enqueue_script(
-        'antigravity-event-settings',
-        plugins_url('build/extensions/event-settings/index.js', __FILE__),
+        'firstchurch-event-settings',
+        plugins_url('build/extensions/event-settings.js', __FILE__),
         ['wp-plugins', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-core-data', 'wp-i18n'],
-        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/event-settings/index.js'),
+        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/event-settings.js'),
         true
     );
 
     // CSS for Frontend & Editor
+    // Note: Webpack usually outputs style-[name].css or [name].css depending on config.
+    // Based on directory listing, it is style-separator.css
     wp_enqueue_style(
-        'antigravity-separator-style-css',
-        plugins_url('build/extensions/separator/style-index.css', __FILE__),
+        'firstchurch-separator-style-css',
+        plugins_url('build/extensions/style-separator.css', __FILE__),
         [],
-        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/separator/style-index.css')
+        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/style-separator.css')
     );
 }
-add_action('wp_enqueue_scripts', 'antigravity_core_blocks_assets');
-add_action('enqueue_block_editor_assets', 'antigravity_core_blocks_assets'); // Ensure fonts load in editor too
+add_action('wp_enqueue_scripts', 'firstchurch_core_blocks_assets');
+add_action('enqueue_block_editor_assets', 'firstchurch_core_blocks_assets'); // Ensure fonts load in editor too
 
 /**
  * Register custom font families in the Block Editor.
@@ -281,7 +318,7 @@ add_action('wp_head', function () {
 /**
  * Register Custom Post Types (Events, Locations)
  */
-function antigravity_register_cpts()
+function firstchurch_register_cpts()
 {
     // Events
     register_post_type('event', array(
@@ -381,16 +418,17 @@ function antigravity_register_cpts()
             'single' => true,
             'type' => $type,
             'auth_callback' => function () {
-                return current_user_can('edit_posts'); }
+                return current_user_can('edit_posts');
+            }
         ));
     }
 }
-add_action('init', 'antigravity_register_cpts');
+add_action('init', 'firstchurch_register_cpts');
 
 /**
  * Rename "Posts" to "Articles" in Admin Menu
  */
-function antigravity_rename_post_menu()
+function firstchurch_rename_post_menu()
 {
     global $menu, $submenu;
 
@@ -398,12 +436,12 @@ function antigravity_rename_post_menu()
     $submenu['edit.php'][5][0] = 'Articles';
     $submenu['edit.php'][10][0] = 'Add New Article';
 }
-add_action('admin_menu', 'antigravity_rename_post_menu', 999);
+add_action('admin_menu', 'firstchurch_rename_post_menu', 999);
 
 /**
  * Rename "Posts" to "Articles" in Post Type Labels
  */
-function antigravity_rename_post_object()
+function firstchurch_rename_post_object()
 {
     global $wp_post_types;
 
@@ -426,39 +464,64 @@ function antigravity_rename_post_object()
     $labels->menu_name = 'Articles';
     $labels->name_admin_bar = 'Article';
 }
-add_action('init', 'antigravity_rename_post_object', 999);
+add_action('init', 'firstchurch_rename_post_object', 999);
 
 /**
  * Admin Dashboard Branding
- * Styles the WordPress Admin (Sidebar, Top Bar) to match the Antigravity Brand.
+ * Styles the WordPress Admin (Sidebar, Top Bar) to match the First Church Brand.
  */
-function antigravity_enqueue_admin_branding()
+function firstchurch_enqueue_admin_branding()
 {
     wp_enqueue_style(
-        'antigravity-admin-theme',
+        'firstchurch-admin-theme',
         plugins_url('src/admin.css', __FILE__),
         [],
-        '1.0.0'
+        '1.0.1'
     );
 }
-add_action('admin_enqueue_scripts', 'antigravity_enqueue_admin_branding');
+add_action('admin_enqueue_scripts', 'firstchurch_enqueue_admin_branding');
+
+/**
+ * Replace WordPress Admin Bar Logo (Smarter Method)
+ * Uses the native API instead of CSS hacks.
+ */
+function firstchurch_update_admin_bar_logo($wp_admin_bar)
+{
+    // Remove the default WordPress logo node
+    $wp_admin_bar->remove_node('wp-logo');
+
+    // Add our custom logo node
+    // We use an <img> tag to ensure it occupies space correctly and isn't affected by font-icon CSS.
+    $logo_url = plugins_url('src/assets/church-logo.png', __FILE__);
+
+    $wp_admin_bar->add_node(array(
+        'id' => 'firstchurch-logo', // New ID to prevent conflicts
+        'title' => '<img src="' . esc_url($logo_url) . '" alt="First Church" style="height: 24px; width: auto; vertical-align: middle; margin-top: 2px;">',
+        'href' => admin_url('admin.php?page=firstchurch-dashboard'), // Deep link to Mission Control
+        'meta' => array(
+            'title' => 'First Church Mission Control',
+            'class' => 'firstchurch-logo-node' // Add a custom class for safety
+        ),
+    ));
+}
+add_action('admin_bar_menu', 'firstchurch_update_admin_bar_logo', 999);
 
 /**
  * Register "Blank Canvas" Template for Posts (Articles) & Pages
  * Since this is a plugin, we must manually inject the template into the dropdown.
  */
-function antigravity_register_templates($templates)
+function firstchurch_register_templates($templates)
 {
-    $templates['antigravity_blank_canvas'] = 'First Church: Blank Canvas';
+    $templates['firstchurch_blank_canvas'] = 'First Church: Blank Canvas';
     return $templates;
 }
-add_filter('theme_post_templates', 'antigravity_register_templates');
-add_filter('theme_page_templates', 'antigravity_register_templates');
+add_filter('theme_post_templates', 'firstchurch_register_templates');
+add_filter('theme_page_templates', 'firstchurch_register_templates');
 
 /**
  * Load the "Blank Canvas" Template file
  */
-function antigravity_load_template($template)
+function firstchurch_load_template($template)
 {
     $post_id = get_the_ID();
     if (!$post_id) {
@@ -467,7 +530,7 @@ function antigravity_load_template($template)
 
     $slug = get_post_meta($post_id, '_wp_page_template', true);
 
-    if ($slug === 'antigravity_blank_canvas') {
+    if ($slug === 'firstchurch_blank_canvas') {
         $file = plugin_dir_path(__FILE__) . 'templates/blank-canvas.php';
         if (file_exists($file)) {
             return $file;
@@ -476,4 +539,134 @@ function antigravity_load_template($template)
 
     return $template;
 }
-add_filter('template_include', 'antigravity_load_template');
+add_filter('template_include', 'firstchurch_load_template');
+
+/**
+ * Register Mission Control Dashboard
+ */
+function firstchurch_register_dashboard_page()
+{
+    add_menu_page(
+        __('Mission Control', 'first-church-core-blocks'),
+        __('Mission Control', 'first-church-core-blocks'),
+        'edit_posts',
+        'firstchurch-dashboard',
+        'firstchurch_render_dashboard_page',
+        'dashicons-chart-pie',
+        3 // Position just below Dashboard
+    );
+}
+add_action('admin_menu', 'firstchurch_register_dashboard_page');
+
+function firstchurch_render_dashboard_page()
+{
+    ?>
+    <div id="fc-dashboard-root"></div>
+    <?php
+}
+
+function firstchurch_enqueue_dashboard_assets($hook)
+{
+    // Use looser check to ensure it catches the page handle
+    if (strpos($hook, 'firstchurch-dashboard') === false) {
+        return;
+    }
+
+    $asset_file = include(plugin_dir_path(__FILE__) . 'build/dashboard.asset.php');
+
+    // 1. Enqueue Design Tokens (Variables) - Essential for Dashboard
+    // Use the NEW handle 'firstchurch-design-tokens'
+    wp_enqueue_style(
+        'firstchurch-design-tokens',
+        plugins_url('src/tokens.css', __FILE__),
+        [],
+        '1.0.0'
+    );
+
+    // 2. Enqueue Dashboard App
+    wp_enqueue_script(
+        'firstchurch-dashboard-script',
+        plugins_url('build/dashboard.js', __FILE__),
+        $asset_file['dependencies'],
+        $asset_file['version'],
+        true
+    );
+
+    wp_enqueue_style(
+        'firstchurch-dashboard-style',
+        plugins_url('build/style-dashboard.css', __FILE__),
+        array('wp-components', 'firstchurch-design-tokens'), // Make sure tokens load first
+        $asset_file['version']
+    );
+}
+add_action('admin_enqueue_scripts', 'firstchurch_enqueue_dashboard_assets');
+
+// Include Dashboard API
+require_once plugin_dir_path(__FILE__) . 'src/dashboard/api.php';
+
+/**
+ * Redirect Default Login to Mission Control
+ */
+function firstchurch_login_redirect($redirect_to, $request, $user)
+{
+    // If the user has capabilities to edit posts, send them to Mission Control
+    if (isset($user->roles) && is_array($user->roles) && !empty($user->roles)) {
+        return admin_url('admin.php?page=firstchurch-dashboard');
+    }
+    return $redirect_to;
+}
+add_filter('login_redirect', 'firstchurch_login_redirect', 10, 3);
+
+/**
+ * Redirect /wp-admin/ (Dashboard) to Mission Control
+ * This effectively hides the default WP Dashboard.
+ */
+function firstchurch_dashboard_redirect()
+{
+    // getting the current screen to ensure we only redirect from the 'dashboard'
+    $screen = get_current_screen();
+    if ($screen && $screen->base == 'dashboard') {
+        wp_redirect(admin_url('admin.php?page=firstchurch-dashboard'));
+        exit;
+    }
+}
+// ... existing dashboard code ...
+
+/**
+ * Register Block Patterns
+ */
+function firstchurch_register_patterns()
+{
+    // Register categories
+    register_block_pattern_category('firstchurch', array('label' => __('First Church', 'first-church-core-blocks')));
+    register_block_pattern_category('firstchurch/articles', array('label' => __('First Church: Articles', 'first-church-core-blocks')));
+    register_block_pattern_category('firstchurch/microsites', array('label' => __('First Church: Microsites', 'first-church-core-blocks')));
+    register_block_pattern_category('firstchurch/events', array('label' => __('First Church: Events', 'first-church-core-blocks')));
+    register_block_pattern_category('firstchurch/locations', array('label' => __('First Church: Locations', 'first-church-core-blocks')));
+
+    // List of patterns to register
+    $patterns = [
+        'article-a',
+        'article-b',
+        'article-c',
+        'mission-statement',
+        'team-profile'
+    ];
+
+    foreach ($patterns as $pattern_slug) {
+        $pattern_path = plugin_dir_path(__FILE__) . 'src/patterns/' . $pattern_slug . '.php';
+
+        if (file_exists($pattern_path)) {
+            $pattern_data = require $pattern_path;
+
+            // Register using the slug defined in the file, or fallback
+            // The files return an array with 'slug', 'title', 'content', etc.
+            register_block_pattern(
+                isset($pattern_data['slug']) ? $pattern_data['slug'] : 'firstchurch/' . $pattern_slug,
+                $pattern_data
+            );
+        }
+    }
+}
+add_action('init', 'firstchurch_register_patterns');
+

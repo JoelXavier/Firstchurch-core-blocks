@@ -26,32 +26,32 @@ export const Location = ({
   mapEmbedIframe,
 }) => {
   return (
-    <div className="antigravity-location-wrapper">
-      <div className="antigravity-location-grid">
+    <div className="fc-location">
+      <div className="fc-location__grid">
         
         {/* Left Column: Info */}
-        <div className="antigravity-location-info">
+        <div className="fc-location__info">
           
           <div className="location-header-group">
             {subHeading && (
-              <h4 className="antigravity-location-subheading">{subHeading}</h4>
+              <h4 className="fc-location__subheading">{subHeading}</h4>
             )}
-            <h2 className="antigravity-location-heading">{heading}</h2>
-            <div className="antigravity-location-divider"></div>
+            <h2 className="fc-location__heading">{heading}</h2>
+            <div className="fc-location__divider"></div>
           </div>
 
-          <ul className="antigravity-location-schedule">
+          <ul className="fc-location__schedule">
             {schedule.map((item, index) => (
-              <li key={index} className="antigravity-location-schedule-item">
-                <span className="schedule-day">{item.label}</span>
-                <span className="schedule-time">{item.time}</span>
+              <li key={index} className="fc-location__schedule-item">
+                <span className="fc-location__schedule-day">{item.label}</span>
+                <span className="fc-location__schedule-time">{item.time}</span>
               </li>
             ))}
           </ul>
 
           {/* Optional: Text Address if not using floating card */}
           {/* 
-          <div className="antigravity-location-address">
+          <div className="fc-location__address">
             {addressLines.map((line, i) => (
               <div key={i}>{line}</div>
             ))}
@@ -60,7 +60,7 @@ export const Location = ({
         </div>
 
         {/* Right Column: Map */}
-        <div className="antigravity-location-map">
+        <div className="fc-location__map">
           {/* Render Iframe safely */}
           <div 
             className="map-embed-container" 
@@ -69,8 +69,8 @@ export const Location = ({
           />
 
           {/* Floating Address Card */}
-          <div className="location-map-card">
-            <div className="map-card-address">
+          <div className="fc-location__map-card">
+            <div className="fc-location__map-card-address">
               {addressLines.map((line, i) => (
                 <div key={i}>{line}</div>
               ))}

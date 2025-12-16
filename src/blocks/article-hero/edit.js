@@ -34,9 +34,9 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<div { ...useBlockProps() }>
 			<InspectorControls>
-				<PanelBody title={ __( 'Hero Settings', 'antigravity' ) }>
+				<PanelBody title={ __( 'Hero Settings', 'firstchurch' ) }>
 					<SelectControl
-						label={ __( 'Variant', 'antigravity' ) }
+						label={ __( 'Variant', 'firstchurch' ) }
 						value={ variant }
 						options={ [
 							{ label: 'Standard', value: 'standard' },
@@ -45,7 +45,7 @@ export default function Edit( { attributes, setAttributes } ) {
 						onChange={ ( newVariant ) => setAttributes( { variant: newVariant } ) }
 					/>
 				</PanelBody>
-				<PanelBody title={ __( 'Content', 'antigravity' ) }>
+				<PanelBody title={ __( 'Content', 'firstchurch' ) }>
 					<MediaUploadCheck>
 						<MediaUpload
 							onSelect={ onSelectImage }
@@ -56,7 +56,7 @@ export default function Edit( { attributes, setAttributes } ) {
 									<label style={{display:'block', marginBottom:'0.5rem'}}>Hero Image</label>
 									{!heroImageId && (
 										<Button variant="secondary" onClick={ open }>
-											{ __( 'Upload Image', 'antigravity' ) }
+											{ __( 'Upload Image', 'first-church-core-blocks' ) }
 										</Button>
 									)}
 									{heroImageId && (
@@ -65,10 +65,10 @@ export default function Edit( { attributes, setAttributes } ) {
 												<img src={heroImageUrl} alt="Hero" style={{width:'100%', height:'100%', objectFit:'cover'}} />
 											</div>
 											<Button variant="link" isDestructive onClick={ onRemoveImage }>
-												{ __( 'Remove Image', 'antigravity' ) }
+												{ __( 'Remove Image', 'first-church-core-blocks' ) }
 											</Button>
 											<Button variant="secondary" onClick={ open }>
-												{ __( 'Replace Image', 'antigravity' ) }
+												{ __( 'Replace Image', 'first-church-core-blocks' ) }
 											</Button>
 										</>
 									)}
@@ -77,22 +77,22 @@ export default function Edit( { attributes, setAttributes } ) {
 						/>
 					</MediaUploadCheck>
 					<TextControl
-						label={ __( 'Title', 'antigravity' ) }
+						label={ __( 'Title', 'first-church-core-blocks' ) }
 						value={ title }
 						onChange={ ( val ) => setAttributes( { title: val } ) }
 					/>
 					<TextControl
-						label={ __( 'Category', 'antigravity' ) }
+						label={ __( 'Category', 'first-church-core-blocks' ) }
 						value={ category }
 						onChange={ ( val ) => setAttributes( { category: val } ) }
 					/>
 					<TextControl
-						label={ __( 'Author Name', 'antigravity' ) }
+						label={ __( 'Author Name', 'first-church-core-blocks' ) }
 						value={ authorName }
 						onChange={ ( val ) => setAttributes( { authorName: val } ) }
 					/>
 					<TextControl
-						label={ __( 'Date', 'antigravity' ) }
+						label={ __( 'Date', 'first-church-core-blocks' ) }
 						value={ date }
 						onChange={ ( val ) => setAttributes( { date: val } ) }
 					/>

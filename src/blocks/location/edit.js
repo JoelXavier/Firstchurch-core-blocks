@@ -50,20 +50,20 @@ export default function Edit({ attributes, setAttributes }) {
     return (
         <div {...useBlockProps()}>
             <InspectorControls>
-                <PanelBody title={__('Location Content', 'antigravity-core')}>
+                <PanelBody title={__('Location Content', 'first-church-core-blocks')}>
                     <TextControl
-                        label={__('Heading', 'antigravity-core')}
+                        label={__('Heading', 'first-church-core-blocks')}
                         value={heading}
                         onChange={(val) => setAttributes({ heading: val })}
                     />
                     <TextControl
-                        label={__('Sub Heading', 'antigravity-core')}
+                        label={__('Sub Heading', 'first-church-core-blocks')}
                         value={subHeading}
                         onChange={(val) => setAttributes({ subHeading: val })}
                     />
                 </PanelBody>
 
-                <PanelBody title={__('Address', 'antigravity-core')}>
+                <PanelBody title={__('Address', 'first-church-core-blocks')}>
                     {addressLines.map((line, index) => (
                         <div key={index} style={{ marginBottom: '10px', display: 'flex', gap: '5px' }}>
                             <TextControl
@@ -76,7 +76,7 @@ export default function Edit({ attributes, setAttributes }) {
                     <Button variant="secondary" onClick={addAddressLine}>Add Line</Button>
                 </PanelBody>
 
-                <PanelBody title={__('Schedule', 'antigravity-core')}>
+                <PanelBody title={__('Schedule', 'first-church-core-blocks')}>
                     {schedule.map((item, index) => (
                         <div key={index} style={{ marginBottom: '15px', padding: '10px', border: '1px solid #ccc' }}>
                             <TextControl
@@ -95,10 +95,10 @@ export default function Edit({ attributes, setAttributes }) {
                     <Button variant="secondary" onClick={addScheduleItem}>Add Schedule Item</Button>
                 </PanelBody>
 
-                <PanelBody title={__('Map Settings', 'antigravity-core')}>
+                <PanelBody title={__('Map Settings', 'first-church-core-blocks')}>
                     <TextareaControl
-                        label={__('Google Maps Embed Code (Iframe)', 'antigravity-core')}
-                        help={__('Paste the full <iframe> code from Google Maps > Share > Embed a map.', 'antigravity-core')}
+                        label={__('Google Maps Embed Code (Iframe)', 'first-church-core-blocks')}
+                        help={__('Paste the full <iframe> code from Google Maps > Share > Embed a map.', 'first-church-core-blocks')}
                         value={mapEmbedIframe}
                         onChange={(val) => setAttributes({ mapEmbedIframe: val })}
                         rows={6}

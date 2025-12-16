@@ -6,15 +6,15 @@ export default function Edit({ attributes, setAttributes }) {
 	const { layoutMode, verticalSpacing, hasDecoration, decorationPosition } = attributes;
 
     const blockProps = useBlockProps({
-        className: `antigravity-section mode-${layoutMode} spacing-${verticalSpacing} ${hasDecoration ? 'has-decoration decoration-' + decorationPosition : ''}`
+        className: `fc-section fc-section--mode-${layoutMode} fc-section--spacing-${verticalSpacing} ${hasDecoration ? 'fc-section--has-decoration fc-section--decoration-' + decorationPosition : ''}`
     });
 
 	return (
 		<>
             <InspectorControls>
-                <PanelBody title={__('Section Layout', 'antigravity')}>
+                <PanelBody title={__('Section Layout', 'first-church-core-blocks')}>
                     <SelectControl
-                        label={__('Width Mode', 'antigravity')}
+                        label={__('Width Mode', 'first-church-core-blocks')}
                         value={layoutMode}
                         options={[
                             { label: 'Contained (Max Width)', value: 'contained' },
@@ -24,7 +24,7 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(val) => setAttributes({ layoutMode: val })}
                     />
                     <SelectControl
-                        label={__('Vertical Spacing', 'antigravity')}
+                        label={__('Vertical Spacing', 'first-church-core-blocks')}
                         value={verticalSpacing}
                         options={[
                             { label: 'None (0px)', value: 'none' },
@@ -35,7 +35,7 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(val) => setAttributes({ verticalSpacing: val })}
                     />
                 </PanelBody>
-                <PanelBody title={__('Decoration', 'antigravity')}>
+                <PanelBody title={__('Decoration', 'first-church-core-blocks')}>
                      <ToggleControl
                         label="Show Gold Border"
                         checked={hasDecoration}
@@ -57,7 +57,7 @@ export default function Edit({ attributes, setAttributes }) {
             </InspectorControls>
 
 			<div {...blockProps}>
-                <div className="antigravity-section-inner">
+                <div className="fc-section__inner">
 				    <InnerBlocks />
                 </div>
 			</div>

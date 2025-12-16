@@ -1,12 +1,12 @@
 /* Fundraiser Component Styles */
 
-.antigravity-fundraiser {
+.fc-fundraiser {
     padding: var(--spacing-64, 4rem) var(--wp--layout--margin);
     background-color: var(--wp--preset--color--sandwood);
 }
 
 /* --- Shared Section Header Treatement --- */
-.fundraiser-header {
+.fc-fundraiser__header {
     text-align: center;
     margin-bottom: var(--spacing-48, 3rem);
     display: flex;
@@ -14,7 +14,7 @@
     align-items: center;
 }
 
-.fundraiser-title {
+.fc-fundraiser__title {
     font-family: var(--wp--preset--font-family--playfair-display);
     font-size: var(--wp--preset--font-size--h2);
     font-weight: 700;
@@ -23,14 +23,14 @@
     margin: 0 0 var(--spacing-24, 1.5rem) 0;
 }
 
-.fundraiser-line {
+.fc-fundraiser__line {
     width: 80px;
     height: 4px;
     background-color: var(--wp--preset--color--divine-gold);
 }
 
 /* --- The Progress Bar Container --- */
-.fundraiser-container {
+.fc-fundraiser__container {
     max-width: 800px;
     margin: 0 auto;
     background: white;
@@ -40,7 +40,7 @@
 }
 
 /* --- Metrics Grid --- */
-.fundraiser-metrics {
+.fc-fundraiser__metrics {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -49,12 +49,12 @@
     gap: 1rem;
 }
 
-.metric-group {
+.fc-fundraiser__metric-group {
     display: flex;
     flex-direction: column;
 }
 
-.metric-label {
+.fc-fundraiser__metric-label {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 0.875rem;
     text-transform: uppercase;
@@ -64,25 +64,25 @@
     margin-bottom: 0.5rem;
 }
 
-.metric-value {
+.fc-fundraiser__metric-value {
     font-family: var(--wp--preset--font-family--playfair-display);
     font-weight: 700;
     color: var(--wp--preset--color--neutral-900);
     line-height: 1;
 }
 
-.metric-value.raised {
+.fc-fundraiser__metric-value--raised {
     font-size: clamp(2.5rem, 5vw, 4rem);
     color: var(--wp--preset--color--burgundy);
 }
 
-.metric-value.goal {
+.fc-fundraiser__metric-value--goal {
     font-size: 1.5rem;
     color: var(--wp--preset--color--neutral-500);
 }
 
 /* --- Bar --- */
-.progress-track {
+.fc-fundraiser__progress-track {
     width: 100%;
     height: 24px;
     background-color: var(--wp--preset--color--neutral-200);
@@ -92,7 +92,7 @@
     margin-bottom: var(--spacing-48, 3rem);
 }
 
-.progress-fill {
+.fc-fundraiser__progress-fill {
     height: 100%;
     background-color: var(--wp--preset--color--burgundy);
     border-radius: 12px;
@@ -101,7 +101,7 @@
 }
 
 /* Shine effect */
-.progress-fill::after {
+.fc-fundraiser__progress-fill::after {
     content: '';
     position: absolute;
     top: 0;
@@ -124,12 +124,12 @@
 }
 
 /* --- CTA --- */
-.fundraiser-actions {
+.fc-fundraiser__actions {
     display: flex;
     justify-content: center;
 }
 
-.donate-button {
+.fc-fundraiser__button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -146,7 +146,7 @@
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.donate-button:hover {
+.fc-fundraiser__button:hover {
     background-color: var(--wp--preset--color--burgundy);
     color: white;
     transform: translateY(-2px);

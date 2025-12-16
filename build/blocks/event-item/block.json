@@ -1,12 +1,12 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "antigravity/event-item",
-  "version": "1.0.0",
-  "title": "Event Item",
-  "category": "antigravity",
+  "name": "firstchurch/event-item",
+  "version": "0.1.0",
+  "title": "Event Item (Manual)",
+  "category": "firstchurch",
   "parent": [
-    "antigravity/event-list"
+    "firstchurch/event-list"
   ],
   "icon": "calendar-alt",
   "description": "A single event card for manual entry.",
@@ -58,7 +58,7 @@
   "supports": {
     "html": false
   },
-  "textdomain": "antigravity-core-blocks",
+  "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
   "style": "file:./style-index.css",
   "render": "file:./render.php"

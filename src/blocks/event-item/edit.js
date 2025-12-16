@@ -28,7 +28,7 @@ export default function Edit({ attributes, setAttributes }) {
     return (
         <div {...useBlockProps()}>
             <InspectorControls>
-                <PanelBody title={__('Event Details', 'antigravity-core-blocks')}>
+                <PanelBody title={__('Event Details', 'first-church-core-blocks')}>
                     <TextControl
                         label="Label (Type)"
                         value={label}
@@ -52,7 +52,7 @@ export default function Edit({ attributes, setAttributes }) {
                     />
                 </PanelBody>
 
-                <PanelBody title={__('Date Selection', 'antigravity-core-blocks')} initialOpen={false}>
+                <PanelBody title={__('Date Selection', 'first-church-core-blocks')} initialOpen={false}>
                     <p><strong>Start Date</strong></p>
                     <DatePicker
                         currentDate={dateStart}
@@ -75,7 +75,7 @@ export default function Edit({ attributes, setAttributes }) {
                     )}
                 </PanelBody>
 
-                <PanelBody title={__('Complex Schedule', 'antigravity-core-blocks')} initialOpen={false}>
+                <PanelBody title={__('Complex Schedule', 'first-church-core-blocks')} initialOpen={false}>
                      <TextareaControl
                         label="Schedule Lines"
                         value={scheduleString}
@@ -85,7 +85,7 @@ export default function Edit({ attributes, setAttributes }) {
                      />
                 </PanelBody>
 
-                <PanelBody title={__('Media (Optional)', 'antigravity-core-blocks')} initialOpen={false}>
+                <PanelBody title={__('Media (Optional)', 'first-church-core-blocks')} initialOpen={false}>
                     <MediaUploadCheck>
                         <MediaUpload
                             onSelect={onSelectMedia}
@@ -106,7 +106,7 @@ export default function Edit({ attributes, setAttributes }) {
                     )}
                 </PanelBody>
 
-                <PanelBody title={__('Action / Link', 'antigravity-core-blocks')} initialOpen={false}>
+                <PanelBody title={__('Action / Link', 'first-church-core-blocks')} initialOpen={false}>
                     <TextControl
                         label="Button Text"
                         value={ctaText}

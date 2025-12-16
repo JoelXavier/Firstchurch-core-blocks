@@ -1,6 +1,8 @@
 /* Author Card Styles */
 
-.antigravity-author-card {
+/* Author Card Styles */
+
+.fc-author-card {
     display: flex;
     flex-direction: column; /* Stacked by default for sidebar */
     align-items: center; /* Center align text */
@@ -12,25 +14,23 @@
     max-width: 100%;
     border-top: 1px solid var(--wp--preset--color--neutral-300);
     border-bottom: 1px solid var(--wp--preset--color--neutral-300);
-    /* background-color: var(--wp--preset--color--white); REMOVED for transparency */
 }
 
-.author-card-image {
+.fc-author-card__media {
     width: 80px;
     height: 80px;
     border-radius: 50%;
     overflow: hidden;
-    /* background-color: var(--wp--preset--color--neutral-200); REMOVED */
     flex-shrink: 0;
 }
 
-.author-card-image img {
+.fc-author-card__media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.author-card-placeholder {
+.fc-author-card__placeholder {
     width: 100%;
     height: 100%;
     display: flex;
@@ -41,13 +41,13 @@
     color: var(--wp--preset--color--neutral-500);
 }
 
-.author-card-info {
+.fc-author-card__info {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
 }
 
-.author-card-name {
+.fc-author-card__name {
     font-family: var(--wp--preset--font-family--playfair-display);
     font-weight: 700;
     font-size: 1.125rem;
@@ -55,7 +55,7 @@
     line-height: 1.2;
 }
 
-.author-card-team {
+.fc-author-card__team {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -64,7 +64,7 @@
     font-weight: 700;
 }
 
-.author-card-location {
+.fc-author-card__location {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 0.75rem;
     color: var(--wp--preset--color--neutral-600);
@@ -72,7 +72,7 @@
 
 /* On Mobile/Tablet where it drops to bottom, maybe row layout? */
 @media (max-width: 768px) {
-    .antigravity-author-card {
+    .fc-author-card {
         flex-direction: row;
         align-items: center;
         text-align: left;
@@ -82,7 +82,7 @@
         width: 100%;
     }
     
-    .antigravity-author-card .author-card-info {
+    .fc-author-card .fc-author-card__info {
         align-items: flex-start;
     }
 }

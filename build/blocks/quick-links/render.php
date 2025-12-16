@@ -7,20 +7,20 @@ $attributes = $attributes ?? [];
 $title = $attributes['title'] ?? 'Quick Links';
 
 $wrapper_attributes = get_block_wrapper_attributes([
-    'class' => 'antigravity-quick-links'
+    'class' => 'fc-quick-links'
 ]);
 ?>
 
 <section <?php echo $wrapper_attributes; ?>>
-    <div class="quick-links-inner">
+    <div class="fc-quick-links__inner">
         <!-- Header -->
-        <div class="quick-links-header">
-            <h2 class="quick-links-title"><?php echo wp_kses_post($title); ?></h2>
-            <div class="quick-links-underline"></div>
+        <div class="fc-quick-links__header">
+            <h2 class="fc-quick-links__title"><?php echo wp_kses_post($title); ?></h2>
+            <div class="fc-quick-links__underline"></div>
         </div>
 
         <!-- Links Container -->
-        <div class="quick-links-list">
+        <div class="fc-quick-links__list">
             <?php echo $content; ?>
         </div>
     </div>

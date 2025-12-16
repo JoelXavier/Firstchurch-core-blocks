@@ -7,29 +7,29 @@ export default function Edit({ attributes, setAttributes }) {
     const { blockTitle, blockSubtitle, perPage, columns, filterStyle, showCategory, showExcerpt } = attributes;
     
     const blockProps = useBlockProps({
-        className: `antigravity-event-feed antigravity-listing-component layout-${filterStyle}`
+        className: `firstchurch-event-feed firstchurch-listing-component layout-${filterStyle}`
     });
 
     return (
         <>
             <InspectorControls>
-                <PanelBody title={__('Feed Settings', 'antigravity-core-blocks')}>
+                <PanelBody title={__('Feed Settings', 'first-church-core-blocks')}>
                      <RangeControl
-                        label={__('Items Per Page', 'antigravity-core-blocks')}
+                        label={__('Items Per Page', 'first-church-core-blocks')}
                         value={perPage}
                         onChange={(value) => setAttributes({ perPage: value })}
                         min={3}
                         max={24}
                     />
                      <RangeControl
-                        label={__('Columns (Grid)', 'antigravity-core-blocks')}
+                        label={__('Columns (Grid)', 'first-church-core-blocks')}
                         value={columns}
                         onChange={(value) => setAttributes({ columns: value })}
                         min={1}
                         max={4}
                     />
                     <SelectControl
-                        label={__('Filter Style', 'antigravity-core-blocks')}
+                        label={__('Filter Style', 'first-church-core-blocks')}
                         value={filterStyle}
                         options={[
                             { label: 'Sidebar (Left)', value: 'sidebar' },
@@ -39,14 +39,14 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(value) => setAttributes({ filterStyle: value })}
                     />
                 </PanelBody>
-                <PanelBody title={__('Display Options', 'antigravity-core-blocks')}>
+                <PanelBody title={__('Display Options', 'first-church-core-blocks')}>
                     <ToggleControl
-                        label={__('Show Event Type', 'antigravity-core-blocks')}
+                        label={__('Show Event Type', 'first-church-core-blocks')}
                         checked={showCategory}
                         onChange={(value) => setAttributes({ showCategory: value })}
                     />
                     <ToggleControl
-                        label={__('Show Excerpt', 'antigravity-core-blocks')}
+                        label={__('Show Excerpt', 'first-church-core-blocks')}
                         checked={showExcerpt}
                         onChange={(value) => setAttributes({ showExcerpt: value })}
                     />
@@ -60,7 +60,7 @@ export default function Edit({ attributes, setAttributes }) {
                         className="listing-title"
                         value={blockTitle}
                         onChange={(value) => setAttributes({ blockTitle: value })}
-                        placeholder={__('Section Title...', 'antigravity-core-blocks')}
+                        placeholder={__('Section Title...', 'first-church-core-blocks')}
                     />
                     <div className="listing-decoration"></div>
                      <RichText
@@ -68,7 +68,7 @@ export default function Edit({ attributes, setAttributes }) {
                         className="listing-subtitle"
                         value={blockSubtitle}
                         onChange={(value) => setAttributes({ blockSubtitle: value })}
-                        placeholder={__('Add a subtitle...', 'antigravity-core-blocks')}
+                        placeholder={__('Add a subtitle...', 'first-church-core-blocks')}
                     />
                 </div>
 

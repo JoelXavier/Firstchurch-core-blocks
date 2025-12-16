@@ -1,10 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "antigravity/card-grid",
-  "version": "1.1.0",
-  "title": "Card Grid",
-  "category": "antigravity",
+  "name": "firstchurch/card-grid",
+  "version": "0.1.0",
+  "title": "Card Grid (3-Up)",
+  "category": "firstchurch",
   "icon": "grid-view",
   "description": "A responsive grid container for displaying content cards in 3 or 4 columns.",
   "supports": {
@@ -37,7 +37,7 @@
       "type": "string"
     }
   },
-  "textdomain": "antigravity-core",
+  "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

@@ -20,35 +20,35 @@ export const ArticleHero = ({
     variant = "standard"
 }) => {
     return (
-        <header className={`antigravity-article-hero variant-${variant}`}>
+        <header className={`fc-article-hero fc-article-hero--${variant}`}>
             {/* Background Image (Immersive Only) */}
             {variant === 'immersive' && imageUrl && (
-                <div className="article-hero-bg">
+                <div className="fc-article-hero__bg">
                     <img src={imageUrl} alt="" />
-                    <div className="article-hero-overlay"></div>
+                    <div className="fc-article-hero__overlay"></div>
                 </div>
             )}
 
-            <div className="article-hero-container">
-                <div className="article-hero-content">
+            <div className="fc-article-hero__container">
+                <div className="fc-article-hero__content">
                     {/* Meta Top */}
-                    <div className="article-meta-top">
-                        <span className="article-category">{category}</span>
-                        <span className="article-date">{date}</span>
+                    <div className="fc-article-hero__meta-top">
+                        <span className="fc-article-hero__category">{category}</span>
+                        <span className="fc-article-hero__date">{date}</span>
                     </div>
 
-                    <h1 className="article-title">{title}</h1>
+                    <h1 className="fc-article-hero__title">{title}</h1>
 
                     {/* Meta Bottom */}
-                    <div className="article-meta-bottom">
-                        <span className="article-byline">By <span className="author-name">{author}</span></span>
+                    <div className="fc-article-hero__meta-bottom">
+                        <span className="fc-article-hero__byline">By <span className="fc-article-hero__author">{author}</span></span>
                     </div>
                 </div>
             </div>
 
             {/* Standard Image (Below Title) */}
             {variant === 'standard' && imageUrl && (
-                <div className="article-hero-standard-image">
+                <div className="fc-article-hero__standard-media">
                     <img src={imageUrl} alt={title} />
                 </div>
             )}

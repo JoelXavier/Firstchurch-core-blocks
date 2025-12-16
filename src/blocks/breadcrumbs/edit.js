@@ -7,20 +7,20 @@ export default function Edit({ attributes, setAttributes }) {
 	const { separator, showHome } = attributes;
 
     const blockProps = useBlockProps({
-        className: 'antigravity-breadcrumbs'
+        className: 'fc-breadcrumbs'
     });
 
 	return (
 		<>
             <InspectorControls>
-                <PanelBody title={__('Settings', 'antigravity-core-blocks')}>
+                <PanelBody title={__('Settings', 'first-church-core-blocks')}>
                      <ToggleControl
-                        label={__('Show Home Link', 'antigravity-core-blocks')}
+                        label={__('Show Home Link', 'first-church-core-blocks')}
                         checked={showHome}
                         onChange={(val) => setAttributes({ showHome: val })}
                     />
                     <TextControl
-                        label={__('Separator', 'antigravity-core-blocks')}
+                        label={__('Separator', 'first-church-core-blocks')}
                         value={separator}
                         onChange={(val) => setAttributes({ separator: val })}
                     />
@@ -28,11 +28,11 @@ export default function Edit({ attributes, setAttributes }) {
             </InspectorControls>
 
 			<div {...blockProps}>
-                <span className="breadcrumb-item">HOME</span>
-                <span className="breadcrumb-separator">{separator}</span>
-                <span className="breadcrumb-item">PARENT PAGE</span>
-                <span className="breadcrumb-separator">{separator}</span>
-                <span className="breadcrumb-item current">CURRENT PAGE</span>
+                <span className="fc-breadcrumbs__item">HOME</span>
+                <span className="fc-breadcrumbs__separator">{separator}</span>
+                <span className="fc-breadcrumbs__item">PARENT PAGE</span>
+                <span className="fc-breadcrumbs__separator">{separator}</span>
+                <span className="fc-breadcrumbs__item fc-breadcrumbs__item--current">CURRENT PAGE</span>
 			</div>
 		</>
 	);

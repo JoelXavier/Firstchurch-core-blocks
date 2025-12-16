@@ -23,25 +23,25 @@ export default function Edit({ attributes, setAttributes }) {
     return (
         <>
             <InspectorControls>
-                <PanelBody title={__('Content Settings', 'antigravity-core')}>
+                <PanelBody title={__('Content Settings', 'first-church-core-blocks')}>
                     <TextControl
-                        label={__('Link URL', 'antigravity-core')}
+                        label={__('Link URL', 'first-church-core-blocks')}
                         value={linkUrl}
                         onChange={(value) => setAttributes({ linkUrl: value })}
                     />
                     <TextControl
-                        label={__('Button Text', 'antigravity-core')}
+                        label={__('Button Text', 'first-church-core-blocks')}
                         value={linkText}
                         onChange={(value) => setAttributes({ linkText: value })}
                     />
                 </PanelBody>
             </InspectorControls>
 
-            <div { ...useBlockProps({ className: 'antigravity-card-item' }) }>
-                <div className="card-link-wrapper">
+            <div { ...useBlockProps({ className: 'fc-card-item' }) }>
+                <div className="fc-card-link-wrapper">
                     
                     {/* Image Area */}
-                    <div className="card-image-container">
+                    <div className="fc-card-image-wrapper">
                         <MediaUploadCheck>
                             <MediaUpload
                                 onSelect={onSelectMedia}
@@ -54,7 +54,7 @@ export default function Edit({ attributes, setAttributes }) {
                                                 <img 
                                                     src={mediaUrl} 
                                                     alt={title} 
-                                                    className="card-image" 
+                                                    className="fc-card-image" 
                                                 />
                                                 <Button 
                                                     onClick={open}
@@ -62,17 +62,17 @@ export default function Edit({ attributes, setAttributes }) {
                                                     className="has-icon"
                                                     style={{ position: 'absolute', top: 10, right: 10, zIndex: 10 }}
                                                 >
-                                                    {__('Replace', 'antigravity-core')}
+                                                    {__('Replace', 'first-church-core-blocks')}
                                                 </Button>
                                             </>
                                         ) : (
                                             <Button 
                                                 onClick={open}
                                                 variant="secondary"
-                                                className="editor-media-placeholder"
+                                                className="fc-card-image-placeholder"
                                                 style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
                                             >
-                                                {__('Upload Image', 'antigravity-core')}
+                                                {__('Upload Image', 'first-church-core-blocks')}
                                             </Button>
                                         )}
                                     </>
@@ -81,29 +81,27 @@ export default function Edit({ attributes, setAttributes }) {
                         </MediaUploadCheck>
                     </div>
 
-                    <div className="card-content">
+                    <div className="fc-card-content">
                         {/* Label */}
                         <RichText
                             tagName="span"
-                            className="card-label"
+                            className="fc-card-label"
                             value={label}
                             onChange={(value) => setAttributes({ label: value })}
-                            placeholder={__('LABEL', 'antigravity-core')}
+                            placeholder={__('LABEL', 'first-church-core-blocks')}
                             allowedFormats={[]} // Plain text only
                         />
 
                         {/* Title */}
                         <RichText
                             tagName="h3"
-                            className="card-title"
+                            className="fc-card-title"
                             value={title}
                             onChange={(value) => setAttributes({ title: value })}
-                            placeholder={__('Enter Title...', 'antigravity-core')}
+                            placeholder={__('Enter Title...', 'first-church-core-blocks')}
                         />
 
-                        <span className="card-cta">{linkText}</span>
-                        
-                        <div className="card-bottom-border"></div>
+                        <span className="fc-card-cta">{linkText}</span>
                     </div>
                 </div>
             </div>

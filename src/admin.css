@@ -1,5 +1,5 @@
 /* ========================================= */
-/* ANTIGRAVITY ADMIN THEME                   */
+/* FIRST CHURCH ADMIN THEME                   */
 /* ========================================= */
 
 :root {
@@ -85,3 +85,10 @@ a:hover, a:active, a:focus {
 .notice-error {
     border-left-color: var(--ag-cardinal) !important;
 }
+
+/* Ensure our custom PHP-injected logo overrides the default dashicon content */
+#wpadminbar #wp-admin-bar-wp-logo > .ab-item .ab-icon:before {
+    content: "" !important; 
+}
+
+

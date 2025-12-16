@@ -10,26 +10,26 @@ export function QuickLinks({
     ]
 }) {
     return (
-        <section className="antigravity-quick-links">
-            <div className="quick-links-inner">
+        <section className="fc-quick-links">
+            <div className="fc-quick-links__inner">
                 
                 {/* Header (Left) */}
-                <div className="quick-links-header">
-                    <h2 className="quick-links-title">{title}</h2>
-                    <div className="quick-links-underline"></div>
+                <div className="fc-quick-links__header">
+                    <h2 className="fc-quick-links__title">{title}</h2>
+                    <div className="fc-quick-links__underline"></div>
                 </div>
 
                 {/* List (Right) */}
-                <div className="quick-links-list">
+                <div className="fc-quick-links__list">
                     {links.map((link) => (
-                        <a key={link.id} href={link.url} className="quick-link-item">
-                            <div className="quick-link-image-wrapper">
-                                <img src={link.image} alt="" className="quick-link-image" />
+                        <a key={link.id} href={link.url} className="fc-quick-link-item">
+                            <div className="fc-quick-link-item__image-wrapper">
+                                <img src={link.image} alt="" className="fc-quick-link-item__image" />
                             </div>
-                            <div className="quick-link-content">
-                                <span className="quick-link-label">
+                            <div className="fc-quick-link-item__content">
+                                <span className="fc-quick-link-item__label">
                                     {link.label}
-                                    <span className="quick-link-arrow">→</span>
+                                    <span className="fc-quick-link-item__arrow">→</span>
                                 </span>
                             </div>
                         </a>

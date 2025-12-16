@@ -1,9 +1,9 @@
 {
   "apiVersion": 3,
-  "name": "antigravity/fundraiser",
-  "version": "1.0.0",
-  "title": "Fundraiser (Progress Bar)",
-  "category": "antigravity",
+  "name": "firstchurch/fundraiser",
+  "version": "0.1.0",
+  "title": "Fundraiser",
+  "category": "firstchurch",
   "icon": "chart-bar",
   "description": "A sleek progress bar for fundraising goals.",
   "supports": {
@@ -32,7 +32,7 @@
       "default": "#"
     }
   },
-  "textdomain": "antigravity-core",
+  "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

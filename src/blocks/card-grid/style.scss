@@ -1,24 +1,40 @@
 @import '../../components/Card/Card.scss';
 
-.antigravity-card-grid {
+.fc-card-grid {
     padding: var(--spacing-64, 4rem) var(--wp--layout--margin);
     
-    .grid-container {
+    .fc-card-grid__grid {
         display: grid;
         grid-template-columns: 1fr; /* Mobile default */
         gap: var(--spacing-32, 2rem);
         margin-top: var(--spacing-48, 3rem);
     }
+
+    .fc-card-grid__header {
+        margin-bottom: 2rem;
+    }
+    
+    .fc-card-grid__title {
+        /* Inherit or defined globally? */
+        color: var(--card-section-title-color, inherit);
+    }
+    
+    .fc-card-grid__line {
+        width: 60px;
+        height: 2px;
+        background-color: var(--card-section-title-color, currentColor);
+        margin-top: 1rem;
+    }
 }
 
 @media (min-width: 600px) {
-    .antigravity-card-grid .grid-container {
+    .fc-card-grid .fc-card-grid__grid {
         grid-template-columns: repeat(2, 1fr); /* Tablet 2-up */
     }
 }
 
 @media (min-width: 1024px) {
-    .antigravity-card-grid .grid-container {
+    .fc-card-grid .fc-card-grid__grid {
         /* Use the CSS variable set in render.php, default to 3 */
         grid-template-columns: repeat(var(--grid-columns, 3), 1fr);
     }

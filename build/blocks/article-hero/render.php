@@ -24,42 +24,43 @@ if ($variant === 'immersive') {
     }
 }
 // Map attributes to CSS classes (matching BEM from SCSS)
-$wrapper_class = 'antigravity-article-hero variant-' . esc_attr($variant);
+// Map attributes to CSS classes (matching BEM from SCSS)
+$wrapper_class = 'fc-article-hero fc-article-hero--' . esc_attr($variant);
 
 ?>
 <header class="<?php echo esc_attr($wrapper_class); ?>">
 
     <?php if ($variant === 'immersive' && $image_url): ?>
-        <div class="article-hero-bg">
+        <div class="fc-article-hero__bg">
             <img src="<?php echo esc_url($image_url); ?>" alt="" />
-            <div class="article-hero-overlay"></div>
+            <div class="fc-article-hero__overlay"></div>
         </div>
     <?php endif; ?>
 
-    <div class="article-hero-container">
-        <div class="article-hero-content">
-            <div class="article-meta-top">
+    <div class="fc-article-hero__container">
+        <div class="fc-article-hero__content">
+            <div class="fc-article-hero__meta-top">
                 <?php if ($category): ?>
-                    <span class="article-category"><?php echo esc_html($category); ?></span>
+                    <span class="fc-article-hero__category"><?php echo esc_html($category); ?></span>
                 <?php endif; ?>
                 <?php if ($date): ?>
-                    <span class="article-date"><?php echo esc_html($date); ?></span>
+                    <span class="fc-article-hero__date"><?php echo esc_html($date); ?></span>
                 <?php endif; ?>
             </div>
 
-            <h1 class="article-title"><?php echo esc_html($title); ?></h1>
+            <h1 class="fc-article-hero__title"><?php echo esc_html($title); ?></h1>
 
-            <div class="article-meta-bottom">
+            <div class="fc-article-hero__meta-bottom">
                 <?php if ($author_name): ?>
-                    <span class="article-byline">By <span
-                            class="author-name"><?php echo esc_html($author_name); ?></span></span>
+                    <span class="fc-article-hero__byline">By <span
+                            class="fc-article-hero__author"><?php echo esc_html($author_name); ?></span></span>
                 <?php endif; ?>
             </div>
         </div>
     </div>
 
     <?php if ($variant === 'standard' && $image_url): ?>
-        <div class="article-hero-standard-image">
+        <div class="fc-article-hero__standard-media">
             <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($title); ?>" />
         </div>
     <?php endif; ?>

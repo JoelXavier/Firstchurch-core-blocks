@@ -8,7 +8,7 @@ $separator = isset($attributes['separator']) ? $attributes['separator'] : '/';
 $show_home = isset($attributes['showHome']) ? $attributes['showHome'] : true;
 
 $wrapper_attributes = get_block_wrapper_attributes(array(
-    'class' => 'antigravity-breadcrumbs'
+    'class' => 'fc-breadcrumbs'
 ));
 
 // Build the trail
@@ -85,15 +85,15 @@ if (is_singular() || is_page()) {
 <nav <?php echo $wrapper_attributes; ?> aria-label="Breadcrumb">
     <?php foreach ($trail_items as $index => $item): ?>
         <?php if ($index > 0): ?>
-            <span class="breadcrumb-separator" aria-hidden="true"><?php echo esc_html($separator); ?></span>
+            <span class="fc-breadcrumbs__separator" aria-hidden="true"><?php echo esc_html($separator); ?></span>
         <?php endif; ?>
 
         <?php if ($item['current']): ?>
-            <span class="breadcrumb-item current" aria-current="page">
+            <span class="fc-breadcrumbs__item fc-breadcrumbs__item--current" aria-current="page">
                 <?php echo esc_html($item['title']); ?>
             </span>
         <?php else: ?>
-            <a href="<?php echo esc_url($item['url']); ?>" class="breadcrumb-item">
+            <a href="<?php echo esc_url($item['url']); ?>" class="fc-breadcrumbs__item">
                 <?php echo esc_html($item['title']); ?>
             </a>
         <?php endif; ?>

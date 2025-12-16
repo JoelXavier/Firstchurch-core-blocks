@@ -1,6 +1,8 @@
 /* Hero Split Component Styles */
 
-.antigravity-hero-split {
+/* Hero Split Component Styles */
+
+.fc-hero-split {
     display: flex;
     flex-direction: column; /* Mobile first: Stacked */
     width: 100%;
@@ -20,18 +22,18 @@
 }
 
 @media (min-width: 960px) {
-    .antigravity-hero-split {
+    .fc-hero-split {
         flex-direction: row;
         min-height: 600px; /* Ensure substantial presence on desktop */
     }
     
-    .antigravity-hero-split.image-right {
+    .fc-hero-split--right {
         flex-direction: row-reverse;
     }
 }
 
 /* --- Image Side --- */
-.hero-split-image-wrapper {
+.fc-hero-split__media {
     width: 100%;
     position: relative;
     /* Default Mobile Aspect Ratio (Landscape) */
@@ -40,16 +42,16 @@
 }
 
 /* Aspect Ratio Modifiers */
-.antigravity-hero-split.aspect-ratio-portrait .hero-split-image-wrapper {
+.fc-hero-split--portrait .fc-hero-split__media {
     aspect-ratio: 3 / 4;
 }
 
-.antigravity-hero-split.aspect-ratio-square .hero-split-image-wrapper {
+.fc-hero-split--square .fc-hero-split__media {
     aspect-ratio: 1 / 1;
 }
 
 @media (min-width: 960px) {
-    .hero-split-image-wrapper {
+    .fc-hero-split__media {
         width: 50%;
         min-height: auto; /* Let flex stretch it */
         /* On desktop, we inherently want the height to track the content... 
@@ -65,7 +67,7 @@
     */
 }
 
-.hero-split-image {
+.fc-hero-split__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -73,7 +75,7 @@
 }
 
 /* --- Content Side --- */
-.hero-split-content {
+.fc-hero-split__content {
     width: 100%;
     padding: var(--spacing-48, 3rem) var(--wp--layout--margin);
     display: flex;
@@ -83,13 +85,13 @@
 }
 
 @media (min-width: 960px) {
-    .hero-split-content {
+    .fc-hero-split__content {
         width: 50%;
         padding: var(--spacing-64, 5rem) var(--spacing-64, 5rem); /* Extra breathing room */
     }
 }
 
-.hero-split-label {
+.fc-hero-split__label {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 0.875rem;
     text-transform: uppercase;
@@ -99,7 +101,7 @@
     opacity: 0.9;
 }
 
-.hero-split-title {
+.fc-hero-split__title {
     font-family: var(--wp--preset--font-family--playfair-display);
     font-weight: 700;
     font-size: clamp(2.5rem, 5vw, 3.5rem);
@@ -110,7 +112,7 @@
 }
 
 /* --- Link & Decor --- */
-.hero-split-link {
+.fc-hero-split__link {
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
@@ -125,11 +127,11 @@
     transition: opacity 0.3s ease;
 }
 
-.hero-split-link:hover {
+.fc-hero-split__link:hover {
     opacity: 0.8;
 }
 
-.hero-split-link svg {
+.fc-hero-split__link svg {
     width: 1rem; /* 16px */
     height: 1rem;
     transition: transform 0.3s ease;
@@ -137,11 +139,11 @@
     fill: currentColor;
 }
 
-.hero-split-link:hover svg {
+.fc-hero-split__link:hover svg {
     transform: translateX(5px);
 }
 
-.hero-split-bar {
+.fc-hero-split__bar {
     width: 120px;
     height: 4px;
     background-color: var(--wp--preset--color--divine-gold);

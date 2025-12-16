@@ -88,22 +88,22 @@ export default function Edit({ attributes, setAttributes }) {
     return (
         <div {...useBlockProps()}>
             <InspectorControls>
-                <PanelBody title={__('Content Settings', 'antigravity-core-blocks')}>
+                <PanelBody title={__('Content Settings', 'first-church-core-blocks')}>
                     <TextControl
-                        label={__('Title', 'antigravity-core-blocks')}
+                        label={__('Title', 'first-church-core-blocks')}
                         value={blockTitle}
                         onChange={(val) => setAttributes({ blockTitle: val })}
                     />
                     <TextControl
-                        label={__('Subtitle', 'antigravity-core-blocks')}
+                        label={__('Subtitle', 'first-church-core-blocks')}
                         value={blockSubtitle}
                         onChange={(val) => setAttributes({ blockSubtitle: val })}
                     />
                 </PanelBody>
 
-                <PanelBody title={__('Query Settings', 'antigravity-core-blocks')}>
+                <PanelBody title={__('Query Settings', 'first-church-core-blocks')}>
                     <SelectControl
-                        label={__('Card Type', 'antigravity-core-blocks')}
+                        label={__('Card Type', 'first-church-core-blocks')}
                         value={cardType}
                         options={[
                             { label: 'Standard Card', value: 'standard' },
@@ -112,7 +112,7 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(val) => setAttributes({ cardType: val })}
                     />
                     <SelectControl
-                        label={__('Post Type', 'antigravity-core-blocks')}
+                        label={__('Post Type', 'first-church-core-blocks')}
                         value={postType}
                         options={[
                           { label: 'Posts', value: 'post' },
@@ -125,7 +125,7 @@ export default function Edit({ attributes, setAttributes }) {
                     
                      {taxonomyOptions.length > 0 && (
                         <SelectControl
-                            label={__('Query Taxonomy (Pre-Filter)', 'antigravity-core-blocks')}
+                            label={__('Query Taxonomy (Pre-Filter)', 'first-church-core-blocks')}
                             help="Only show posts from these terms initially."
                             value={selectedTaxonomy}
                             options={[{ label: 'None (Show All)', value: '' }, ...taxonomyOptions]}
@@ -135,7 +135,7 @@ export default function Edit({ attributes, setAttributes }) {
 
                     {selectedTaxonomy && (
                         <FormTokenField
-                            label={__('Select Terms', 'antigravity-core-blocks')}
+                            label={__('Select Terms', 'first-church-core-blocks')}
                             value={selectedTerms}
                             suggestions={(terms || []).map((term) => term.name)}
                             onChange={(tokens) => {
@@ -149,7 +149,7 @@ export default function Edit({ attributes, setAttributes }) {
                     )}
 
                     <RangeControl
-                        label={__('Items Limit per Page', 'antigravity-core-blocks')}
+                        label={__('Items Limit per Page', 'first-church-core-blocks')}
                         value={perPage}
                         onChange={(val) => setAttributes({ perPage: val })}
                         min={1}
@@ -157,9 +157,9 @@ export default function Edit({ attributes, setAttributes }) {
                     />
                 </PanelBody>
 
-                <PanelBody title={__('Display Layout', 'antigravity-core-blocks')}>
+                <PanelBody title={__('Display Layout', 'first-church-core-blocks')}>
                      <SelectControl
-                        label={__('Filter Style', 'antigravity-core-blocks')}
+                        label={__('Filter Style', 'first-church-core-blocks')}
                         value={filterStyle}
                         options={[
                             { label: 'Sidebar (Left)', value: 'sidebar' },
@@ -168,7 +168,7 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(val) => setAttributes({ filterStyle: val })}
                     />
                     <RangeControl
-                        label={__('Columns', 'antigravity-core-blocks')}
+                        label={__('Columns', 'first-church-core-blocks')}
                         value={columns}
                         onChange={(val) => setAttributes({ columns: val })}
                         min={2}

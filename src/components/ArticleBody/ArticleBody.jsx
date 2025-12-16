@@ -18,30 +18,30 @@ export const ArticleBody = ({
     children
 }) => {
     return (
-        <section className="antigravity-article-body">
-            <div className="article-body-grid">
+        <section className="fc-article-body">
+            <div className="fc-article-body__grid">
                 {/* Author Sidebar (Left on Desktop, Bottom on Mobile) */}
-                <aside className="article-sidebar">
-                    <div className="sidebar-sticky">
+                <aside className="fc-article-body__sidebar">
+                    <div className="fc-article-body__sticky">
                         <AuthorCard {...author} />
                     </div>
                 </aside>
 
                 {/* Main Content (Center) */}
-                <article className="article-content">
+                <article className="fc-article-body__content">
                     {/* Simulated InnerBlocks Content */}
-                    <div className="article-typography">
+                    <div className="fc-article-body__typography">
                          {children}
                         
                         {/* Tombstone */}
-                        <div className="article-tombstone">
-                            <span className="tombstone-icon">❖</span>
+                        <div className="fc-article-body__tombstone">
+                            <span className="fc-article-body__tombstone-icon">❖</span>
                         </div>
                     </div>
                 </article>
                 
                 {/* Empty Right Column for Balance (Optional, or just use Grid centering) */}
-                <div className="article-right-spacer"></div>
+                <div className="fc-article-body__spacer"></div>
             </div>
         </section>
     );

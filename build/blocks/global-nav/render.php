@@ -6,13 +6,13 @@
  */
 
 // Generate a unique ID for this block instance
-$block_id = 'antigravity-global-nav-' . uniqid();
+$block_id = 'fc-global-nav-' . uniqid();
 
 // Encode attributes to pass to React
 $attributes_json = wp_json_encode($attributes);
 
 ?>
-<div id="<?php echo esc_attr($block_id); ?>" class="antigravity-global-nav-root"
+<div id="<?php echo esc_attr($block_id); ?>" class="fc-global-nav-root"
     data-attributes="<?php echo esc_attr($attributes_json); ?>">
     <!-- Content will be hydrated by React -->
     <noscript>

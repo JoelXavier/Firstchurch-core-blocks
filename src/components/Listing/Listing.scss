@@ -1,4 +1,4 @@
-.antigravity-listing-component {
+.fc-listing {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -7,39 +7,38 @@
     padding: var(--wp--preset--spacing--64) var(--wp--layout--margin);
 
     /* --- Header Section --- */
-    .listing-header {
+    &__header {
         margin-bottom: var(--wp--preset--spacing--64);
         max-width: 800px;
+    }
 
-        .listing-title {
-            font-family: var(--wp--preset--font-family--playfair-display);
-            font-size: var(--wp--preset--font-size--h2);
-            font-weight: 700; /* Ensure Bold */
-            color: var(--wp--preset--color--burgundy);
-            margin: 0 0 0.5rem 0;
-            line-height: 1.1;
-        }
+    &__title {
+        font-family: var(--wp--preset--font-family--playfair-display);
+        font-size: var(--wp--preset--font-size--h2);
+        font-weight: 700;
+        color: var(--wp--preset--color--burgundy);
+        margin: 0 0 0.5rem 0;
+        line-height: 1.1;
+    }
 
-        .listing-subtitle {
-            font-family: var(--wp--preset--font-family--merriweather);
-            font-size: var(--wp--preset--font-size--h5);
-            color: var(--wp--preset--color--neutral-600);
-            margin: 0 0 1.5rem 0;
-        }
+    &__subtitle {
+        font-family: var(--wp--preset--font-family--merriweather);
+        font-size: var(--wp--preset--font-size--h5);
+        color: var(--wp--preset--color--neutral-600);
+        margin: 0 0 1.5rem 0;
+    }
 
-        .listing-decoration {
-            width: 60px;
-            height: 4px;
-            background-color: var(--wp--preset--color--divine-gold);
-            margin-top: 1rem; /* Push it down */
-        }
+    &__decoration {
+        width: 60px;
+        height: 4px;
+        background-color: var(--wp--preset--color--divine-gold);
+        margin-top: 1rem;
     }
 
     /* --- Body Wrapper --- */
-    .listing-body {
+    &__body {
         display: flex;
         gap: var(--wp--preset--spacing--64);
-        /* Default mobile: stack */
         flex-direction: column;
 
         @media (min-width: 1024px) {
@@ -48,163 +47,233 @@
     }
 
     /* --- Sidebar Column --- */
-    .listing-sidebar {
+    &__sidebar {
         width: 100%;
         flex-shrink: 0;
 
         @media (min-width: 1024px) {
             width: 250px;
         }
-
-        .listing-sidebar-sticky {
-            @media (min-width: 1024px) {
-                position: sticky;
-                top: 2rem;
-            }
-        }
     }
 
-    .static-label-pill {
-        display: inline-block;
-        background-color: #C5A059; /* Goldish/Tan from mockup */
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 50px;
-        font-family: var(--wp--preset--font-family--inter);
-        font-weight: 600;
-        font-size: 0.875rem;
-        margin-top: 2rem; 
-        text-align: center;
-        width: fit-content;
+    &__sidebar-sticky {
+        @media (min-width: 1024px) {
+            position: sticky;
+            top: 2rem;
+        }
     }
 
     /* --- Main Column --- */
-    .listing-main {
+    &__main {
         flex-grow: 1;
     }
 
-    /* --- Filters: Variable Width Pills (Shared by Sidebar & Top) --- */
-    .listing-filters {
+    /* --- Filters --- */
+    &__filters {
         display: flex;
         flex-wrap: wrap;
         gap: 0.75rem;
-        align-items: flex-start; /* Ensure rows stack nicely */
+        align-items: flex-start;
 
-        .filter-group-title {
-            width: 100%;
-            flex-basis: 100%;
-            display: block;
-            margin-top: 2rem;
-            margin-bottom: 0.5rem;
-            font-family: var(--wp--preset--font-family--inter);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--wp--preset--color--neutral-500);
-        }
+        &--sidebar {
+            flex-direction: row;
 
-        /* Sidebar specific adjustments */
-        &.listing-filters--sidebar {
-            flex-direction: row; /* wrap pills */
-            
             @media (min-width: 1024px) {
-                /* On desktop sidebar, keep them wrapping or stack? Mockup shows wrapping/stacking mix */
-                flex-direction: column; 
-                align-items: flex-start;
-                
-                /* Override: Mockup actually shows distinct buttons. 
-                   Let's support variable width buttons stacked vertically or packed. */
-                flex-direction: row; 
+                flex-direction: row;
                 flex-wrap: wrap;
             }
         }
     }
-
-    .filter-btn {
-        background-color: var(--wp--preset--color--neutral-900); /* Black Pills */
-        color: white;
-        text-decoration: none; /* No underline */
-        border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 50px;
-        font-family: var(--wp--preset--font-family--inter);
-        font-size: 0.875rem; /* ~14px */
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        white-space: nowrap;
-        width: fit-content; /* Variable width */
-
-        &:hover {
-            background-color: var(--wp--preset--color--neutral-700);
-            transform: translateY(-1px);
-        }
-
-        &.is-active {
-            background-color: var(--wp--preset--color--divine-gold); /* Gold active state */
-            color: white;
-        }
-    }
-
+    
     /* --- Grid --- */
-    .listing-grid {
+    &__grid {
         display: grid;
         grid-template-columns: 1fr;
         gap: var(--wp--preset--spacing--40);
-
-        /* @media (min-width: 600px) {
-           grid-template-columns: repeat(2, 1fr);
-        } */
 
         @media (min-width: 1024px) {
             grid-template-columns: repeat(var(--columns, 3), 1fr);
         }
     }
 
-    .no-results {
-        padding: 4rem;
-        background: var(--wp--preset--color--neutral-50);
-        border-radius: 8px;
-        text-align: center;
-        grid-column: 1 / -1;
-    }
-
     /* --- Pagination --- */
-    .listing-pagination {
+    &__pagination {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 0.5rem;
         margin-top: var(--wp--preset--spacing--64);
         width: 100%;
+    }
+}
 
-        .pagination-btn {
-            background: transparent;
-            border: 1px solid var(--wp--preset--color--neutral-300);
-            color: var(--wp--preset--color--neutral-700);
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            font-family: var(--wp--preset--font-family--inter);
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
+/* Component Classes (BEM) */
+.fc-filter-btn {
+    background-color: var(--wp--preset--color--neutral-900);
+    color: white;
+    text-decoration: none;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    width: fit-content;
 
-            &:hover {
-                border-color: var(--wp--preset--color--divine-gold);
-                color: var(--wp--preset--color--divine-gold);
-            }
+    &:hover {
+        background-color: var(--wp--preset--color--neutral-700);
+        transform: translateY(-1px);
+    }
 
-            &.is-active {
-                background-color: var(--wp--preset--color--divine-gold);
-                border-color: var(--wp--preset--color--divine-gold);
-                color: white;
-            }
+    &.is-active {
+        background-color: var(--wp--preset--color--divine-gold);
+        color: white;
+    }
+}
+
+/* .fc-filter-label removed as it was empty */
+
+.fc-no-results {
+    padding: 4rem;
+    background: var(--wp--preset--color--neutral-50);
+    border-radius: 8px;
+    text-align: center;
+    grid-column: 1 / -1;
+}
+
+.fc-pagination-btn {
+    background: transparent;
+    border: 1px solid var(--wp--preset--color--neutral-300);
+    color: var(--wp--preset--color--neutral-700);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: var(--wp--preset--font-family--inter);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: var(--wp--preset--color--divine-gold);
+        color: var(--wp--preset--color--divine-gold);
+    }
+
+    &.is-active {
+        background-color: var(--wp--preset--color--divine-gold);
+        border-color: var(--wp--preset--color--divine-gold);
+        color: white;
+    }
+}
+
+.fc-pagination-ellipsis {
+    color: var(--wp--preset--color--neutral-500);
+    padding: 0 0.5rem;
+}
+
+/* 
+ * Re-styling Cards under fc-card-item for consistency 
+ * (Note: Ideally Card SCSS should be in its own file, but verifying here to match PHP output)
+ */
+.fc-card-item {
+    height: 100%;
+}
+
+.fc-card-link-wrapper {
+    color: inherit;
+    text-decoration: none;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+
+    &:hover {
+        .fc-card-image {
+            transform: scale(1.05);
         }
-
-        .pagination-ellipsis {
-            color: var(--wp--preset--color--neutral-500);
-            padding: 0 0.5rem;
+        .fc-card-cta {
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
+    }
+}
+
+.fc-card-image-wrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    margin-bottom: var(--spacing-24, 1.5rem);
+    background-color: var(--wp--preset--color--neutral-200);
+}
+
+.fc-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.fc-card-content {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+    gap: var(--spacing-24, 1.5rem);
+    padding-bottom: var(--spacing-16, 1rem);
+}
+
+.fc-card-text-group {
+    display: block;
+}
+
+.fc-card-label {
+    display: block;
+    margin-bottom: var(--spacing-16, 1rem);
+    font-family: var(--wp--preset--font-family--inter);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--card-label-color, var(--wp--preset--color--neutral-900));
+}
+
+.fc-card-title {
+    margin: 0;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: var(--wp--preset--font-size--h4);
+    line-height: 1.2;
+    color: var(--card-title-color, var(--wp--preset--color--neutral-900));
+}
+
+.fc-card-excerpt {
+    margin-top: var(--spacing-16, 1rem);
+    font-family: var(--wp--preset--font-family--merriweather);
+    font-weight: 300;
+    font-size: var(--wp--preset--font-size--body);
+    line-height: 1.6;
+    color: var(--wp--preset--color--neutral-600);
+}
+
+.fc-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--wp--preset--font-family--inter);
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--card-link-color, var(--wp--preset--color--neutral-900));
+    transition: color 0.3s ease;
+
+    &:after {
+        content: "›";
+        font-size: 1.25em;
+        line-height: 1;
+        font-weight: 400;
+        margin-bottom: 2px;
     }
 }
 

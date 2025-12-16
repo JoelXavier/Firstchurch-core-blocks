@@ -1,10 +1,10 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "antigravity/event-list",
+  "name": "firstchurch/event-list",
   "version": "1.0.0",
   "title": "Event List (Manual)",
-  "category": "antigravity",
+  "category": "firstchurch",
   "icon": "calendar-alt",
   "description": "A manually curated list of events. Drag and drop Event Item blocks inside.",
   "attributes": {
@@ -36,7 +36,7 @@
       "text": true
     }
   },
-  "textdomain": "antigravity-core-blocks",
+  "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

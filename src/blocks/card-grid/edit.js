@@ -23,16 +23,16 @@ export default function Edit({ attributes, setAttributes }) {
     };
 
     const blockProps = useBlockProps({
-        className: 'antigravity-card-grid',
+        className: 'fc-card-grid',
         style: style
     });
 
     return (
         <>
             <InspectorControls>
-                <PanelBody title={__('Layout Settings', 'antigravity-core')}>
+                <PanelBody title={__('Layout Settings', 'first-church-core-blocks')}>
                     <RangeControl
-                        label={__('Columns (Desktop)', 'antigravity-core')}
+                        label={__('Columns (Desktop)', 'first-church-core-blocks')}
                         value={columns}
                         onChange={(value) => setAttributes({ columns: value })}
                         min={2}
@@ -40,53 +40,53 @@ export default function Edit({ attributes, setAttributes }) {
                     />
                 </PanelBody>
                 <PanelColorSettings
-                    title={__('Text Colors', 'antigravity-core')}
+                    title={__('Text Colors', 'first-church-core-blocks')}
                     initialOpen={false}
                     colorSettings={[
                         {
                             value: sectionTitleColor,
                             onChange: (value) => setAttributes({ sectionTitleColor: value }),
-                            label: __('Section Title Color', 'antigravity-core'),
+                            label: __('Section Title Color', 'first-church-core-blocks'),
                         },
                         {
                             value: cardLabelColor,
                             onChange: (value) => setAttributes({ cardLabelColor: value }),
-                            label: __('Card Label Color', 'antigravity-core'),
+                            label: __('Card Label Color', 'first-church-core-blocks'),
                         },
                         {
                             value: cardTitleColor,
                             onChange: (value) => setAttributes({ cardTitleColor: value }),
-                            label: __('Card Title Color', 'antigravity-core'),
+                            label: __('Card Title Color', 'first-church-core-blocks'),
                         },
                         {
                             value: cardLinkColor,
                             onChange: (value) => setAttributes({ cardLinkColor: value }),
-                            label: __('Card Link Color', 'antigravity-core'),
+                            label: __('Card Link Color', 'first-church-core-blocks'),
                         },
                     ]}
                 />
             </InspectorControls>
 
             <section { ...blockProps }>
-                <div className="container">
-                    <div className="card-grid-header">
+                <div className="fc-card-grid__inner">
+                    <div className="fc-card-grid__header">
                         <RichText
                             tagName="h2"
-                            className="section-title"
+                            className="fc-card-grid__title"
                             value={ sectionTitle }
                             onChange={ ( value ) => setAttributes( { sectionTitle: value } ) }
-                            placeholder={ __( 'Section Title...', 'antigravity-core' ) }
+                            placeholder={ __( 'Section Title...', 'first-church-core-blocks' ) }
                         />
-                        <div className="section-line"></div>
+                        <div className="fc-card-grid__line"></div>
                     </div>
                     
-                    <div className="grid-container">
+                    <div className="fc-card-grid__grid">
                         <InnerBlocks
-                            allowedBlocks={['antigravity/card-item']}
+                            allowedBlocks={['firstchurch/card-item']}
                             template={[
-                                ['antigravity/card-item'],
-                                ['antigravity/card-item'],
-                                ['antigravity/card-item']
+                                ['firstchurch/card-item'],
+                                ['firstchurch/card-item'],
+                                ['firstchurch/card-item']
                             ]}
                             orientation="horizontal"
                         />

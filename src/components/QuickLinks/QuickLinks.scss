@@ -1,6 +1,6 @@
 /* Quick Links Component Styles */
 
-.antigravity-quick-links {
+.fc-quick-links {
     position: relative;
     /* The Elegant Cardinal Background */
     background-color: var(--wp--preset--color--cardinal);
@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 
-.quick-links-inner {
+.fc-quick-links__inner {
     max-width: var(--wp--style--global--wide-size);
     margin: 0 auto;
     padding: var(--spacing-32, 2rem) var(--wp--layout--margin);
@@ -26,7 +26,7 @@
 
 /* increased breakpoint from 960px to 1024px so we skip the awkward squeezed phase */
 @media (min-width: 1024px) {
-    .quick-links-inner {
+    .fc-quick-links__inner {
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
@@ -37,7 +37,7 @@
 }
 
 /* --- Section Title (Left) --- */
-.quick-links-header {
+.fc-quick-links__header {
     flex-shrink: 0;
     position: relative;
     padding-right: var(--spacing-48, 3rem);
@@ -57,7 +57,7 @@
 }
 
 @media (min-width: 1024px) {
-    .quick-links-header {
+    .fc-quick-links__header {
         border-bottom: none;
         padding-bottom: 0;
         width: auto;
@@ -69,7 +69,7 @@
     }
 }
 
-.quick-links-title {
+.fc-quick-links__title {
     font-family: var(--wp--preset--font-family--playfair-display);
     font-size: clamp(2rem, 3vw, 2.5rem);
     font-weight: 700;
@@ -78,7 +78,7 @@
     color: var(--wp--preset--color--sandwood);
 }
 
-.quick-links-underline {
+.fc-quick-links__underline {
     width: 60px;
     height: 3px;
     background-color: var(--wp--preset--color--divine-gold);
@@ -86,7 +86,7 @@
 }
 
 /* --- Links Container (Right) --- */
-.quick-links-list {
+.fc-quick-links__list {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-24, 1.5rem);
@@ -98,7 +98,7 @@
 }
 
 @media (min-width: 768px) {
-    .quick-links-list {
+    .fc-quick-links__list {
         flex-direction: row;
         flex-wrap: wrap;
         width: 100%;
@@ -108,13 +108,13 @@
 }
 
 @media (min-width: 1024px) {
-    .quick-links-list {
+    .fc-quick-links__list {
         justify-content: flex-end;
     }
 }
 
 /* --- Individual Link Item --- */
-.quick-link-item {
+.fc-quick-link-item {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -126,17 +126,17 @@
 }
 
 @media (min-width: 768px) {
-    .quick-link-item {
+    .fc-quick-link-item {
         width: auto;
     }
 }
 
-.quick-link-item:hover {
+.fc-quick-link-item:hover {
     transform: translateX(5px);
 }
 
 /* Circular Image "Stamp" */
-.quick-link-image-wrapper {
+.fc-quick-link-item__image-wrapper {
     width: 60px;
     height: 60px;
     flex-shrink: 0;
@@ -147,24 +147,24 @@
     transition: all 0.3s ease;
 }
 
-.quick-link-item:hover .quick-link-image-wrapper {
+.fc-quick-link-item:hover .fc-quick-link-item__image-wrapper {
     border-color: var(--wp--preset--color--divine-gold);
     transform: scale(1.05) rotate(3deg);
 }
 
-.quick-link-image {
+.fc-quick-link-item__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
 /* Text & Icon */
-.quick-link-content {
+.fc-quick-link-item__content {
     display: flex;
     flex-direction: column;
 }
 
-.quick-link-label {
+.fc-quick-link-item__label {
     font-family: var(--wp--preset--font-family--inter);
     font-weight: 700;
     font-size: 1.125rem;
@@ -175,7 +175,7 @@
     gap: 0.5rem;
 }
 
-.quick-link-arrow {
+.fc-quick-link-item__arrow {
     /* Mobile/Tablet: Always visible */
     opacity: 1;
     transform: translateX(0);
@@ -184,13 +184,13 @@
 }
 
 @media (min-width: 1024px) {
-    .quick-link-arrow {
+    .fc-quick-link-item__arrow {
         /* Desktop: Fade in on hover */
         opacity: 0;
         transform: translateX(-10px);
     }
     
-    .quick-link-item:hover .quick-link-arrow {
+    .fc-quick-link-item:hover .fc-quick-link-item__arrow {
         opacity: 1;
         transform: translateX(0);
     }

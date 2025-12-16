@@ -14,21 +14,18 @@ if (empty($media_url)) {
 }
 
 $wrapper_attributes = get_block_wrapper_attributes([
-    'class' => 'quick-link-item-wrapper' // Wrapper needed because `a` tag can't easily accept block props if we want clean markup
+    'class' => 'fc-quick-link-item'
 ]);
-
-// Wait, standard WP get_block_wrapper_attributes adds structural classes we might not want on a flex ITEM anchor.
-// But we need it for supports. Let's apply it to the <a> directly.
 ?>
 
-<a href="<?php echo esc_url($url); ?>" class="quick-link-item">
-    <div class="quick-link-image-wrapper">
-        <img src="<?php echo esc_url($media_url); ?>" alt="" class="quick-link-image" />
+<a <?php echo $wrapper_attributes; ?> href="<?php echo esc_url($url); ?>">
+    <div class="fc-quick-link-item__image-wrapper">
+        <img src="<?php echo esc_url($media_url); ?>" alt="" class="fc-quick-link-item__image" />
     </div>
-    <div class="quick-link-content">
-        <span class="quick-link-label">
+    <div class="fc-quick-link-item__content">
+        <span class="fc-quick-link-item__label">
             <?php echo esc_html($label); ?>
-            <span class="quick-link-arrow">→</span>
+            <span class="fc-quick-link-item__arrow">→</span>
         </span>
     </div>
 </a>

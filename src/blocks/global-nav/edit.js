@@ -68,12 +68,12 @@ export default function Edit({ attributes, setAttributes }) {
     };
 
 	return (
-		<div {...useBlockProps({ className: 'antigravity-global-nav-editor' })}>
+		<div {...useBlockProps({ className: 'fc-global-nav-editor' })}>
             
             {/* 1. Sidebar Controls */}
             <InspectorControls>
                 
-                <PanelBody title={__('Identity', 'antigravity-core-blocks')} initialOpen={true}>
+                <PanelBody title={__('Identity', 'first-church-core-blocks')} initialOpen={true}>
                     <MediaUploadCheck>
                         <MediaUpload
                             onSelect={onSelectLogo}
@@ -84,11 +84,11 @@ export default function Edit({ attributes, setAttributes }) {
                                     {logoUrl && <img src={logoUrl} alt="Logo" style={{ maxWidth: '100%', marginBottom: '10px' }} />}
                                     <div style={{ display: 'flex', gap: '10px' }}>
                                         <Button variant="secondary" onClick={open}>
-                                            {logoUrl ? __('Replace Logo', 'antigravity-core-blocks') : __('Upload Logo', 'antigravity-core-blocks')}
+                                            {logoUrl ? __('Replace Logo', 'first-church-core-blocks') : __('Upload Logo', 'first-church-core-blocks')}
                                         </Button>
                                         {logoUrl && (
                                             <Button variant="link" isDestructive onClick={onRemoveLogo}>
-                                                {__('Remove', 'antigravity-core-blocks')}
+                                                {__('Remove', 'first-church-core-blocks')}
                                             </Button>
                                         )}
                                     </div>
@@ -98,18 +98,18 @@ export default function Edit({ attributes, setAttributes }) {
                     </MediaUploadCheck>
                     <br />
                     <TextControl
-                        label={__('Primary Name', 'antigravity-core-blocks')}
+                        label={__('Primary Name', 'first-church-core-blocks')}
                         value={logoTextPrimary}
                         onChange={(val) => setAttributes({ logoTextPrimary: val })}
                     />
                     <TextControl
-                        label={__('Secondary Name', 'antigravity-core-blocks')}
+                        label={__('Secondary Name', 'first-church-core-blocks')}
                         value={logoTextSecondary}
                         onChange={(val) => setAttributes({ logoTextSecondary: val })}
                     />
                 </PanelBody>
 
-                <PanelBody title={__('Top Navigation', 'antigravity-core-blocks')} initialOpen={false}>
+                <PanelBody title={__('Top Navigation', 'first-church-core-blocks')} initialOpen={false}>
                     {items.map((item, index) => (
                         <div key={index} className="nav-item-control" style={{ borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom: '10px' }}>
                             <TextControl
@@ -135,7 +135,7 @@ export default function Edit({ attributes, setAttributes }) {
                     <Button variant="primary" onClick={addItem}>Add Link</Button>
                 </PanelBody>
 
-                <PanelBody title={__('Announcements', 'antigravity-core-blocks')} initialOpen={false}>
+                <PanelBody title={__('Announcements', 'first-church-core-blocks')} initialOpen={false}>
                     {announcements.map((text, index) => (
                          <div key={index} style={{ display: 'flex', gap: '5px', marginBottom: '5px' }}>
                              <TextControl
@@ -149,7 +149,7 @@ export default function Edit({ attributes, setAttributes }) {
                     <Button variant="secondary" onClick={addAnnouncement}>Add Announcement</Button>
                 </PanelBody>
 
-                 <PanelBody title={__('Call to Action', 'antigravity-core-blocks')} initialOpen={false}>
+                 <PanelBody title={__('Call to Action', 'first-church-core-blocks')} initialOpen={false}>
                     <TextControl
                         label="Button Label"
                         value={ctaLabel}
@@ -164,7 +164,7 @@ export default function Edit({ attributes, setAttributes }) {
 
 
 
-                 <PanelBody title={__('Mega Menu: Main Links', 'antigravity-core-blocks')} initialOpen={false}>
+                 <PanelBody title={__('Mega Menu: Main Links', 'first-church-core-blocks')} initialOpen={false}>
                     {menuData.mainLinks.map((link, index) => (
                         <div key={index} className="nav-item-control" style={{ borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom: '10px' }}>
                              <TextControl
@@ -189,7 +189,7 @@ export default function Edit({ attributes, setAttributes }) {
                     ))}
                 </PanelBody>
 
-                 <PanelBody title={__('Mega Menu: News Feed', 'antigravity-core-blocks')} initialOpen={false}>
+                 <PanelBody title={__('Mega Menu: News Feed', 'first-church-core-blocks')} initialOpen={false}>
                     {menuData.newsItems.map((item, index) => (
                         <div key={index} style={{ borderBottom: '1px solid #ddd', paddingBottom: '15px', marginBottom: '15px' }}>
                             <p><strong>News Item {index + 1}</strong></p>
@@ -251,7 +251,7 @@ export default function Edit({ attributes, setAttributes }) {
                     ))}
                 </PanelBody>
 
-                 <PanelBody title={__('Mega Menu: Quick Links', 'antigravity-core-blocks')} initialOpen={false}>
+                 <PanelBody title={__('Mega Menu: Quick Links', 'first-church-core-blocks')} initialOpen={false}>
                      {menuData.quickLinks.map((link, index) => (
                         <div key={index} style={{ display: 'flex', gap: '5px', marginBottom: '5px' }}>
                              <TextControl

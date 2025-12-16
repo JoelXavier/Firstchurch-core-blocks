@@ -3,7 +3,7 @@
   "name": "antigravity/quick-links",
   "version": "1.0.0",
   "title": "Quick Links Strip",
-  "category": "antigravity",
+  "category": "firstchurch",
   "icon": "align-wide",
   "description": "A full-width strip of quick navigation links.",
   "supports": {
@@ -16,7 +16,7 @@
         "default": "Quick Links"
     }
   },
-  "textdomain": "antigravity-core",
+  "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",

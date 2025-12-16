@@ -54,13 +54,13 @@ export const GlobalNavigation = ({
 
   return (
     <>
-      <header className="global-header" style={{ width: '100%', fontFamily: 'var(--wp--preset--font-family--ui)' }}>
+      <header className="fc-global-header" style={{ width: '100%', fontFamily: 'var(--wp--preset--font-family--ui)' }}>
         
         {/* 0. TOP BORDER: 6px Burgundy */}
         <div style={{ height: '6px', backgroundColor: 'var(--header-border-top)', width: '100%' }}></div>
 
         {/* 1. TOP BAR: Branding, Nav, Actions (Height ~140px) */}
-        <div className="global-header__top" style={{
+        <div className="fc-global-header__top" style={{
           backgroundColor: 'rgba(245, 240, 229, 0.85)',
           backdropFilter: 'blur(12px)',
           WebkitBackdropFilter: 'blur(12px)',
@@ -76,14 +76,14 @@ export const GlobalNavigation = ({
         }}>
           
           {/* Branding (Left) */}
-          <div className="global-header__brand" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+          <div className="fc-global-header__brand" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
              <img 
               src={displayLogo} 
               alt="Church Logo" 
               style={{ height: '100px', width: 'auto', objectFit: 'contain' }} 
              />
              
-             <div className="global-header__brand-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+             <div className="fc-global-header__brand-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                <span style={{ 
                  fontFamily: 'var(--wp--preset--font-family--brand)', 
                  fontSize: '48px', 
@@ -108,10 +108,10 @@ export const GlobalNavigation = ({
           </div>
 
           {/* Right Section: Nav Items + Actions */}
-          <div className="global-header__right" style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
+          <div className="fc-global-header__right" style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
             
             {/* Main Navigation (Moved to Top) */}
-            <nav aria-label={label} className="desktop-nav">
+            <nav aria-label={label} className="fc-desktop-nav">
                <ul style={{ 
                  display: 'flex', 
                  gap: '16px', // Reduced gap since padding added to links
@@ -120,8 +120,8 @@ export const GlobalNavigation = ({
                  padding: 0 
                }}>
                  {items.map((item, index) => (
-                   <li key={index} className="global-nav-item" style={{ display: 'flex', alignItems: 'center' }}>
-                     <a href={item.url} className="global-nav-link">
+                   <li key={index} className="fc-global-nav-item" style={{ display: 'flex', alignItems: 'center' }}>
+                     <a href={item.url} className="fc-global-nav-link">
                        {item.label}
                        {/* Dropdown Chevron */}
                        {item.hasSubmenu && (
@@ -133,7 +133,7 @@ export const GlobalNavigation = ({
                    
                    {/* Simple Dropdown */}
                    {item.hasSubmenu && (
-                     <ul className="global-nav-dropdown">
+                     <ul className="fc-global-nav-dropdown">
                        <li><a href="#">Overview</a></li>
                        <li><a href="#">Our Team</a></li>
                        <li><a href="#">Get Involved</a></li>
@@ -147,8 +147,8 @@ export const GlobalNavigation = ({
             <div className="desktop-nav-separator" style={{ width: '1px', height: '40px', backgroundColor: 'rgba(0,0,0,0.1)' }}></div>
 
              {/* Actions: Button + Hamburger */}
-             <div className="global-header__actions" style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-               <button className="global-cta-button" style={{
+             <div className="fc-global-header__actions" style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+               <button className="fc-global-cta-button" style={{
                  backgroundColor: 'var(--wp--preset--color--burgundy)',
                  color: 'var(--wp--preset--color--white)',
                  border: 'none',
@@ -185,7 +185,7 @@ export const GlobalNavigation = ({
         </div>
 
         {/* 2. BOTTOM BAR: Announcements (Repurposed Gold Bar) */}
-        <div className="global-header__announcements" style={{
+        <div className="fc-global-header__announcements" style={{
           background: 'radial-gradient(circle at center, rgba(232, 215, 190, 0.95) 0%, rgba(184, 140, 75, 0.95) 100%)',
           backdropFilter: 'blur(8px)',
           WebkitBackdropFilter: 'blur(8px)',
@@ -211,7 +211,7 @@ export const GlobalNavigation = ({
           </div>
 
           {/* Progress Dots (Absolute positioned or flexed) */}
-          <div className="announcement-indicators" style={{ 
+          <div className="fc-announcement-indicators" style={{ 
             position: 'absolute', 
             right: 'var(--wp--layout--margin)', 
             display: 'flex', 
@@ -232,16 +232,16 @@ export const GlobalNavigation = ({
       </header>
 
       {/* FULL PAGE MENU OVERLAY */}
-      <div className={`full-page-menu ${isMenuOpen ? 'is-open' : ''}`}>
+      <div className={`fc-full-page-menu ${isMenuOpen ? 'is-open' : ''}`}>
         
         {/* Menu Logo (Top Left) */}
-        <div className="menu-logo">
+        <div className="fc-menu-logo">
           <img src={displayLogo} alt="Logo" style={{ height: '80px', width: 'auto' }} />
         </div>
 
         {/* Close Button */}
         <button 
-          className="menu-close-btn"
+          className="fc-menu-close-btn"
           onClick={() => setIsMenuOpen(false)}
           aria-label="Close Menu"
         >
@@ -253,12 +253,12 @@ export const GlobalNavigation = ({
         </button>
 
         {/* Menu Content Grid */}
-        <div className="menu-container">
+        <div className="fc-full-page-menu__container">
           
           {/* Column 1: Main Navigation (The Church) */}
-          <div className="menu-col menu-col-main">
-             <h4 className="menu-heading">THE CHURCH</h4>
-             <ul className="full-nav-list">
+          <div className="fc-full-page-menu__col menu-col-main">
+             <h4 className="fc-menu-heading">THE CHURCH</h4>
+             <ul className="fc-full-nav-list">
                {menuData?.mainLinks?.map((link, idx) => (
                  <li key={idx}><a href={link.url}>{link.label}</a></li>
                ))}
@@ -266,35 +266,35 @@ export const GlobalNavigation = ({
           </div>
 
           {/* Column 2: News (From The Temple) */}
-          <div className="menu-col menu-col-news">
-             <h4 className="menu-heading">FROM THE TEMPLE</h4>
-             <div className="news-grid">
+          <div className="fc-full-page-menu__col menu-col-news">
+             <h4 className="fc-menu-heading">FROM THE TEMPLE</h4>
+             <div className="fc-news-grid">
                {menuData?.newsItems?.map((news, idx) => (
-                 <div key={idx} className="news-item">
+                 <div key={idx} className="fc-news-item">
                    {news.image && (
-                     <div className="news-image">
+                     <div className="fc-news-image">
                        <img src={news.image} alt="" />
                      </div>
                    )}
-                   <span className="news-cat">{news.category}</span>
-                   <h5 className="news-title">{news.title}</h5>
-                   <a href={news.link} className="news-read-more">READ MORE</a>
+                   <span className="fc-news-cat">{news.category}</span>
+                   <h5 className="fc-news-title">{news.title}</h5>
+                   <a href={news.link} className="fc-news-read-more">READ MORE</a>
                  </div>
                ))}
              </div>
           </div>
 
           {/* Column 3: Quick Links */}
-          <div className="menu-col menu-col-quick">
-             <h4 className="menu-heading text-right">QUICK LINKS</h4>
-             <ul className="quick-nav-list text-right">
+          <div className="fc-full-page-menu__col menu-col-quick">
+             <h4 className="fc-menu-heading text-right">QUICK LINKS</h4>
+             <ul className="fc-quick-nav-list text-right">
                {menuData?.quickLinks?.map((link, idx) => (
                  <li key={idx}><a href={link.url}>{link.label}</a></li>
                ))}
              </ul>
              
              {/* Social Icons */}
-             <div className="menu-socials">
+             <div className="fc-menu-socials">
                 <a href="#" aria-label="YouTube" className="social-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 </a>

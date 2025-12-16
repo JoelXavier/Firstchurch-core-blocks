@@ -1,4 +1,4 @@
-.antigravity-hero {
+.fc-hero {
   position: relative;
   width: 100%;
   margin-top: 0 !important; /* Force flush with header */
@@ -14,7 +14,7 @@
 }
 
 /* --- Media Layer --- */
-.antigravity-hero__media {
+.fc-hero__media {
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   width: 100%;
@@ -22,7 +22,7 @@
   z-index: 0;
 }
 
-.antigravity-hero__image {
+.fc-hero__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -33,7 +33,7 @@
 }
 
 /* --- Overlay Layer --- */
-.antigravity-hero__overlay {
+.fc-hero__overlay {
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   width: 100%;
@@ -44,8 +44,8 @@
 }
 
 /* Overlay Variations */
-.antigravity-hero--layout-bottom-left .antigravity-hero__overlay,
-.antigravity-hero--layout-middle-left .antigravity-hero__overlay {
+.fc-hero--layout-bottom-left .fc-hero__overlay,
+.fc-hero--layout-middle-left .fc-hero__overlay {
   /* Scrim: Dark gradient starting from left/bottom */
   background: linear-gradient(
     90deg, 
@@ -55,13 +55,13 @@
   );
 }
 
-.antigravity-hero--layout-center .antigravity-hero__overlay {
+.fc-hero--layout-center .fc-hero__overlay {
   /* Dimmer: Full uniform dark overlay */
   background: rgba(0, 0, 0, 0.5);
 }
 
 /* --- Content Layer --- */
-.antigravity-hero__content {
+.fc-hero__content {
   grid-column: 1 / -1;
   grid-row: 1 / -1;
   z-index: 2;
@@ -74,7 +74,7 @@
 }
 
 /* Layout Placements */
-.antigravity-hero--layout-bottom-left .antigravity-hero__content {
+.fc-hero--layout-bottom-left .fc-hero__content {
   justify-content: flex-end;
   align-items: flex-start;
   text-align: left;
@@ -83,14 +83,14 @@
   padding-bottom: var(--spacing-layout-l, 80px);
 }
 
-.antigravity-hero--layout-middle-left .antigravity-hero__content {
+.fc-hero--layout-middle-left .fc-hero__content {
   justify-content: center;
   align-items: flex-start;
   text-align: left;
   max-width: 600px;
 }
 
-.antigravity-hero--layout-center .antigravity-hero__content {
+.fc-hero--layout-center .fc-hero__content {
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -99,33 +99,32 @@
 }
 
 /* Defaults for Inner Content (to match design system if not provided by blocks) */
-/* Defaults for Inner Content (to match design system if not provided by blocks) */
-.antigravity-hero__content h1 {
+.fc-hero__content h1 {
   color: inherit;
   font-family: inherit; /* Allow WP defaults or Theme JSON to win naturally */
   font-size: 3rem;
   margin-bottom: var(--spacing-40, 1rem);
 }
 
-.antigravity-hero__content h3 {
+.fc-hero__content h3 {
   color: inherit;
   font-family: inherit; /* Allow WP defaults or Theme JSON to win naturally */
   margin-bottom: var(--spacing-40, 1rem);
 }
 
 /* Button styles (WP Block Button) */
-.antigravity-hero__content .wp-block-button {
+.fc-hero__content .wp-block-button {
   max-width: 100%; /* Ensure it doesn't overflow, but allow WP widths */
 }
 
 /* Support for standard WP Button Widths (25, 50, 75, 100%) */
-.antigravity-hero__content .wp-block-button.has-custom-width .wp-block-button__link,
-.antigravity-hero__content .wp-block-button[class*="width-"] .wp-block-button__link {
+.fc-hero__content .wp-block-button.has-custom-width .wp-block-button__link,
+.fc-hero__content .wp-block-button[class*="width-"] .wp-block-button__link {
   width: 100%;
 }
 
-.antigravity-hero__content .wp-block-button__link,
-.antigravity-hero__content button {
+.fc-hero__content .wp-block-button__link,
+.fc-hero__content button {
   font-size: 14px;
   font-family: inherit; 
   
@@ -146,14 +145,14 @@
 }
 
 /* Hover Effect: Universal Brightness Drop (Works on any color) */
-.antigravity-hero__content .wp-block-button__link:hover,
-.antigravity-hero__content button:hover {
+.fc-hero__content .wp-block-button__link:hover,
+.fc-hero__content button:hover {
   filter: brightness(0.85);
   transform: translateY(-1px);
 }
 
 /* Kicker (usually H2) spacing */
-.antigravity-hero__content h2 {
+.fc-hero__content h2 {
   color: inherit;
   font-family: inherit;
   margin-bottom: 32px;
@@ -161,7 +160,7 @@
   letter-spacing: 1px;
 }
 
-.antigravity-hero__content p {
+.fc-hero__content p {
   color: inherit;
   /* Removed rigid font-family to allow WP Editor utilities (.has-playfair-font-family) to win */
   font-size: var(--body-size-medium, 1.125rem);
@@ -171,7 +170,7 @@
 }
 
 /* --- Slideshow Dots Positioning --- */
-.antigravity-hero__dots {
+.fc-hero__dots {
   position: absolute;
   bottom: 30px;
   left: 50%;
@@ -183,13 +182,13 @@
 /* --- Responsive (Tablet & Mobile) --- */
 @media (max-width: 1024px) {
   /* Target the WRAPPER to handle stacking */
-  .antigravity-hero-wrapper {
+  .fc-hero-wrapper {
     display: flex;
     flex-direction: column;
     height: auto !important;
   }
 
-  .antigravity-hero {
+  .fc-hero {
     /* Reset Inner Container */
     display: block; /* Removing flex/grid from inner */
     height: auto !important;
@@ -205,7 +204,7 @@
      Logic: Move the Default Burgundy Background to the CONTENT card only.
      This ensures it sits neatly under the image.
   */
-  .antigravity-hero__content {
+  .fc-hero__content {
     /* Default Background */
     background-color: var(--wp--preset--color--burgundy);
     
@@ -224,13 +223,13 @@
      Override: If user selects a color in Inspector (.has-background on wrapper),
      make our content transparent so their color shows through.
   */
-  .wp-block-antigravity-hero.has-background .antigravity-hero__content {
+  .wp-block-fc-hero.has-background .fc-hero__content {
     background-color: transparent;
   }
 
   /* 1. Image Block (Top) */
   /* Must use !important to override the inline styles from render.php */
-  .antigravity-hero__media {
+  .fc-hero__media {
     position: relative !important;
     height: 350px !important;
     min-height: 350px;
@@ -242,12 +241,12 @@
   }
 
   /* 2. Overlay (Hidden in Stacked Mode) */
-  .antigravity-hero__overlay {
+  .fc-hero__overlay {
     display: none !important; /* Force hide fallback overlay */
   }
   
   /* Center layout specifics reset for mobile */
-  .antigravity-hero--layout-center .antigravity-hero__content {
+  .fc-hero--layout-center .fc-hero__content {
     align-items: flex-start;
     text-align: left;
   }
@@ -256,24 +255,24 @@
   
   /* Tablet (Portrait) */
   /* Using higher specificity + !important to override inline user styles from desktop */
-  .wp-block-antigravity-hero .antigravity-hero__content h1,
-  .wp-block-antigravity-hero .antigravity-hero__content h1.wp-block-heading {
+  .wp-block-fc-hero .fc-hero__content h1,
+  .wp-block-fc-hero .fc-hero__content h1.wp-block-heading {
     font-size: 2.618rem !important; 
     line-height: 1.2;
   }
 
-  .antigravity-hero__content h2,
-  .antigravity-hero__content h3 { 
+  .fc-hero__content h2,
+  .fc-hero__content h3 { 
     margin-bottom: var(--spacing-xs, 0.5rem); /* Tighter kicker spacing (8px) */
     font-size: 0.8rem;
   }
   
-  .antigravity-hero__content p {
+  .fc-hero__content p {
     font-size: 1rem;
   }
 
   /* Reposition Dots to sit on the image area in stacked mode */
-  .antigravity-hero__dots {
+  .fc-hero__dots {
     bottom: auto;
     top: 320px; /* Inside the 350px image area */
   }
@@ -281,20 +280,20 @@
 
 /* Mobile (Small Screens) */
 @media (max-width: 600px) {
-  .antigravity-hero__media {
+  .fc-hero__media {
     height: 250px !important;
     min-height: 250px;
   }
   
   /* Using !important to effectively override inline styles on mobile */
-  .wp-block-antigravity-hero .antigravity-hero__content h1,
-  .wp-block-antigravity-hero .antigravity-hero__content h1.wp-block-heading {
+  .wp-block-fc-hero .fc-hero__content h1,
+  .wp-block-fc-hero .fc-hero__content h1.wp-block-heading {
     font-size: 2rem !important; 
     line-height: 1.4;
   }
 
   /* Adjust dots for smaller image height */
-  .antigravity-hero__dots {
+  .fc-hero__dots {
     top: 220px; /* Inside the 250px image area */
   }
 }

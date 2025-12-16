@@ -22,20 +22,20 @@ export function HeroSplit({
 
     return (
         <section 
-            className={`antigravity-hero-split ${imagePosition === 'right' ? 'image-right' : ''}`}
+            className={`fc-hero-split ${imagePosition === 'right' ? 'fc-hero-split--right' : ''}`}
             style={customStyles}
         >
             {/* Image Side */}
-            <div className="hero-split-image-wrapper">
-                <img src={imageSrc} alt="" className="hero-split-image" />
+            <div className="fc-hero-split__media">
+                <img src={imageSrc} alt="" className="fc-hero-split__image" />
             </div>
 
             {/* Content Side */}
-            <div className="hero-split-content">
-                <span className="hero-split-label">{label}</span>
-                <h2 className="hero-split-title">{title}</h2>
+            <div className="fc-hero-split__content">
+                <span className="fc-hero-split__label">{label}</span>
+                <h2 className="fc-hero-split__title">{title}</h2>
                 
-                <a href={linkUrl} className="hero-split-link">
+                <a href={linkUrl} className="fc-hero-split__link">
                     {linkText}
                     {/* Simple chevron arrow */}
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -43,7 +43,7 @@ export function HeroSplit({
                     </svg>
                 </a>
 
-                <div className="hero-split-bar"></div>
+                <div className="fc-hero-split__bar"></div>
             </div>
         </section>
     );

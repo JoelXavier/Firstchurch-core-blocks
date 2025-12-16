@@ -3,7 +3,7 @@ import { GlobalNavigation } from '../../components/GlobalNavigation/GlobalNaviga
 import '../../tokens.css'; // Bundle tokens into view.css
 
 document.addEventListener( 'DOMContentLoaded', () => {
-    const roots = document.querySelectorAll( '.antigravity-global-nav-root' );
+    const roots = document.querySelectorAll( '.fc-global-nav-root' );
 
     roots.forEach( ( root ) => {
         const attributes = JSON.parse( root.dataset.attributes );

@@ -1,4 +1,4 @@
-.antigravity-footer {
+.fc-footer {
   background-color: var(--wp--preset--color--neutral-900);
   color: var(--wp--preset--color--neutral-50);
   padding: 0; /* Reset parent padding to let children handle spacing */
@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-.footer-content {
+.fc-footer__content {
   max-width: var(--wp--style--global--wide-size, 1200px);
   margin: 0 auto;
   /* Generous breathing room for the main content area */
@@ -23,12 +23,12 @@
 }
 
 /* Brand Column (Left) */
-.footer-brand-col {
+.fc-footer__brand-col {
   flex: 1;
   max-width: 400px; /* Don't get too wide on large screens */
 }
 
-.footer-logo {
+.fc-footer__logo {
   display: flex;
   align-items: center;
   gap: 1.5rem;
@@ -41,7 +41,7 @@
     /* Optional: Brighten logo if it's dark, or assume provided logo works on dark bg */
   }
 
-  .footer-logo-text {
+  .fc-footer__logo-text {
     display: flex;
     flex-direction: column;
     
@@ -63,7 +63,7 @@
   }
 }
 
-.footer-mission {
+.fc-footer__mission {
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--wp--preset--color--neutral-300);
@@ -71,7 +71,7 @@
 }
 
 /* Nav Grid (Right) */
-.footer-nav-grid {
+.fc-footer__nav-grid {
   flex: 2;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -82,8 +82,8 @@
   }
 }
 
-.footer-nav-col {
-  .footer-heading {
+.fc-footer__nav-col {
+  .fc-footer__heading {
     color: var(--wp--preset--color--divine-gold);
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -115,14 +115,14 @@
 }
 
 /* Bottom Bar */
-.footer-bottom {
+.fc-footer__bottom {
   border-top: 1px solid rgba(255,255,255,0.1);
   margin-top: 0; /* Removed margin since we added padding to parent */
   padding: 2rem var(--wp--layout--margin);
   background-color: rgba(0,0,0,0.2);
 }
 
-.footer-bottom-inner {
+.fc-footer__bottom-inner {
   max-width: var(--wp--style--global--wide-size, 1200px);
   margin: 0 auto;
   display: flex;
@@ -136,16 +136,16 @@
   }
 }
 
-.footer-copyright {
+.fc-footer__copyright {
   font-size: 0.75rem;
   color: var(--wp--preset--color--neutral-400);
 }
 
-.footer-socials {
+.fc-footer__socials {
   display: flex;
   gap: 1.5rem;
   
-  .footer-social-icon {
+  .fc-footer__social-icon {
     color: var(--wp--preset--color--neutral-400);
     transition: color 0.2s, transform 0.2s;
     

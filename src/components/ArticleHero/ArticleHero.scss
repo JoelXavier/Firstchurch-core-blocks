@@ -1,6 +1,8 @@
 /* Article Hero Styles */
 
-.antigravity-article-hero {
+/* Article Hero Styles */
+
+.fc-article-hero {
     position: relative;
     width: 100%;
     color: var(--wp--preset--color--neutral-900);
@@ -11,7 +13,7 @@
     --title-size: clamp(2.5rem, 5vw, 4rem);
 }
 
-.article-hero-container {
+.fc-article-hero__container {
     max-width: var(--wp--style--global--wide-size, 1200px);
     margin: 0 auto;
     padding: var(--hero-padding) var(--wp--layout--margin);
@@ -20,7 +22,7 @@
 }
 
 /* --- Typography --- */
-.article-meta-top {
+.fc-article-hero__meta-top {
     display: flex;
     gap: 1rem;
     font-family: var(--wp--preset--font-family--inter);
@@ -32,11 +34,11 @@
     opacity: 0.8;
 }
 
-.article-category {
+.fc-article-hero__category {
     color: var(--wp--preset--color--cardinal);
 }
 
-.article-title {
+.fc-article-hero__title {
     font-family: var(--wp--preset--font-family--playfair-display);
     font-size: var(--title-size);
     font-weight: 700;
@@ -45,7 +47,7 @@
     max-width: 900px; /* Optimal reading width for title */
 }
 
-.article-meta-bottom {
+.fc-article-hero__meta-bottom {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 1rem;
     border-top: 4px solid var(--wp--preset--color--divine-gold);
@@ -53,24 +55,23 @@
     padding-top: 1rem;
 }
 
-.author-name {
+.fc-article-hero__author {
     font-weight: 700;
     color: var(--wp--preset--color--cardinal);
 }
 
 /* --- Variant: Standard --- */
-.antigravity-article-hero.variant-standard {
-    /* background-color: var(--wp--preset--color--white); REMOVED */
+.fc-article-hero--standard {
     text-align: center;
+    
+    .fc-article-hero__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
-.variant-standard .article-hero-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.article-hero-standard-image {
+.fc-article-hero__standard-media {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
@@ -84,7 +85,7 @@
 }
 
 @media (min-width: 768px) {
-    .article-hero-standard-image {
+    .fc-article-hero__standard-media {
         /* Desktop: 21:9 (Cinematic/Ultrawide) */
         /* This keeps the image substantial but not "tall", inviting the user to scroll to body text. */
         aspect-ratio: 21 / 9; 
@@ -93,7 +94,7 @@
     }
 }
 
-.article-hero-standard-image img {
+.fc-article-hero__standard-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -101,17 +102,23 @@
 }
 
 /* --- Variant: Immersive --- */
-.antigravity-article-hero.variant-immersive {
+.fc-article-hero--immersive {
     color: var(--wp--preset--color--white);
-    /* Reduced from 80vh to 60vh to keep "below the fold" content hintable? 
-       Or maybe users want full impact? 
-       "prevent images from being too large in height" suggests reducing this too. */
+    /* Reduced from 80vh to 60vh to keep "below the fold" content hintable? */
     min-height: 60vh; 
     display: flex;
     align-items: center;
+    
+    .fc-article-hero__category {
+        color: var(--wp--preset--color--divine-gold); /* Gold on dark */
+    }
+    
+    .fc-article-hero__author {
+        color: var(--wp--preset--color--white);
+    }
 }
 
-.article-hero-bg {
+.fc-article-hero__bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -120,13 +127,13 @@
     z-index: 0;
 }
 
-.article-hero-bg img {
+.fc-article-hero__bg img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.article-hero-overlay {
+.fc-article-hero__overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -134,12 +141,4 @@
     height: 100%;
     /* Gradient: Dark at bottom to make text pop */
     background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
-}
-
-.variant-immersive .article-category {
-    color: var(--wp--preset--color--divine-gold); /* Gold on dark */
-}
-
-.variant-immersive .author-name {
-    color: var(--wp--preset--color--white);
 }
