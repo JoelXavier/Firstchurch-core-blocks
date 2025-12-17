@@ -20,6 +20,10 @@
       "type": "string",
       "default": "Visit Apostle, Pastor Gino Jennings In The City Of Philadelphia"
     },
+    "sectionSubheader": {
+        "type": "string",
+        "default": ""
+    },
     "columns": {
       "type": "number",
       "default": 3

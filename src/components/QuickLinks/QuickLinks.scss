@@ -2,9 +2,23 @@
 
 .fc-quick-links {
     position: relative;
-    /* The Elegant Cardinal Background */
+    /* The Elegant Cardinal Background (Default / Red) */
     background-color: var(--wp--preset--color--cardinal);
     background-image: radial-gradient(circle at 50% 50%, #68121d 0%, var(--wp--preset--color--cardinal) 100%);
+    
+    /* Variants */
+    &.has-bg-divine-green {
+        background-color: var(--wp--preset--color--sem-success);
+        /* Darker Sage -> Sage */
+        background-image: radial-gradient(circle at 50% 50%, #1a3826 0%, var(--wp--preset--color--sem-success) 100%);
+    }
+
+    &.has-bg-divine-blue {
+        background-color: var(--wp--preset--color--navy-grey);
+        /* Darker Navy -> Navy */
+        background-image: radial-gradient(circle at 50% 50%, #1f2731 0%, var(--wp--preset--color--navy-grey) 100%);
+    }
+
     border-bottom: 4px solid var(--wp--preset--color--divine-gold);
     color: var(--wp--preset--color--sandwood);
     overflow: hidden;
@@ -87,29 +101,26 @@
 
 /* --- Links Container (Right) --- */
 .fc-quick-links__list {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: var(--spacing-24, 1.5rem);
-    flex-grow: 1;
-    justify-content: center; /* Center on mobile */
-    align-items: flex-start; /* Align items left for readability */
     width: 100%;
-    max-width: 400px; /* Constrain width on mobile */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
     .fc-quick-links__list {
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-        max-width: 100%;
-        justify-content: center;
+        /* Auto-fit columns: nice wrapping for 3, 4, 5+ items */
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        justify-items: start;
     }
 }
 
 @media (min-width: 1024px) {
     .fc-quick-links__list {
-        justify-content: flex-end;
+        /* On large screens, push to the right if few items, or stretch if many */
+        justify-content: end;
+        /* Grid doesn't support justify-content: end like flex for tracks the same way unless width is auto */
+        /* But simple grid is usually enough. Let's keep it robust. */
     }
 }
 

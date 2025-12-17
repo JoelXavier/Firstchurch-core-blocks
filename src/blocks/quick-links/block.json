@@ -1,6 +1,6 @@
 {
   "apiVersion": 3,
-  "name": "antigravity/quick-links",
+  "name": "firstchurch/quick-links",
   "version": "1.0.0",
   "title": "Quick Links Strip",
   "category": "firstchurch",
@@ -14,6 +14,11 @@
     "title": {
         "type": "string",
         "default": "Quick Links"
+    },
+    "backgroundVariant": {
+        "type": "string",
+        "default": "red",
+        "enum": ["red", "green", "blue"]
     }
   },
   "textdomain": "first-church-core-blocks",

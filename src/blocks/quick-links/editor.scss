@@ -10,3 +10,12 @@
 .fc-quick-link-item.is-selected {
     border-color: var(--wp--preset--color--divine-gold);
 }
+
+/* Ensure the Appender is visible on the dark background */
+.fc-quick-links__list > .block-editor-button-block-appender {
+    color: white; 
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

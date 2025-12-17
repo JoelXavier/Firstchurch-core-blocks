@@ -69,6 +69,9 @@ function firstchurch_core_blocks_init()
 
     // Register Event Feed (Auto)
     register_block_type(__DIR__ . '/build/blocks/event-feed');
+
+    // Register Location Feed
+    register_block_type(__DIR__ . '/build/blocks/location-feed');
 }
 add_action('init', 'firstchurch_core_blocks_init');
 
@@ -146,7 +149,7 @@ function firstchurch_core_blocks_assets()
         'antigravity-design-tokens',
         plugins_url('src/tokens.css', __FILE__),
         [],
-        '1.0.0'
+        filemtime(plugin_dir_path(__FILE__) . 'src/tokens.css') // Cache busting
     );
 
     // Enqueue Global Extensions (Block Styles)
@@ -165,6 +168,15 @@ function firstchurch_core_blocks_assets()
         plugins_url('build/extensions/event-settings.js', __FILE__),
         ['wp-plugins', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-core-data', 'wp-i18n'],
         filemtime(plugin_dir_path(__FILE__) . 'build/extensions/event-settings.js'),
+        true
+    );
+
+    // Location Settings Extension
+    wp_enqueue_script(
+        'firstchurch-location-settings',
+        plugins_url('build/extensions/location-settings.js', __FILE__),
+        ['wp-plugins', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-core-data', 'wp-i18n'],
+        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/location-settings.js'),
         true
     );
 
@@ -253,6 +265,59 @@ add_filter('wp_theme_json_data_theme', function ($theme_json) {
             ],
             // Enable all appearance tools (spacing, etc.) to ensure comprehensive control
             'appearanceTools' => true,
+            'color' => [
+                'defaultPalette' => false,
+                'custom' => true, // Keep the custom color picker enabled
+                'palette' => [
+                    [
+                        'name' => 'Ink Black',
+                        'slug' => 'ink-black',
+                        'color' => '#1A1A1A',
+                    ],
+                    [
+                        'name' => 'Cardinal',
+                        'slug' => 'cardinal',
+                        'color' => '#8A1C26',
+                    ],
+                    [
+                        'name' => 'Burgundy',
+                        'slug' => 'burgundy',
+                        'color' => '#560D1A',
+                    ],
+                    [
+                        'name' => 'Divine Gold',
+                        'slug' => 'divine-gold',
+                        'color' => '#B08D55',
+                    ],
+                    [
+                        'name' => 'Navy Grey',
+                        'slug' => 'navy-grey',
+                        'color' => '#344152',
+                    ],
+                    [
+                        'name' => 'Sandwood',
+                        'slug' => 'sandwood',
+                        'color' => '#F3F0E6',
+                    ],
+                    [
+                        'name' => 'Cloud Blue',
+                        'slug' => 'cloud-blue',
+                        'color' => '#E3F4F6',
+                    ],
+                    [
+                        'name' => 'Platinum',
+                        'slug' => 'platinum',
+                        'color' => '#f4f5f6',
+                    ],
+                ],
+                'gradients' => [
+                    [
+                        'name' => 'Sand Radial',
+                        'slug' => 'sand-radial',
+                        'gradient' => 'radial-gradient(circle at center, #E8D7BE 0%, #B88C4B 100%)',
+                    ],
+                ],
+            ],
         ],
     ];
 
@@ -364,6 +429,19 @@ function firstchurch_register_cpts()
         'rewrite' => array('slug' => 'locations'),
     ));
 
+    // Location Categories (Taxonomy)
+    register_taxonomy('location_category', 'location', array(
+        'labels' => array(
+            'name' => 'Location Categories',
+            'singular_name' => 'Location Category',
+            'add_new_item' => 'Add New Category',
+            'new_item_name' => 'New Category Name',
+        ),
+        'hierarchical' => true,
+        'show_in_rest' => true, // Essential for Block Editor
+        'public' => true,
+    ));
+
     // Register Event Meta (Start Date) for Querying
     register_post_meta('event', '_event_start_date', array(
         'show_in_rest' => true,
@@ -421,6 +499,50 @@ function firstchurch_register_cpts()
                 return current_user_can('edit_posts');
             }
         ));
+    }
+
+    // Location Meta
+    $location_meta = [
+        '_location_status' => 'string',       // e.g. "Temporarily Closed due to Hurricane"
+        '_location_region' => 'string',       // e.g. "St. Elizabeth, Jamaica"
+        '_location_address' => 'string',      // e.g. "Main Street Lacovia, St. Elizabeth"
+        '_location_times' => 'string',        // e.g. "Wednesday @ 6:30pm..."
+        '_location_phone' => 'string',        // e.g. "876-555-5555"
+        '_location_map_embed' => 'string',    // e.g. "https://www.google.com/maps/embed?..." (iframe src)
+    ];
+
+    foreach ($location_meta as $key => $type) {
+        $args = array(
+            'show_in_rest' => true,
+            'single' => true,
+            'type' => $type,
+            'auth_callback' => function () {
+                return current_user_can('edit_posts');
+            }
+        );
+
+        // Special handling for map embed to allow HTML (iframes)
+        if ($key === '_location_map_embed') {
+            // Remove 'type' => 'string' to bypass strict sanitization
+            // or provide a custom sanitize callback that allows HTML
+            unset($args['type']);
+            $args['sanitize_callback'] = function ($meta_value) {
+                return wp_kses($meta_value, array(
+                    'iframe' => array(
+                        'src' => true,
+                        'width' => true,
+                        'height' => true,
+                        'frameborder' => true,
+                        'style' => true,
+                        'allowfullscreen' => true,
+                        'loading' => true,
+                        'referrerpolicy' => true
+                    )
+                ));
+            };
+        }
+
+        register_post_meta('location', $key, $args);
     }
 }
 add_action('init', 'firstchurch_register_cpts');
@@ -668,5 +790,8 @@ function firstchurch_register_patterns()
         }
     }
 }
-add_action('init', 'firstchurch_register_patterns');
+/**
+ * Enable Backend Preview for Synced Patterns (wp_block)
+ * Fixes the "View" icon being disabled in the editor.
+ */
 

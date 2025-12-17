@@ -8,6 +8,11 @@ $section_title = isset($attributes['sectionTitle']) ? $attributes['sectionTitle'
 $section_subheader = isset($attributes['sectionSubheader']) ? $attributes['sectionSubheader'] : '';
 $view_all_text = isset($attributes['viewAllText']) ? $attributes['viewAllText'] : 'See All Events';
 $view_all_link = isset($attributes['viewAllLink']) ? $attributes['viewAllLink'] : '';
+$header_color = isset($attributes['headerColor']) ? $attributes['headerColor'] : '';
+
+// Style string for caching
+$header_style = $header_color ? 'color: ' . esc_attr($header_color) . ';' : '';
+$line_style = $header_color ? 'background-color: ' . esc_attr($header_color) . ';' : '';
 
 $wrapper_attributes = get_block_wrapper_attributes(array(
     'class' => 'fc-event-list'
@@ -17,8 +22,9 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
 <div <?php echo $wrapper_attributes; ?>>
     <?php if ($section_title): ?>
         <div class="fc-event-list__header">
-            <h2 class="fc-event-list__title"><?php echo esc_html($section_title); ?></h2>
-            <div class="fc-event-list__line"></div>
+            <h2 class="fc-event-list__title" style="<?php echo $header_style; ?>"><?php echo esc_html($section_title); ?>
+            </h2>
+            <div class="fc-event-list__line" style="<?php echo $line_style; ?>"></div>
             <?php if ($section_subheader): ?>
                 <p class="fc-event-list__subheader"><?php echo esc_html($section_subheader); ?></p>
             <?php endif; ?>
@@ -30,11 +36,16 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
         <?php echo $content; ?>
     </div>
 
-    <?php if ($view_all_link): ?>
+    <?php if ($view_all_text): // Changed condition to Text instead of Link ?>
         <div class="fc-event-list__footer">
-            <a href="<?php echo esc_url($view_all_link); ?>" class="fc-view-all-btn">
-                <?php echo esc_html($view_all_text); ?>
-            </a>
+            <?php if ($view_all_link): ?>
+                <a href="<?php echo esc_url($view_all_link); ?>" class="fc-view-all-btn">
+                    <?php echo esc_html($view_all_text); ?>
+                </a>
+            <?php else: ?>
+                <!-- Render as span if no link provided yet -->
+                <span class="fc-view-all-btn"><?php echo esc_html($view_all_text); ?></span>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
 </div>

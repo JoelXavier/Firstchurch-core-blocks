@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "title": "Card Item",
   "category": "firstchurch",
-  "parent": ["antigravity/card-grid"],
+  "parent": ["firstchurch/card-grid"],
   "icon": "feedback",
   "description": "A single content card with image, label, title, and link.",
   "supports": {

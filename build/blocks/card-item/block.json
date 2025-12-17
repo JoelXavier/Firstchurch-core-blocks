@@ -6,7 +6,7 @@
   "title": "Card Item",
   "category": "firstchurch",
   "parent": [
-    "antigravity/card-grid"
+    "firstchurch/card-grid"
   ],
   "icon": "feedback",
   "description": "A single content card with image, label, title, and link.",

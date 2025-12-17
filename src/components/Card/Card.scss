@@ -50,6 +50,8 @@
 /* --- Card Link Hover Group --- */
 .fc-card-item {
     height: 100%;
+    /* Default base size is H4, allows overrides via Block Settings */
+    font-size: var(--wp--preset--font-size--h4);
 }
 
 .fc-card-link-wrapper {
@@ -61,6 +63,19 @@
     height: 100%; 
     position: relative;
     cursor: pointer;
+    /* Ensure font-size cascades if set on wrapper */
+    font-size: inherit;
+}
+/* ... (skip images) ... */
+
+.fc-card-title {
+    font-family: inherit;
+    /* Inherit allows the block wrapper's font-size (set by user) to apply here */
+    font-size: inherit;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--card-title-color, var(--wp--preset--color--neutral-900));
+    margin: 0;
 }
 
 /* --- Image Styles --- */
@@ -117,7 +132,8 @@
 
 .fc-card-title {
     font-family: inherit;
-    font-size: var(--wp--preset--font-size--h4);
+    /* Inherit allows the block wrapper's font-size (set by user) to apply here */
+    font-size: inherit;
     font-weight: 700;
     line-height: 1.2;
     color: var(--card-title-color, var(--wp--preset--color--neutral-900));

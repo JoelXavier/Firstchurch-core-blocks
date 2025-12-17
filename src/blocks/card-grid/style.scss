@@ -15,15 +15,27 @@
     }
     
     .fc-card-grid__title {
-        /* Inherit or defined globally? */
         color: var(--card-section-title-color, inherit);
+        font-family: var(--wp--preset--font-family--playfair-display);
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        line-height: 1.1;
     }
     
     .fc-card-grid__line {
         width: 60px;
-        height: 2px;
-        background-color: var(--card-section-title-color, currentColor);
+        height: 4px;
+        background-color: var(--wp--preset--color--divine-gold);
+        margin: 1rem 0;
+        border-radius: 2px;
+    }
+
+    .fc-card-grid__subheader {
+        font-size: 1.1rem;
+        opacity: 0.8;
         margin-top: 1rem;
+        max-width: 800px;
     }
 }
 

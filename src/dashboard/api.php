@@ -127,12 +127,54 @@ function firstchurch_get_dashboard_templates()
         ];
     }
 
-    // 4. Format Output (Remove empty groups)
+    // 4. Fetch Content Stats
+    $stats = [
+        'articles' => wp_count_posts('post')->publish,
+        'events' => wp_count_posts('event')->publish,
+        'locations' => wp_count_posts('location')->publish,
+        'pages' => wp_count_posts('page')->publish,
+    ];
+
+    // 5. Fetch Recent Activity (Last 5 modified by ANY user, or specific user?)
+    // "My Recent Drafts" implies current user.
+    $recent_args = [
+        'post_type' => ['post', 'page', 'event', 'location'],
+        'posts_per_page' => 5,
+        'orderby' => 'modified',
+        'order' => 'DESC',
+        'post_status' => ['publish', 'draft', 'pending', 'future'],
+        // 'author'      => get_current_user_id() // Optional: restrict to current user? 
+        // Let's keep it global for now for better team visibility, or restrict if user wants "MY" drafts.
+        // User said "My Recent Drafts", so let's restrict to author.
+        'author' => get_current_user_id()
+    ];
+    $recent_query = get_posts($recent_args);
+    $recent_activity = [];
+
+    foreach ($recent_query as $p) {
+        $recent_activity[] = [
+            'id' => $p->ID,
+            'title' => get_the_title($p) ?: '(No Title)',
+            'type' => get_post_type_object($p->post_type)->labels->singular_name,
+            'date' => get_the_modified_date('M j, g:i a', $p),
+            'link' => get_edit_post_link($p->ID, ''), // Context empty to get raw link
+            'status' => $p->post_status
+        ];
+    }
+
+    // 6. Format Output (Return Object structure instead of flat array)
+    // NOTE: This changes the API response structure! Frontend must update.
+    $template_groups = [];
     foreach ($groups as $group) {
         if (!empty($group['templates'])) {
-            $response[] = $group;
+            $template_groups[] = $group;
         }
     }
 
-    return $response;
+    return [
+        'templates' => $template_groups,
+        'stats' => $stats,
+        'recent' => $recent_activity
+    ];
 }
+

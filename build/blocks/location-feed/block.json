@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "firstchurch/location-feed",
+  "version": "0.1.0",
+  "title": "Location Feed",
+  "category": "firstchurch",
+  "icon": "location-alt",
+  "description": "Display a feed of Church Locations (Temples).",
+  "attributes": {
+    "cardType": {
+      "type": "string",
+      "default": "location"
+    },
+    "selectedTaxonomy": {
+      "type": "string",
+      "default": "category"
+    },
+    "selectedTermIds": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "number"
+      }
+    },
+    "postType": {
+      "type": "string",
+      "default": "location"
+    },
+    "perPage": {
+      "type": "number",
+      "default": 10
+    },
+    "layout": {
+      "type": "string",
+      "default": "list"
+    },
+    "columns": {
+      "type": "number",
+      "default": 1
+    },
+    "showDate": {
+      "type": "boolean",
+      "default": false
+    },
+    "showCategory": {
+      "type": "boolean",
+      "default": false
+    },
+    "showExcerpt": {
+      "type": "boolean",
+      "default": false
+    },
+    "showMedia": {
+      "type": "boolean",
+      "default": false
+    },
+    "filterStyle": {
+      "type": "string",
+      "default": "none"
+    },
+    "blockTitle": {
+      "type": "string",
+      "default": "Our Locations"
+    },
+    "blockSubtitle": {
+      "type": "string",
+      "default": "Find a temple near you"
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": [
+      "wide",
+      "full"
+    ]
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

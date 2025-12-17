@@ -5,9 +5,10 @@
 
 $attributes = $attributes ?? [];
 $title = $attributes['title'] ?? 'Quick Links';
+$variant = $attributes['backgroundVariant'] ?? 'red';
 
 $wrapper_attributes = get_block_wrapper_attributes([
-    'class' => 'fc-quick-links'
+    'class' => 'fc-quick-links has-bg-divine-' . esc_attr($variant)
 ]);
 ?>
 

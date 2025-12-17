@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, InnerBlocks, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { PanelBody, SelectControl, RangeControl, Button } from '@wordpress/components';
+import { PanelBody, SelectControl, RangeControl, ToggleControl, Button } from '@wordpress/components';
 import { Hero } from '../../components/Hero/Hero';
 import './editor.scss';
 
@@ -17,7 +17,7 @@ const HERO_TEMPLATE = [
 const ALLOWED_BLOCKS = ['core/heading', 'core/paragraph', 'core/buttons', 'core/button'];
 
 export default function Edit({ attributes, setAttributes }) {
-    const { mode, layout, media, overlayOpacity } = attributes;
+    const { mode, layout, media, overlayOpacity, fixedBackground } = attributes;
 
     const onSelectMedia = (newMedia) => {
         // Append new media to array
@@ -46,6 +46,12 @@ export default function Edit({ attributes, setAttributes }) {
         <div {...useBlockProps()}>
             <InspectorControls>
                 <PanelBody title={__('Layout Settings', 'first-church-core-blocks')}>
+                    <ToggleControl
+                        label={__('Fixed Background', 'first-church-core-blocks')}
+                        help={__('Keeps the background image fixed while scrolling (Desktop only).', 'first-church-core-blocks')}
+                        checked={fixedBackground}
+                        onChange={(val) => setAttributes({ fixedBackground: val })}
+                    />
                     <SelectControl
                         label={__('Function Mode', 'first-church-core-blocks')}
                         value={mode}

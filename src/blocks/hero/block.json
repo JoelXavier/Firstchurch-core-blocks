@@ -43,6 +43,10 @@
     "media": {
       "type": "array",
       "default": []
+    },
+    "fixedBackground": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

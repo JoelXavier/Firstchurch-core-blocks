@@ -6,6 +6,7 @@ import './editor.scss';
 export default function Edit({ attributes, setAttributes }) {
     const {
         sectionTitle,
+        sectionSubheader,
         columns,
         sectionTitleColor,
         cardLabelColor,
@@ -76,8 +77,16 @@ export default function Edit({ attributes, setAttributes }) {
                             value={ sectionTitle }
                             onChange={ ( value ) => setAttributes( { sectionTitle: value } ) }
                             placeholder={ __( 'Section Title...', 'first-church-core-blocks' ) }
+                            style={{ color: sectionTitleColor }}
                         />
                         <div className="fc-card-grid__line"></div>
+                        <RichText
+                             tagName="p"
+                             className="fc-card-grid__subheader"
+                             value={ sectionSubheader }
+                             onChange={ ( value ) => setAttributes( { sectionSubheader: value } ) }
+                             placeholder={ __( 'Write a brief description...', 'first-church-core-blocks' ) }
+                        />
                     </div>
                     
                     <div className="fc-card-grid__grid">
@@ -89,6 +98,8 @@ export default function Edit({ attributes, setAttributes }) {
                                 ['firstchurch/card-item']
                             ]}
                             orientation="horizontal"
+                            templateLock={false}
+                            renderAppender={InnerBlocks.ButtonBlockAppender}
                         />
                     </div>
                 </div>

@@ -7,6 +7,7 @@ $content = $content ?? ''; // InnerBlocks content
 $mode = $attributes['mode'] ?? 'static';
 $layout = $attributes['layout'] ?? 'bottom-left';
 $overlayOpacity = $attributes['overlayOpacity'] ?? 80;
+$fixedBackground = $attributes['fixedBackground'] ?? false;
 $media = $attributes['media'] ?? [];
 
 // Escape attributes for HTML data output
@@ -15,6 +16,7 @@ $props_json = htmlspecialchars(json_encode([
     'mode' => $mode,
     'layout' => $layout,
     'overlayOpacity' => $overlayOpacity,
+    'fixedBackground' => $fixedBackground,
     'media' => $media
 ]));
 
@@ -34,10 +36,29 @@ $props_json = htmlspecialchars(json_encode([
     <!-- The frontend script will find this and mount the Hero Background logic -->
     <div class="fc-hero-background-root fc-hero__media" data-props="<?php echo $props_json; ?>"
         style="position: absolute; top:0; left:0; width:100%; height:100%; z-index:0;">
-        <!-- No-JS Fallback for Background -->
+
+        <!-- No-JS / Server Rendered Background -->
         <?php if (!empty($media[0]['url'])): ?>
-            <img src="<?php echo esc_url($media[0]['url']); ?>" style="width:100%; height:100%; object-fit:cover;"
-                alt="Hero Background">
+            <?php if ($fixedBackground && $mode === 'static'): ?>
+                <!-- Fixed Background Implementation (Div with background-image) -->
+                <div class="fc-hero__fixed-bg" style="
+                    background-image: url('<?php echo esc_url($media[0]['url']); ?>');
+                    background-position: center center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-attachment: fixed;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                "></div>
+            <?php else: ?>
+                <!-- Standard Background (Img tag) -->
+                <img src="<?php echo esc_url($media[0]['url']); ?>" style="width:100%; height:100%; object-fit:cover;"
+                    alt="Hero Background">
+            <?php endif; ?>
+
             <!-- Static Overlay Fallback -->
             <div class="fc-hero__overlay"
                 style="opacity: <?php echo $overlayOpacity / 100; ?>; position:absolute; top:0; left:0; width:100%; height:100%;">
