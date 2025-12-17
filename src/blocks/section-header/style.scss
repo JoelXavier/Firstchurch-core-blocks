@@ -1,0 +1,57 @@
+.fc-section-header {
+    margin-bottom: var(--wp--style--block-gap, 2rem);
+    
+    // Alignment Modifiers
+    &--align-center {
+        text-align: center;
+        
+        .fc-section-header__line {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    &--align-right {
+        text-align: right;
+        
+        .fc-section-header__line {
+            margin-left: auto;
+        }
+    }
+
+    &__title {
+        // Inherit typography from parent (wrapper) where WP applies the classes
+        font-family: inherit;
+        font-size: inherit; 
+        font-weight: inherit;
+        line-height: inherit;
+        color: inherit;
+        
+        // Default fallbacks ONLY if no WP class present (simplest way is to set these on wrapper in block editor defaults, but here we just reset browser defaults)
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    &__subtitle {
+        font-size: var(--wp--preset--font-size--medium, 1.125rem);
+        color: inherit; 
+        opacity: 0.8; // distinguish slightly from title unless explicity set
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+
+    &__line {
+        height: 3px;
+        width: 60px;
+        background-color: var(--wp--preset--color--secondary, #D4AF37); // Default Gold
+        margin-top: 0.5rem;
+        
+        &--neutral {
+             background-color: var(--wp--preset--color--neutral-500);
+        }
+         &--primary {
+             background-color: var(--wp--preset--color--primary);
+        }
+    }
+}

@@ -210,3 +210,34 @@
     color: var(--wp--preset--color--divine-gold);
     font-size: 1.5rem;
 }
+
+/* Share Button */
+.fc-article-body__share {
+    position: relative; /* For tooltip positioning */
+    background: none;
+    border: none;
+    cursor: pointer;
+    /* Use standard text color if variable fails, fallback to gray */
+    color: var(--wp--preset--color--neutral-500, #757575);
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto 0;
+    
+    /* Ensure icon is visible */
+    svg {
+        width: 20px;
+        height: 20px;
+        display: block; /* Fix invalid line-height render */
+        stroke: currentColor; /* Ensure it follows text color */
+    }
+
+    /* Hover state */
+    &:hover {
+        background-color: var(--wp--preset--color--neutral-100, #f5f5f5);
+        color: var(--wp--preset--color--cardinal, #AD1F2D);
+    }
+}

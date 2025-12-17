@@ -45,16 +45,14 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
                             <?php endif; ?>
                         </div>
                         <div class="fc-author-card__info">
-                            <span class="fc-author-card__name"><?php echo esc_html($author_name); ?></span>
-                            <span class="fc-author-card__team"><?php echo esc_html($author_team); ?></span>
-                            <span class="fc-author-card__location"><?php echo esc_html($author_location); ?></span>
+                            <span class="fc-author-card__name"><?php echo wp_kses_post($author_name); ?></span>
+                            <span class="fc-author-card__team"><?php echo wp_kses_post($author_team); ?></span>
+                            <span class="fc-author-card__location"><?php echo wp_kses_post($author_location); ?></span>
                         </div>
                     </div>
 
                     <!-- Share Button -->
-                    <button class="fc-article-body__share"
-                        onclick="navigator.share ? navigator.share({title: document.title, url: window.location.href}) : navigator.clipboard.writeText(window.location.href).then(() => alert('Link copied!'))"
-                        aria-label="Share Article">
+                    <button class="fc-article-body__share" aria-label="Share Article">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
                             stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="18" cy="5" r="3"></circle>

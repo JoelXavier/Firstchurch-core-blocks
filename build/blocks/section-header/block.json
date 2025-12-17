@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "firstchurch/section-header",
+  "version": "0.1.0",
+  "title": "Section Header",
+  "category": "firstchurch",
+  "icon": "heading",
+  "description": "A standalone header with Title, Subtitle, and Gold Bar decoration.",
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Section Title"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "Section Subtitle"
+    },
+    "alignment": {
+      "type": "string",
+      "default": "left"
+    },
+    "showDecoration": {
+      "type": "boolean",
+      "default": true
+    },
+    "decorationColor": {
+      "type": "string",
+      "default": "gold"
+    }
+  },
+  "supports": {
+    "html": false,
+    "color": {
+      "text": true,
+      "background": false
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true,
+      "fontFamily": true,
+      "fontWeight": true,
+      "fontStyle": true,
+      "textTransform": true,
+      "textDecoration": true,
+      "letterSpacing": true,
+      "__experimentalFontFamily": true,
+      "__experimentalFontWeight": true,
+      "__experimentalFontStyle": true,
+      "__experimentalTextTransform": true,
+      "__experimentalTextDecoration": true,
+      "__experimentalLetterSpacing": true,
+      "__experimentalDefaultControls": {
+        "fontSize": true,
+        "fontFamily": true
+      }
+    }
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

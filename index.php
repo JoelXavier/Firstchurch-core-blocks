@@ -23,6 +23,8 @@ function firstchurch_core_blocks_init()
 
     // Register the Hero block
     register_block_type(__DIR__ . '/build/blocks/hero');
+    register_block_type(__DIR__ . '/build/blocks/section-header');
+    register_block_type(__DIR__ . '/build/blocks/marquee');
 
     // Register the Location block
     register_block_type(__DIR__ . '/build/blocks/location');

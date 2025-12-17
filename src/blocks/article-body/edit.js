@@ -1,7 +1,6 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck, InnerBlocks, PanelColorSettings } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck, InnerBlocks, PanelColorSettings, RichText } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, TextControl, Button } from '@wordpress/components';
-import { ArticleBody as ArticleBodyComponent } from '../../components/ArticleBody/ArticleBody';
 import './style.scss';
 
 export default function Edit( { attributes, setAttributes } ) {
@@ -24,14 +23,6 @@ export default function Edit( { attributes, setAttributes } ) {
 			authorImageId: 0,
 			authorImageUrl: '',
 		} );
-	};
-
-	// Mock author object for component
-	const authorData = {
-		name: authorName,
-		team: authorTeam,
-		location: authorLocation,
-		imageUrl: authorImageUrl
 	};
 
 	return (
@@ -67,21 +58,7 @@ export default function Edit( { attributes, setAttributes } ) {
 									) }
 								/>
 							</MediaUploadCheck>
-							<TextControl
-								label={ __( 'Name', 'first-church-core-blocks' ) }
-								value={ authorName }
-								onChange={ ( val ) => setAttributes( { authorName: val } ) }
-							/>
-							<TextControl
-								label={ __( 'Team', 'first-church-core-blocks' ) }
-								value={ authorTeam }
-								onChange={ ( val ) => setAttributes( { authorTeam: val } ) }
-							/>
-							<TextControl
-								label={ __( 'Location', 'first-church-core-blocks' ) }
-								value={ authorLocation }
-								onChange={ ( val ) => setAttributes( { authorLocation: val } ) }
-							/>
+
 						</>
 					) }
 				</PanelBody>
@@ -108,13 +85,34 @@ export default function Edit( { attributes, setAttributes } ) {
 									{authorImageUrl ? (
 										<img src={authorImageUrl} alt={authorName} />
 									) : (
-										<div className="fc-author-card__placeholder">{authorName.charAt(0)}</div>
+										<div className="fc-author-card__placeholder">{authorName ? authorName.charAt(0) : ''}</div>
 									)}
 								</div>
 								<div className="fc-author-card__info">
-									<span className="fc-author-card__name">{authorName}</span>
-									<span className="fc-author-card__team">{authorTeam}</span>
-									<span className="fc-author-card__location">{authorLocation}</span>
+                                    <RichText
+                                        tagName="span"
+                                        className="fc-author-card__name"
+                                        value={ authorName }
+                                        onChange={ ( val ) => setAttributes( { authorName: val } ) }
+                                        placeholder={ __( 'Author Name', 'first-church-core-blocks' ) }
+                                        allowedFormats={ [ 'core/text-color', 'core/bold', 'core/italic' ] }
+                                    />
+                                    <RichText
+                                        tagName="span"
+                                        className="fc-author-card__team"
+                                        value={ authorTeam }
+                                        onChange={ ( val ) => setAttributes( { authorTeam: val } ) }
+                                        placeholder={ __( 'Team', 'first-church-core-blocks' ) }
+                                        allowedFormats={ [ 'core/text-color', 'core/bold', 'core/italic' ] }
+                                    />
+                                    <RichText
+                                        tagName="span"
+                                        className="fc-author-card__location"
+                                        value={ authorLocation }
+                                        onChange={ ( val ) => setAttributes( { authorLocation: val } ) }
+                                        placeholder={ __( 'Location', 'first-church-core-blocks' ) }
+                                        allowedFormats={ [ 'core/text-color', 'core/bold', 'core/italic' ] }
+                                    />
 								</div>
 							</div>
 							

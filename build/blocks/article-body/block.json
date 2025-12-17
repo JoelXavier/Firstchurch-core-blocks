@@ -15,7 +15,7 @@
     ],
     "color": {
       "background": true,
-      "text": false,
+      "text": true,
       "link": false
     }
   },

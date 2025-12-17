@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "firstchurch/marquee",
+  "version": "0.1.0",
+  "title": "Marquee",
+  "category": "firstchurch",
+  "icon": "images-alt2",
+  "description": "An infinite-scroll image carousel.",
+  "attributes": {
+    "images": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object"
+      }
+    },
+    "speed": {
+      "type": "number",
+      "default": 30
+    },
+    "direction": {
+      "type": "string",
+      "default": "left"
+    },
+    "zigzag": {
+        "type": "boolean",
+        "default": false
+    }
+  },
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"],
+    "spacing": {
+        "margin": true,
+        "padding": true
+    }
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

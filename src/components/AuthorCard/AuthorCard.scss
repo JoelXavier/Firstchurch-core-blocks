@@ -53,6 +53,12 @@
     font-size: 1.125rem;
     color: var(--wp--preset--color--neutral-900);
     line-height: 1.2;
+    margin-bottom: 0.25rem;
+
+    // If parent has user-selected color, inherit it (lower specificity)
+    :where(.has-text-color) & {
+        color: inherit;
+    }
 }
 
 .fc-author-card__team {
@@ -62,12 +68,24 @@
     letter-spacing: 0.05em;
     color: var(--wp--preset--color--cardinal);
     font-weight: 700;
+
+     // If parent has user-selected color, inherit it (lower specificity)
+     :where(.has-text-color) & {
+        color: inherit;
+        opacity: 0.8;
+    }
 }
 
 .fc-author-card__location {
     font-family: var(--wp--preset--font-family--inter);
     font-size: 0.75rem;
     color: var(--wp--preset--color--neutral-600);
+    
+    // If parent has user-selected color, inherit it (using :where to lower specificity so inline RichText colors win)
+    :where(.has-text-color) & {
+        color: inherit;
+        opacity: 0.6;
+    }
 }
 
 /* On Mobile/Tablet where it drops to bottom, maybe row layout? */

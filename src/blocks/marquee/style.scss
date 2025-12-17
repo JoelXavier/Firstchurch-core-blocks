@@ -1,0 +1,80 @@
+.fc-marquee {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    
+    &__container {
+        display: flex;
+        overflow: hidden;
+        user-select: none;
+        gap: 2rem; 
+        
+        // Gradient Masks for fade effect at edges
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    &__track {
+        display: flex;
+        flex-shrink: 0;
+        gap: 2rem; // Space between items
+        min-width: 100%;
+        
+        // Animation
+        animation: scroll var(--marquee-speed, 30s) linear infinite;
+        
+        &:hover {
+           animation-play-state: paused; // Pause on hover
+        }
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+         img {
+            max-height: 350px; // Increased form 80px to 350px
+            width: auto;
+            max-width: none; 
+            object-fit: contain;
+            filter: grayscale(100%); 
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            
+            &:hover {
+                filter: grayscale(0%);
+                opacity: 1;
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    // Zigzag Modifier
+    &--zigzag {
+        .fc-marquee__item {
+             &:nth-child(even) {
+                // Move down
+                transform: translateY(2rem);
+             }
+             &:nth-child(odd) {
+                // Move up
+                transform: translateY(-2rem);
+             }
+        }
+    }
+}
+
+// Keyframes
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(calc(-50% - 1rem)); // Move exactly half set (plus half gap adjustment approx)
+        // Note: For perfect loop with Gap, we might need JS to measure width or use 100% if container matches content. 
+        // With CSS only, translating -50% of the *track* (which contains 2 sets) works if the track width is fitting content.
+        // Actually, if track contains 2 sets, we want to move from 0 to -50%.
+        transform: translateX(-50%);
+    }
+}
