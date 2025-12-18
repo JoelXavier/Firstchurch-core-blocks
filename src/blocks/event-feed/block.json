@@ -35,6 +35,10 @@
     "showExcerpt": {
       "type": "boolean",
       "default": false
+    },
+    "selectedCategories": {
+      "type": "array",
+      "default": []
     }
   },
   "supports": {

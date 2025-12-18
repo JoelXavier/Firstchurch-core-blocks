@@ -14,6 +14,11 @@
 			"background": true,
 			"text": true,
 			"link": false
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalLetterSpacing": true
 		}
 	},
 	"attributes": {

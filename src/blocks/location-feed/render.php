@@ -48,6 +48,29 @@ if ($filter_style !== 'none') {
                 esc_html($term->name)
             );
         }
+
+        // Add International Pill if relevant
+        // We only show this if there ARE international locations, or unconditionally?
+        // Let's check if any international locations exist to avoid empty states
+        $params_int = array(
+            'post_type' => 'location',
+            'meta_key' => '_location_is_international',
+            'meta_value' => '1',
+            'numberposts' => 1
+        );
+        $has_int = get_posts($params_int);
+
+        if ($has_int) {
+            $int_active = ($current_filter === 'international') ? 'is-active' : '';
+            $int_link = add_query_arg('loc_filter', 'international');
+            $filter_html .= sprintf(
+                '<a href="%s" class="fc-listing__filter-item %s">%s</a>',
+                esc_url($int_link),
+                $int_active,
+                __('International', 'first-church-core-blocks')
+            );
+        }
+
         $filter_html .= '</div>';
     }
 }
@@ -64,13 +87,30 @@ $args = array(
 
 // Apply Filter
 if (!empty($current_filter)) {
-    $args['tax_query'] = array(
-        array(
-            'taxonomy' => $selected_taxonomy,
-            'field' => 'slug',
-            'terms' => $current_filter,
-        ),
-    );
+    if ($current_filter === 'international') {
+        // Handle International Filter
+        $args['meta_query'] = array(
+            array(
+                'key' => '_location_is_international',
+                'value' => '1',
+                'compare' => '='
+            )
+        );
+    } else {
+        // Handle Taxonomy Filter
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => $selected_taxonomy,
+                'field' => 'slug',
+                'terms' => $current_filter,
+            ),
+        );
+    }
+} else {
+    // Default (All): Exclude international? Or include all?
+    // User asked to "sort them out". Typically this implies they want them separate.
+    // Let's keep 'All' as truly ALL for now unless specified otherwise, 
+    // but the pill exists for quick access.
 }
 
 $query = new WP_Query($args);

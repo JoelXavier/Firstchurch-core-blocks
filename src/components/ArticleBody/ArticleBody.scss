@@ -1,13 +1,16 @@
 /* Article Body Layout */
 @import '../AuthorCard/AuthorCard.scss';
 
-/* Article Body Layout */
-@import '../AuthorCard/AuthorCard.scss';
 
 .fc-article-body {
     width: 100%;
     padding: var(--spacing-48, 3rem) var(--wp--layout--margin);
-    /* background-color: var(--wp--preset--color--white); <-- REMOVED to allow user override */
+
+    /* Prevention of "Double Padding" when nested in a Section */
+    .fc-section & {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .fc-article-body__grid {
@@ -85,7 +88,7 @@
 /* --- Typography / InnerBlocks Styling --- */
 .fc-article-body__typography {
     font-family: var(--wp--preset--font-family--inter);
-    color: var(--wp--preset--color--neutral-900);
+    color: inherit;
     font-size: 1.125rem;
     line-height: 1.7;
     display: block;

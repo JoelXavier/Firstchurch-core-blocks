@@ -1,9 +1,10 @@
 import { registerBlockType } from '@wordpress/blocks';
 import { useBlockProps, InnerBlocks, InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { PanelBody, TextControl, TextareaControl, Button, BaseControl } from '@wordpress/components';
+import { PanelBody, TextControl, TextareaControl, Button, BaseControl, ToggleControl, ExternalLink } from '@wordpress/components';
+import { useEntityProp } from '@wordpress/core-data';
 import { __ } from '@wordpress/i18n';
-import './style.scss'; // Import for editor AND frontend styles (via build process)
-import '../../components/Footer/Footer.scss'; // Ensure component styles are loaded in editor
+import './style.scss';
+import '../../components/Footer/Footer.scss';
 
 // Social Icon Picker (Simplified for now - fixed list of networks)
 const SocialLinksControl = ({ values, onChange }) => {
@@ -33,10 +34,32 @@ const SocialLinksControl = ({ values, onChange }) => {
 
 registerBlockType( 'firstchurch/footer', {
     edit: ({ attributes, setAttributes }) => {
-        const { logoId, logoUrl, logoTextPrimary, logoTextSecondary, missionText, copyrightText, socialLinks } = attributes;
+        const { logoId, logoUrl, logoTextPrimary, logoTextSecondary, missionText, copyrightText, socialLinks, useGlobalSync } = attributes;
+
+        const [ globalData ] = useEntityProp( 'root', 'site', 'fc_footer_data' );
+
+        // Helper to get active data (global or local)
+        const isSynced = useGlobalSync && globalData;
+        const activeData = isSynced ? {
+            logoUrl: globalData.logoUrl || logoUrl,
+            logoTextPrimary: globalData.logoTextPrimary || logoTextPrimary,
+            logoTextSecondary: globalData.logoTextSecondary || logoTextSecondary,
+            missionText: globalData.missionText || missionText,
+            copyrightText: globalData.copyrightText || copyrightText,
+            socialLinks: globalData.socialLinks && globalData.socialLinks.length > 0 ? globalData.socialLinks : socialLinks,
+            columns: globalData.columns || []
+        } : {
+            logoUrl,
+            logoTextPrimary,
+            logoTextSecondary,
+            missionText,
+            copyrightText,
+            socialLinks,
+            columns: [] // Columns handled by InnerBlocks when not synced
+        };
 
         const blockProps = useBlockProps({
-            className: 'fc-footer' // Match the component class
+            className: `fc-footer ${isSynced ? 'is-synced' : ''}`
         });
 
         const TEMPLATE = [
@@ -49,87 +72,127 @@ registerBlockType( 'firstchurch/footer', {
         return (
             <>
                 <InspectorControls>
-                    <PanelBody title="Branding">
-                        <MediaUploadCheck>
-                            <MediaUpload
-                                onSelect={(media) => setAttributes({ logoId: media.id, logoUrl: media.url })}
-                                allowedTypes={['image']}
-                                value={logoId}
-                                render={({ open }) => (
-                                    <BaseControl label="Logo">
-                                        {logoUrl ? (
-                                            <>
-                                                <img src={logoUrl} alt="Logo" style={{ maxWidth: '100%', height: 'auto', marginBottom: '10px', background: '#333', padding: '10px' }} />
-                                                <Button onClick={open} variant="secondary">Replace Logo</Button>
-                                                <Button onClick={() => setAttributes({ logoId: undefined, logoUrl: undefined })} isDestructive variant="link">Remove</Button>
-                                            </>
-                                        ) : (
-                                            <Button onClick={open} variant="primary">Upload Logo</Button>
+                    <PanelBody title={__('Global Synchronization', 'first-church-core-blocks')}>
+                         <ToggleControl
+                            label={__('Sync with Global Footer', 'first-church-core-blocks')}
+                            checked={useGlobalSync}
+                            onChange={(val) => setAttributes({ useGlobalSync: val })}
+                            help={__('When enabled, this footer will use the site-wide settings managed in Mission Control.', 'first-church-core-blocks')}
+                        />
+                        {useGlobalSync && (
+                            <div style={{ marginTop: '10px', padding: '10px', background: '#f0f0f0', borderRadius: '4px' }}>
+                                <ExternalLink href="admin.php?page=first-church-mission-control">
+                                    {__('Manage Global Footer Data', 'first-church-core-blocks')}
+                                </ExternalLink>
+                            </div>
+                        )}
+                    </PanelBody>
+
+                    {!isSynced && (
+                        <>
+                            <PanelBody title={__('Branding', 'first-church-core-blocks')}>
+                                <MediaUploadCheck>
+                                    <MediaUpload
+                                        onSelect={(media) => setAttributes({ logoId: media.id, logoUrl: media.url })}
+                                        allowedTypes={['image']}
+                                        value={logoId}
+                                        render={({ open }) => (
+                                            <BaseControl label="Logo">
+                                                {activeData.logoUrl ? (
+                                                    <>
+                                                        <img src={activeData.logoUrl} alt="Logo" style={{ maxWidth: '100%', height: 'auto', marginBottom: '10px', background: '#333', padding: '10px' }} />
+                                                        <Button onClick={open} variant="secondary">Replace Logo</Button>
+                                                        <Button onClick={() => setAttributes({ logoId: undefined, logoUrl: undefined })} isDestructive variant="link">Remove</Button>
+                                                    </>
+                                                ) : (
+                                                    <Button onClick={open} variant="primary">Upload Logo</Button>
+                                                )}
+                                            </BaseControl>
                                         )}
-                                    </BaseControl>
-                                )}
-                            />
-                        </MediaUploadCheck>
-                        <TextControl
-                            label="Primary Brand Text"
-                            value={logoTextPrimary}
-                            onChange={(val) => setAttributes({ logoTextPrimary: val })}
-                        />
-                        <TextControl
-                            label="Secondary Brand Text"
-                            value={logoTextSecondary}
-                            onChange={(val) => setAttributes({ logoTextSecondary: val })}
-                        />
-                    </PanelBody>
-                    <PanelBody title="Content">
-                        <TextareaControl
-                            label="Mission Statement"
-                            value={missionText}
-                            onChange={(val) => setAttributes({ missionText: val })}
-                        />
-                         <TextControl
-                            label="Copyright Text"
-                            value={copyrightText}
-                            onChange={(val) => setAttributes({ copyrightText: val })}
-                        />
-                    </PanelBody>
-                    <PanelBody title="Social Links">
-                        <SocialLinksControl 
-                            values={socialLinks} 
-                            onChange={(newLinks) => setAttributes({ socialLinks: newLinks })} 
-                        />
-                    </PanelBody>
+                                    />
+                                </MediaUploadCheck>
+                                <TextControl
+                                    label="Primary Brand Text"
+                                    value={activeData.logoTextPrimary}
+                                    onChange={(val) => setAttributes({ logoTextPrimary: val })}
+                                />
+                                <TextControl
+                                    label="Secondary Brand Text"
+                                    value={activeData.logoTextSecondary}
+                                    onChange={(val) => setAttributes({ logoTextSecondary: val })}
+                                />
+                            </PanelBody>
+                            <PanelBody title={__('Content', 'first-church-core-blocks')}>
+                                <TextareaControl
+                                    label="Mission Statement"
+                                    value={activeData.missionText}
+                                    onChange={(val) => setAttributes({ missionText: val })}
+                                />
+                                <TextControl
+                                    label="Copyright Text"
+                                    value={activeData.copyrightText}
+                                    onChange={(val) => setAttributes({ copyrightText: val })}
+                                />
+                            </PanelBody>
+                            <PanelBody title={__('Social Links', 'first-church-core-blocks')}>
+                                <SocialLinksControl 
+                                    values={activeData.socialLinks} 
+                                    onChange={(newLinks) => setAttributes({ socialLinks: newLinks })} 
+                                />
+                            </PanelBody>
+                        </>
+                    )}
                 </InspectorControls>
 
                 <footer {...blockProps}>
+                    {isSynced && (
+                        <div className="fc-footer-sync-indicator" style={{ position: 'absolute', top: '10px', right: '10px', background: '#d6a04c', color: '#fff', fontSize: '10px', padding: '2px 6px', borderRadius: '4px', zIndex: 10 }}>
+                            {__('SYNCED TO GLOBAL', 'first-church-core-blocks')}
+                        </div>
+                    )}
+
                     <div className="fc-footer__content">
-                        {/* Fake Brand Col for Editor Context */}
                         <div className="fc-footer__brand-col">
                              <div className="fc-footer__logo">
-                                {logoUrl && <img src={logoUrl} alt="Logo" />}
+                                {activeData.logoUrl && <img src={activeData.logoUrl} alt="Logo" />}
                                 <div className="fc-footer__logo-text">
-                                    <span className="primary">{logoTextPrimary}</span>
-                                    <span className="secondary">{logoTextSecondary}</span>
+                                    <span className="primary">{activeData.logoTextPrimary}</span>
+                                    <span className="secondary">{activeData.logoTextSecondary}</span>
                                 </div>
                              </div>
-                             <p className="fc-footer__mission">{missionText}</p>
+                             <p className="fc-footer__mission">{activeData.missionText}</p>
                         </div>
 
-                        {/* Editable Grid */}
                         <div className="fc-footer__nav-grid" style={{ flex: 2 }}>
-                            <InnerBlocks 
-                                template={TEMPLATE} 
-                                allowedBlocks={['firstchurch/footer-column']}
-                                templateLock={false} // Allow adding/removing columns if needed, though 4 is standard
-                            />
+                            {isSynced && activeData.columns.length > 0 ? (
+                                <div className="fc-footer-editor-columns-preview" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+                                    {activeData.columns.map((col, idx) => (
+                                        <div key={idx} className="fc-footer__nav-col" style={{ opacity: 0.8 }}>
+                                            <h4 className="fc-footer__heading">{col.title}</h4>
+                                            <ul className="wp-block-list">
+                                                {col.links.map((link, lidx) => (
+                                                    <li key={lidx}>{link.label}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <InnerBlocks 
+                                    template={TEMPLATE} 
+                                    allowedBlocks={['firstchurch/footer-column']}
+                                    templateLock={isSynced ? 'all' : false}
+                                />
+                            )}
                         </div>
                     </div>
                      <div className="fc-footer__bottom">
                          <div className="fc-footer__bottom-inner">
-                             <div className="fc-footer__copyright">{copyrightText}</div>
+                             <div className="fc-footer__copyright">{activeData.copyrightText}</div>
                              <div className="fc-footer__socials">
-                                 {/* Visual placeholder for socials */}
-                                 <span style={{opacity: 0.5}}>(Social Icons will render on frontend)</span>
+                                 {activeData.socialLinks.map((s, i) => (
+                                     <span key={i} className={`fc-footer__social-icon fc-footer__social-icon--${s.icon}`} style={{ margin: '0 5px' }}>{s.label}</span>
+                                 ))}
                              </div>
                          </div>
                      </div>

@@ -20,7 +20,7 @@ $wrapper_attributes = get_block_wrapper_attributes(array(
 ?>
 
 <div <?php echo $wrapper_attributes; ?>>
-    <div className="fc-marquee__container">
+    <div class="fc-marquee__container">
         <!-- Track 1 -->
         <div class="fc-marquee__track">
             <?php foreach ($images as $img): ?>

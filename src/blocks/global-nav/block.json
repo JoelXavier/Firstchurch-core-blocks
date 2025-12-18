@@ -99,6 +99,10 @@
           { "label": "Contact", "url": "#" }
         ]
       }
+    },
+    "useGlobalMenu": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

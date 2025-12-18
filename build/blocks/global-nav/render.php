@@ -8,6 +8,15 @@
 // Generate a unique ID for this block instance
 $block_id = 'fc-global-nav-' . uniqid();
 
+// Logic for Global Mega Menu Sync
+$use_global_menu = $attributes['useGlobalMenu'] ?? true;
+if ($use_global_menu) {
+    $global_menu_data = get_option('fc_mega_menu_data');
+    if ($global_menu_data) {
+        $attributes['menuData'] = $global_menu_data;
+    }
+}
+
 // Encode attributes to pass to React
 $attributes_json = wp_json_encode($attributes);
 

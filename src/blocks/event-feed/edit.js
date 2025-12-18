@@ -7,7 +7,7 @@ export default function Edit({ attributes, setAttributes }) {
     const { blockTitle, blockSubtitle, perPage, columns, filterStyle, showCategory, showExcerpt } = attributes;
     
     const blockProps = useBlockProps({
-        className: `firstchurch-event-feed firstchurch-listing-component layout-${filterStyle}`
+        className: `fc-listing fc-event-feed layout-${filterStyle}`
     });
 
     return (
@@ -54,40 +54,42 @@ export default function Edit({ attributes, setAttributes }) {
             </InspectorControls>
 
             <div {...blockProps}>
-                <div className="listing-header">
+                <div className="fc-listing__header">
                      <RichText
                         tagName="h2"
-                        className="listing-title"
+                        className="fc-listing__title"
                         value={blockTitle}
                         onChange={(value) => setAttributes({ blockTitle: value })}
                         placeholder={__('Section Title...', 'first-church-core-blocks')}
                     />
-                    <div className="listing-decoration"></div>
+                    <div className="fc-listing__decoration"></div>
                      <RichText
                         tagName="p"
-                        className="listing-subtitle"
+                        className="fc-listing__subtitle"
                         value={blockSubtitle}
                         onChange={(value) => setAttributes({ blockSubtitle: value })}
                         placeholder={__('Add a subtitle...', 'first-church-core-blocks')}
                     />
                 </div>
 
-                <div className="listing-body">
+                <div className="fc-listing__body">
                     {filterStyle === 'sidebar' && (
-                        <div className="listing-sidebar placeholder-sidebar">
-                            <div className="filter-group">
-                                <h4 className="filter-group-title">Filter By Month</h4>
-                                <div className="filter-item">October 2025</div>
-                                <div className="filter-item">November 2025</div>
-                                <div className="filter-item">December 2025</div>
+                        <div className="fc-listing__sidebar placeholder-sidebar">
+                            <div className="fc-listing__filters fc-listing__filters--sidebar">
+                                <h4 className="fc-listing__filter-group-title">Filter By Month</h4>
+                                <div className="fc-filter-btn">October 2025</div>
+                                <div className="fc-filter-btn">November 2025</div>
+                                <div className="fc-filter-btn">December 2025</div>
                             </div>
                         </div>
                     )}
 
-                    <div className="listing-main placeholder-grid">
-                        <div className="placeholder-card">Event Card 1</div>
-                        <div className="placeholder-card">Event Card 2</div>
-                        <div className="placeholder-card">Event Card 3</div>
+                    <div className="fc-listing__main placeholder-grid">
+                        <div className="fc-listing__grid">
+                            <div className="placeholder-card">Event Card 1</div>
+                            <div className="placeholder-card">Event Card 2</div>
+                            <div className="placeholder-card">Event Card 3</div>
+                        </div>
                     </div>
                 </div>
             </div>

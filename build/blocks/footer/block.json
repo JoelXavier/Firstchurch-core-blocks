@@ -51,6 +51,10 @@
           "label": "Facebook"
         }
       ]
+    },
+    "useGlobalSync": {
+      "type": "boolean",
+      "default": true
     }
   },
   "editorScript": "file:./index.js",

@@ -1,5 +1,5 @@
 /* Fix editor width to match frontend max-width/grids if needed */
-.wp-block-.fc-article-body {
+.wp-block-firstchurch-article-body {
     /* Ensure grid behaves in editor */
     max-width: 100%;
 }

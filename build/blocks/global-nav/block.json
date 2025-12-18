@@ -167,6 +167,10 @@
           }
         ]
       }
+    },
+    "useGlobalMenu": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

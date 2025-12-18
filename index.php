@@ -18,8 +18,9 @@ if (!defined('ABSPATH')) {
  */
 function firstchurch_core_blocks_init()
 {
-    // Register the Global Navigation block
+    // Register the Global Navigation blocks
     register_block_type(__DIR__ . '/build/blocks/global-nav');
+    register_block_type(__DIR__ . '/build/blocks/sleek-nav');
 
     // Register the Hero block
     register_block_type(__DIR__ . '/build/blocks/hero');
@@ -135,17 +136,7 @@ function firstchurch_core_blocks_assets()
 {
     // Load Google Fonts globally for all blocks
     // DISABLED: We now rely on the native WordPress Font Library (Site Editor) to handle this.
-    // This prevents conflicts where our hardcoded fonts override the user's Editor choices.
-    /*
-    wp_enqueue_style(
-        'antigravity-google-fonts',
-        'https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Tangerine:wght@400;700&family=Inter:wght@400;500;600&display=swap',
-        [],
-        null
-    );
-    */
-
-    // Enqueue Design Tokens globally (Crucial for Editor variable support)
+    // 1. Enqueue Design Tokens (Variables)
     // We use plugins_url to point to the source file for now, ensuring :root isn't wrapped
     wp_enqueue_style(
         'antigravity-design-tokens',
@@ -179,6 +170,16 @@ function firstchurch_core_blocks_assets()
         plugins_url('build/extensions/location-settings.js', __FILE__),
         ['wp-plugins', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-core-data', 'wp-i18n'],
         filemtime(plugin_dir_path(__FILE__) . 'build/extensions/location-settings.js'),
+        true
+    );
+
+    // Core Block Modifications (Rename/Recategorize)
+    $core_mods_path = plugin_dir_path(__FILE__) . 'build/extensions/core-mods.js';
+    wp_enqueue_script(
+        'firstchurch-core-mods',
+        plugins_url('build/extensions/core-mods.js', __FILE__),
+        ['wp-blocks', 'wp-hooks', 'wp-dom-ready'],
+        file_exists($core_mods_path) ? filemtime($core_mods_path) : '1.0.0',
         true
     );
 
@@ -342,10 +343,11 @@ add_filter('should_load_remote_block_patterns', '__return_false');
  * Cleanup Default Theme Elements
  * Hides standard headers, footers, and widget areas that "Blank" themes might still output.
  */
+// DISABLED: May hide core content wrappers in some themes
+/*
 add_action('wp_head', function () {
     ?>
     <style>
-        /* Hide Default Theme Header/Footer and common "fallback" blocks */
         header#masthead,
         footer#colophon,
         #header,
@@ -371,7 +373,6 @@ add_action('wp_head', function () {
             display: none !important;
         }
 
-        /* Ensure our blocks take full width if theme constrains them */
         .site-content,
         .entry-content {
             margin: 0 !important;
@@ -381,6 +382,7 @@ add_action('wp_head', function () {
     </style>
     <?php
 });
+*/
 
 /**
  * Register Custom Post Types (Events, Locations)
@@ -401,6 +403,20 @@ function firstchurch_register_cpts()
         'menu_icon' => 'dashicons-calendar-alt',
         'has_archive' => true,
         'rewrite' => array('slug' => 'events'),
+    ));
+
+    // Event Categories (Taxonomy)
+    register_taxonomy('event_category', 'event', array(
+        'labels' => array(
+            'name' => 'Event Categories',
+            'singular_name' => 'Event Category',
+            'add_new_item' => 'Add New Category',
+            'new_item_name' => 'New Category Name',
+        ),
+        'hierarchical' => true,
+        'show_in_rest' => true,
+        'public' => true,
+        'rewrite' => array('slug' => 'event-category'),
     ));
 
     // Locations
@@ -783,8 +799,6 @@ function firstchurch_register_patterns()
         if (file_exists($pattern_path)) {
             $pattern_data = require $pattern_path;
 
-            // Register using the slug defined in the file, or fallback
-            // The files return an array with 'slug', 'title', 'content', etc.
             register_block_pattern(
                 isset($pattern_data['slug']) ? $pattern_data['slug'] : 'firstchurch/' . $pattern_slug,
                 $pattern_data
@@ -792,6 +806,180 @@ function firstchurch_register_patterns()
         }
     }
 }
+add_action('init', 'firstchurch_register_patterns');
+
+/**
+ * Register Global Settings for Mega Menu
+ */
+function firstchurch_register_settings()
+{
+    register_setting('firstchurch_settings', 'fc_mega_menu_data', array(
+        'type' => 'object',
+        'show_in_rest' => array(
+            'schema' => array(
+                'type' => 'object',
+                'properties' => array(
+                    'mainLinks' => array(
+                        'type' => 'array',
+                        'items' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'label' => array('type' => 'string'),
+                                'url' => array('type' => 'string'),
+                            ),
+                        ),
+                    ),
+                    'newsItems' => array(
+                        'type' => 'array',
+                        'items' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'category' => array('type' => 'string'),
+                                'title' => array('type' => 'string'),
+                                'image' => array('type' => 'string'),
+                                'link' => array('type' => 'string'),
+                            ),
+                        ),
+                    ),
+                    'quickLinks' => array(
+                        'type' => 'array',
+                        'items' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'label' => array('type' => 'string'),
+                                'url' => array('type' => 'string'),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'default' => array(
+            'mainLinks' => array(
+                array('label' => 'Branch Temples', 'url' => '#'),
+                array('label' => 'Scheduled Events', 'url' => '#'),
+                array('label' => 'Locations', 'url' => '#'),
+                array('label' => 'Store', 'url' => '#'),
+                array('label' => 'Literature', 'url' => '#'),
+                array('label' => 'ByLaws', 'url' => '#'),
+                array('label' => 'Donation', 'url' => '#'),
+            ),
+            'newsItems' => array(
+                array(
+                    'category' => 'FROM THE TEMPLE',
+                    'title' => '24 baptized in the Greenwich temple',
+                    'image' => '',
+                    'link' => '#',
+                ),
+                array(
+                    'category' => 'COMMUNITY',
+                    'title' => 'First Church Taskforce is seeking volunteers to help out Jamaica',
+                    'image' => '',
+                    'link' => '#',
+                ),
+            ),
+            'quickLinks' => array(
+                array('label' => 'F.C Calendar of events', 'url' => '#'),
+                array('label' => 'First Church Newsletter', 'url' => '#'),
+                array('label' => 'Truth of God Times Magazine', 'url' => '#'),
+                array('label' => 'Youtube – Watch First Church Videos', 'url' => '#'),
+                array('label' => 'Minister evaluation form', 'url' => '#'),
+                array('label' => 'History of the Ministry', 'url' => '#'),
+                array('label' => 'Terms and privacy', 'url' => '#'),
+                array('label' => 'Contact', 'url' => '#'),
+            ),
+        ),
+    ));
+
+    register_setting('firstchurch_settings', 'fc_footer_data', array(
+        'type' => 'object',
+        'show_in_rest' => array(
+            'schema' => array(
+                'type' => 'object',
+                'properties' => array(
+                    'logoUrl' => array('type' => 'string'),
+                    'logoTextPrimary' => array('type' => 'string'),
+                    'logoTextSecondary' => array('type' => 'string'),
+                    'missionText' => array('type' => 'string'),
+                    'copyrightText' => array('type' => 'string'),
+                    'socialLinks' => array(
+                        'type' => 'array',
+                        'items' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'icon' => array('type' => 'string'),
+                                'url' => array('type' => 'string'),
+                                'label' => array('type' => 'string'),
+                            ),
+                        ),
+                    ),
+                    'columns' => array(
+                        'type' => 'array',
+                        'items' => array(
+                            'type' => 'object',
+                            'properties' => array(
+                                'title' => array('type' => 'string'),
+                                'links' => array(
+                                    'type' => 'array',
+                                    'items' => array(
+                                        'type' => 'object',
+                                        'properties' => array(
+                                            'label' => array('type' => 'string'),
+                                            'url' => array('type' => 'string'),
+                                        ),
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'default' => array(
+            'logoUrl' => '',
+            'logoTextPrimary' => 'First Church',
+            'logoTextSecondary' => 'Of Our Lord Jesus Christ',
+            'missionText' => 'A community dedicated to the glory of God and the service of our neighbors.',
+            'copyrightText' => '© 2024 First Church. All rights reserved.',
+            'socialLinks' => array(
+                array('icon' => 'youtube', 'url' => '#', 'label' => 'YouTube'),
+                array('icon' => 'facebook', 'url' => '#', 'label' => 'Facebook'),
+            ),
+            'columns' => array(
+                array(
+                    'title' => 'The Church',
+                    'links' => array(
+                        array('label' => 'Our History', 'url' => '#'),
+                        array('label' => 'What We Believe', 'url' => '#'),
+                    )
+                ),
+                array(
+                    'title' => 'Ministries',
+                    'links' => array(
+                        array('label' => 'Youth', 'url' => '#'),
+                        array('label' => 'Bylaws', 'url' => '#'),
+                    )
+                ),
+                array(
+                    'title' => 'Connect',
+                    'links' => array(
+                        array('label' => 'Locations', 'url' => '#'),
+                        array('label' => 'Contact', 'url' => '#'),
+                    )
+                ),
+                array(
+                    'title' => 'Give',
+                    'links' => array(
+                        array('label' => 'Donation', 'url' => '#'),
+                        array('label' => 'Resources', 'url' => '#'),
+                    )
+                ),
+            ),
+        ),
+    ));
+}
+
+add_action('init', 'firstchurch_register_settings');
 /**
  * Enable Backend Preview for Synced Patterns (wp_block)
  * Fixes the "View" icon being disabled in the editor.

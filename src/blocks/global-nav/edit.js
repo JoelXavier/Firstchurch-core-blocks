@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
-import { PanelBody, TextControl, Button, ToggleControl, TextareaControl } from '@wordpress/components';
+import { PanelBody, TextControl, Button, ToggleControl, TextareaControl, ExternalLink } from '@wordpress/components';
+import { useEntityProp } from '@wordpress/core-data';
 import { GlobalNavigation } from '../../components/GlobalNavigation/GlobalNavigation';
 import './editor.scss'; // Optional editor-specific styles
 
@@ -14,8 +15,15 @@ export default function Edit({ attributes, setAttributes }) {
         ctaUrl,
         items,
         announcements,
-        menuData
+        menuData,
+        useGlobalMenu
     } = attributes;
+
+    // Fetch Global Menu Data
+    const [ globalMenuData ] = useEntityProp( 'root', 'site', 'fc_mega_menu_data' );
+
+    // Determine which data to show
+    const effectiveMenuData = useGlobalMenu && globalMenuData ? globalMenuData : menuData;
 
     // --- Handlers ---
 
@@ -72,6 +80,22 @@ export default function Edit({ attributes, setAttributes }) {
             
             {/* 1. Sidebar Controls */}
             <InspectorControls>
+                <PanelBody title={__('Mega Menu Sync', 'first-church-core-blocks')}>
+                    <ToggleControl
+                        label={__('Use Global Menu', 'first-church-core-blocks')}
+                        help={__('Sync this block with the global menu managed in Mission Control.', 'first-church-core-blocks')}
+                        checked={useGlobalMenu}
+                        onChange={(val) => setAttributes({ useGlobalMenu: val })}
+                    />
+                    {useGlobalMenu && (
+                        <div style={{ marginTop: '10px', fontSize: '12px', fontStyle: 'italic', color: '#666' }}>
+                            <p>{__('Mega menu editing is currently disabled because this block is synced with the global menu.', 'first-church-core-blocks')}</p>
+                            <ExternalLink href="admin.php?page=first-church-mission-control">
+                                {__('Manage Global Menu', 'first-church-core-blocks')}
+                            </ExternalLink>
+                        </div>
+                    )}
+                </PanelBody>
                 
                 <PanelBody title={__('Identity', 'first-church-core-blocks')} initialOpen={true}>
                     <MediaUploadCheck>
@@ -162,8 +186,8 @@ export default function Edit({ attributes, setAttributes }) {
                     />
                 </PanelBody>
 
-
-
+                 {!useGlobalMenu && (
+                 <>
                  <PanelBody title={__('Mega Menu: Main Links', 'first-church-core-blocks')} initialOpen={false}>
                     {menuData.mainLinks.map((link, index) => (
                         <div key={index} className="nav-item-control" style={{ borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom: '10px' }}>
@@ -267,6 +291,8 @@ export default function Edit({ attributes, setAttributes }) {
                     ))}
                     <p style={{ fontSize: '11px', color: '#666' }}>URLs manageable via JSON mode (future).</p>
                 </PanelBody>
+                </>
+                )}
 
             </InspectorControls>
 
@@ -277,7 +303,7 @@ export default function Edit({ attributes, setAttributes }) {
                 ctaLabel={ctaLabel}
                 items={items}
                 announcements={announcements}
-                menuData={menuData}
+                menuData={effectiveMenuData}
                 logoSrc={logoUrl}
             />
 		</div>

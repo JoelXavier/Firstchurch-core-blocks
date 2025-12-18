@@ -1,0 +1,1 @@
+(()=>{"use strict";(0,window.wp.hooks.addFilter)("blocks.registerBlockType","firstchurch/core-quote-rename",function(e,r){return"core/quote"===r?{...e,title:"Article Quote",category:"firstchurch"}:e})})();

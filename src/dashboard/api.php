@@ -12,6 +12,46 @@ function firstchurch_register_dashboard_api()
             return current_user_can('edit_posts');
         }
     ));
+
+    register_rest_route('firstchurch/v1', '/mega-menu', array(
+        'methods' => 'POST',
+        'callback' => 'firstchurch_update_mega_menu_data',
+        'permission_callback' => function () {
+            return current_user_can('manage_options');
+        }
+    ));
+
+    register_rest_route('firstchurch/v1', '/footer-data', array(
+        'methods' => 'POST',
+        'callback' => 'firstchurch_update_footer_data',
+        'permission_callback' => function () {
+            return current_user_can('manage_options');
+        }
+    ));
+
+    register_rest_route('firstchurch/v1', '/content', array(
+        'methods' => 'GET',
+        'callback' => 'firstchurch_get_dashboard_content',
+        'permission_callback' => function () {
+            return current_user_can('edit_posts');
+        }
+    ));
+
+    register_rest_route('firstchurch/v1', '/content/update', array(
+        'methods' => 'POST',
+        'callback' => 'firstchurch_update_content_meta',
+        'permission_callback' => function () {
+            return current_user_can('edit_posts');
+        }
+    ));
+
+    register_rest_route('firstchurch/v1', '/content/create', array(
+        'methods' => 'POST',
+        'callback' => 'firstchurch_create_dashboard_content',
+        'permission_callback' => function () {
+            return current_user_can('edit_posts');
+        }
+    ));
 }
 add_action('rest_api_init', 'firstchurch_register_dashboard_api');
 
@@ -174,7 +214,146 @@ function firstchurch_get_dashboard_templates()
     return [
         'templates' => $template_groups,
         'stats' => $stats,
-        'recent' => $recent_activity
+        'recent' => $recent_activity,
+        'megaMenuData' => get_option('fc_mega_menu_data'),
+        'footerData' => get_option('fc_footer_data')
     ];
 }
 
+/**
+ * Save Mega Menu Data via REST
+ */
+function firstchurch_update_mega_menu_data($request)
+{
+    $data = $request->get_json_params();
+
+    if (!isset($data['menuData'])) {
+        return new WP_Error('invalid_data', 'Missing menuData', array('status' => 400));
+    }
+
+    update_option('fc_mega_menu_data', $data['menuData']);
+
+    return array('success' => true, 'data' => get_option('fc_mega_menu_data'));
+}
+
+/**
+ * Save Footer Data via REST
+ */
+function firstchurch_update_footer_data($request)
+{
+    $data = $request->get_json_params();
+
+    if (!isset($data['footerData'])) {
+        return new WP_Error('invalid_data', 'Missing footerData', array('status' => 400));
+    }
+
+    update_option('fc_footer_data', $data['footerData']);
+
+    return array('success' => true, 'data' => get_option('fc_footer_data'));
+}
+
+
+/**
+ * Fetch events and locations for dashboard management
+ */
+function firstchurch_get_dashboard_content($request)
+{
+    $type = $request->get_param('type') ?: 'event';
+    if (!in_array($type, ['event', 'location'])) {
+        return new WP_Error('invalid_type', 'Invalid post type', ['status' => 400]);
+    }
+
+    $posts = get_posts([
+        'post_type' => $type,
+        'posts_per_page' => -1,
+        'post_status' => ['publish', 'draft', 'pending', 'future'],
+        'orderby' => 'title',
+        'order' => 'ASC'
+    ]);
+
+    $response = [];
+    foreach ($posts as $p) {
+        $meta = get_post_meta($p->ID);
+        // Flatten meta for easier frontend handling (get_post_meta returns arrays)
+        $flat_meta = [];
+        foreach ($meta as $key => $values) {
+            $flat_meta[$key] = maybe_unserialize($values[0]);
+        }
+
+        $response[] = [
+            'id' => $p->ID,
+            'title' => $p->post_title,
+            'status' => $p->post_status,
+            'meta' => $flat_meta
+        ];
+    }
+
+    return $response;
+}
+
+/**
+ * Update meta for a post via dashboard
+ */
+function firstchurch_update_content_meta($request)
+{
+    $params = $request->get_json_params();
+    $post_id = isset($params['id']) ? intval($params['id']) : 0;
+    $meta = isset($params['meta']) ? $params['meta'] : [];
+
+    if (!$post_id || !get_post($post_id)) {
+        return new WP_Error('invalid_post', 'Post not found', ['status' => 404]);
+    }
+
+    foreach ($meta as $key => $value) {
+        // Only allow certain keys for security
+        if (strpos($key, '_event_') === 0 || strpos($key, '_location_') === 0) {
+            update_post_meta($post_id, $key, $value);
+        }
+    }
+
+    return ['success' => true];
+}
+
+/**
+ * Create new event or location via dashboard
+ */
+function firstchurch_create_dashboard_content($request)
+{
+    $params = $request->get_json_params();
+    $type = isset($params['type']) ? $params['type'] : '';
+    $title = isset($params['title']) ? sanitize_text_field($params['title']) : '';
+
+    if (!in_array($type, ['event', 'location'])) {
+        return new WP_Error('invalid_type', 'Invalid post type', ['status' => 400]);
+    }
+
+    if (empty($title)) {
+        return new WP_Error('invalid_title', 'Title is required', ['status' => 400]);
+    }
+
+    $post_id = wp_insert_post([
+        'post_type' => $type,
+        'post_title' => $title,
+        'post_status' => 'draft', // Create as draft by default
+    ]);
+
+    if (is_wp_error($post_id)) {
+        return $post_id;
+    }
+
+    // Initialize meta with defaults to avoid empty states in dashboard
+    if ($type === 'event') {
+        update_post_meta($post_id, '_event_start_date', date('Y-m-d\TH:i:s'));
+        update_post_meta($post_id, '_event_label', 'Event');
+    }
+
+    return [
+        'id' => $post_id,
+        'title' => $title,
+        'status' => 'draft',
+        'meta' => [
+            '_event_start_date' => date('Y-m-d\TH:i:s'),
+            '_event_label' => 'Event'
+        ]
+    ];
+}

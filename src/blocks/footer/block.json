@@ -41,6 +41,10 @@
             { "icon": "youtube", "url": "#", "label": "YouTube" },
             { "icon": "facebook", "url": "#", "label": "Facebook" }
         ]
+    },
+    "useGlobalSync": {
+      "type": "boolean",
+      "default": true
     }
   },
   "editorScript": "file:./index.js",

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "firstchurch/sleek-nav",
+  "version": "0.1.0",
+  "title": "Sleek Navigation",
+  "category": "firstchurch",
+  "icon": "menu-alt3",
+  "description": "A minimalist site navigation with only logo, name, and hamburger menu.",
+  "supports": {
+    "html": false,
+    "align": ["full", "wide"],
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+        "padding": true,
+        "margin": true
+    },
+    "typography": {
+        "fontSize": true,
+        "lineHeight": true,
+        "fontFamily": true,
+        "fontWeight": true,
+        "fontStyle": true,
+        "textTransform": true,
+        "textDecoration": true,
+        "letterSpacing": true
+    },
+    "__experimentalBorder": {
+        "color": true,
+        "width": true,
+        "style": true,
+        "radius": false
+    }
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php",
+  "attributes": {
+    "logoId": {
+      "type": "number"
+    },
+    "logoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "siteName": {
+      "type": "string",
+      "default": "First Church"
+    },
+    "hamburgerColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "menuData": {
+      "type": "object",
+      "default": {
+        "mainLinks": [
+          { "label": "Branch Temples", "url": "#" },
+          { "label": "Scheduled Events", "url": "#" },
+          { "label": "Locations", "url": "#" },
+          { "label": "Store", "url": "#" },
+          { "label": "Literature", "url": "#" },
+          { "label": "ByLaws", "url": "#" },
+          { "label": "Donation", "url": "#" }
+        ],
+        "newsItems": [
+          { 
+            "category": "FROM THE TEMPLE",
+            "title": "24 baptized in the Greenwich temple", 
+            "image": "", 
+            "link": "#" 
+          },
+          { 
+            "category": "COMMUNITY",
+            "title": "First Church Taskforce is seeking volunteers to help out Jamaica", 
+            "image": "", 
+            "link": "#" 
+          }
+        ],
+        "quickLinks": [
+          { "label": "F.C Calendar of events", "url": "#" },
+          { "label": "First Church Newsletter", "url": "#" },
+          { "label": "Truth of God Times Magazine", "url": "#" },
+          { "label": "Youtube - Watch First Church Videos", "url": "#" },
+          { "label": "Minister evaluation form", "url": "#" },
+          { "label": "History of the Ministry", "url": "#" },
+          { "label": "Terms and privacy", "url": "#" },
+          { "label": "Contact", "url": "#" }
+        ]
+      }
+    },
+    "useGlobalMenu": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

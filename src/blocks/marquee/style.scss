@@ -15,16 +15,18 @@
     }
 
     &__track {
-        display: flex;
-        flex-shrink: 0;
-        gap: 2rem; // Space between items
+        display: inline-flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 2rem; 
         min-width: 100%;
+        white-space: nowrap;
         
         // Animation
         animation: scroll var(--marquee-speed, 30s) linear infinite;
         
         &:hover {
-           animation-play-state: paused; // Pause on hover
+           animation-play-state: paused; 
         }
     }
 
@@ -32,6 +34,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        flex: 0 0 auto; // Prevent shrinking (overlap) and growing
         
          img {
             max-height: 350px; // Increased form 80px to 350px

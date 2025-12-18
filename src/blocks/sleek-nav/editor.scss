@@ -1,0 +1,26 @@
+.fc-sleek-nav {
+    // Basic editor reset to match frontend
+    box-sizing: border-box;
+
+    &__logo-placeholder {
+        &.is-empty {
+            background: #f0f0f0 !important;
+            border: 2px dashed #999 !important;
+            color: #666;
+            
+            .dashicons {
+                font-size: 24px;
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+
+    &__site-name {
+        border: 1px dashed transparent;
+        &:focus {
+            border-color: #ddd;
+            outline: none;
+        }
+    }
+}

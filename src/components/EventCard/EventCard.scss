@@ -207,7 +207,7 @@
     }
 
     /* 1. Media: Force full width row */
-    .event-media {
+    .fc-event-card__media {
         width: 100%; /* Break to new row */
         height: 200px; /* Taller image on mobile */
         order: -1; /* Ensure it stays first */
@@ -215,32 +215,26 @@
     }
 
     /* 2. Badge: Keep as is, but maybe adjust size? */
-    .event-date-badge {
+    .fc-event-card__date-badge {
         width: 60px;
         height: 60px;
     }
-    .event-month { font-size: 0.75rem; }
-    .event-day { font-size: 1.5rem; }
+    .fc-event-card__month { font-size: 0.75rem; }
+    .fc-event-card__day { font-size: 1.5rem; }
 
     /* 3. Content: Fill remaining space next to badge */
-    .event-content {
+    .fc-event-card__content {
         flex-grow: 1;
         width: calc(100% - 80px); /* Math to ensure wrapping logic works if needed, but flex-grow usually handles it */
-        /* If we want Badge and Content on one row, and Media on top row:
-           Media { width: 100% }
-           Badge { width: auto }
-           Content { width: auto (flex) }
-           Action { width: 100% }
-        */
     }
 
     /* 4. Action: Force full width row at bottom */
-    .event-action {
+    .fc-event-card__action {
         width: 100%;
         margin-top: 0.5rem;
     }
 
-    .event-button {
+    .fc-event-card__button {
         width: 100%;
         justify-content: center;
         background-color: var(--wp--preset--color--neutral-100);

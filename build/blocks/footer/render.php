@@ -16,6 +16,24 @@ $logo_text_secondary = isset($attributes['logoTextSecondary']) ? $attributes['lo
 $mission_text = isset($attributes['missionText']) ? $attributes['missionText'] : '';
 $copyright_text = isset($attributes['copyrightText']) ? $attributes['copyrightText'] : '';
 $social_links = isset($attributes['socialLinks']) ? $attributes['socialLinks'] : [];
+$use_global_sync = $attributes['useGlobalSync'] ?? true;
+
+$global_footer_data = ($use_global_sync) ? get_option('fc_footer_data') : null;
+
+if ($global_footer_data) {
+    if (!empty($global_footer_data['logoUrl']))
+        $logo_url = $global_footer_data['logoUrl'];
+    if (!empty($global_footer_data['logoTextPrimary']))
+        $logo_text_primary = $global_footer_data['logoTextPrimary'];
+    if (isset($global_footer_data['logoTextSecondary']))
+        $logo_text_secondary = $global_footer_data['logoTextSecondary'];
+    if (isset($global_footer_data['missionText']))
+        $mission_text = $global_footer_data['missionText'];
+    if (isset($global_footer_data['copyrightText']))
+        $copyright_text = $global_footer_data['copyrightText'];
+    if (!empty($global_footer_data['socialLinks']))
+        $social_links = $global_footer_data['socialLinks'];
+}
 
 $wrapper_attributes = get_block_wrapper_attributes(['class' => 'fc-footer']);
 ?>
@@ -42,7 +60,20 @@ $wrapper_attributes = get_block_wrapper_attributes(['class' => 'fc-footer']);
         <!-- Navigation Grid (Right) -->
         <!-- InnerBlocks Content (Columns) goes here -->
         <div class="fc-footer__nav-grid">
-            <?php echo $content; ?>
+            <?php if ($global_footer_data && !empty($global_footer_data['columns'])): ?>
+                    <?php foreach ($global_footer_data['columns'] as $column): ?>
+                            <div class="fc-footer__nav-col">
+                                <h4 class="fc-footer__heading"><?php echo esc_html($column['title']); ?></h4>
+                                <ul class="wp-block-list">
+                                    <?php foreach ($column['links'] as $link): ?>
+                                            <li><a href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($link['label']); ?></a></li>
+                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                    <?php endforeach; ?>
+            <?php else: ?>
+                    <?php echo $content; ?>
+        <?php endif; ?>
         </div>
 
     </div>
@@ -69,8 +100,8 @@ $wrapper_attributes = get_block_wrapper_attributes(['class' => 'fc-footer']);
                             elseif ($icon === 'facebook')
                                 echo '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>';
                             ?>
-                        </a>
-                    <?php endif; ?>
+                                </a>
+                        <?php endif; ?>
                 <?php endforeach; ?>
             </div>
         </div>
