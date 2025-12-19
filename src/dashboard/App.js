@@ -83,7 +83,7 @@ export default function App() {
     return (
         <div className="fc-dashboard">
             <header className="fc-dashboard__header">
-                <h1>{ __('Welcome! What would you like to create?', 'first-church-core-blocks') }</h1>
+                <h1>{ __('Greetings! What would you like to create?', 'first-church-core-blocks') }</h1>
             </header>
 
             {isLoading ? (
