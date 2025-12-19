@@ -284,7 +284,8 @@ function firstchurch_get_dashboard_content($request)
             'id' => $p->ID,
             'title' => $p->post_title,
             'status' => $p->post_status,
-            'meta' => $flat_meta
+            'meta' => $flat_meta,
+            'terms' => wp_get_object_terms($p->ID, 'event_category', ['fields' => 'ids']) // Fetch current terms
         ];
     }
 
@@ -299,16 +300,39 @@ function firstchurch_update_content_meta($request)
     $params = $request->get_json_params();
     $post_id = isset($params['id']) ? intval($params['id']) : 0;
     $meta = isset($params['meta']) ? $params['meta'] : [];
+    $status = isset($params['status']) ? sanitize_text_field($params['status']) : '';
 
     if (!$post_id || !get_post($post_id)) {
         return new WP_Error('invalid_post', 'Post not found', ['status' => 404]);
     }
 
+    // Update Post Status if provided
+    if ($status && in_array($status, ['publish', 'draft', 'pending', 'private'])) {
+        wp_update_post([
+            'ID' => $post_id,
+            'post_status' => $status
+        ]);
+    }
+
     foreach ($meta as $key => $value) {
         // Only allow certain keys for security
         if (strpos($key, '_event_') === 0 || strpos($key, '_location_') === 0) {
-            update_post_meta($post_id, $key, $value);
+            if ($key === '_event_schedule') {
+                // Allow newlines for Complex Schedule
+                $clean = sanitize_textarea_field($value);
+            } elseif ($key === '_event_cta_url' || $key === '_location_map_url') {
+                $clean = esc_url_raw($value);
+            } else {
+                $clean = sanitize_text_field($value);
+            }
+            update_post_meta($post_id, $key, $clean);
         }
+    }
+
+    // Handle Terms (Categories)
+    if (isset($params['terms'])) {
+        $terms = array_map('intval', $params['terms']);
+        wp_set_object_terms($post_id, $terms, 'event_category');
     }
 
     return ['success' => true];
@@ -343,7 +367,7 @@ function firstchurch_create_dashboard_content($request)
 
     // Initialize meta with defaults to avoid empty states in dashboard
     if ($type === 'event') {
-        update_post_meta($post_id, '_event_start_date', date('Y-m-d\TH:i:s'));
+        update_post_meta($post_id, '_event_start_date', date('Y-m-d'));
         update_post_meta($post_id, '_event_label', 'Event');
     }
 
@@ -352,7 +376,7 @@ function firstchurch_create_dashboard_content($request)
         'title' => $title,
         'status' => 'draft',
         'meta' => [
-            '_event_start_date' => date('Y-m-d\TH:i:s'),
+            '_event_start_date' => date('Y-m-d'),
             '_event_label' => 'Event'
         ]
     ];

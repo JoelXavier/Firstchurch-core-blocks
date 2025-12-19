@@ -6,11 +6,65 @@
 .fc-event-feed {
     /* Inherits from .fc-listing base */
     
-    .fc-listing__sidebar {
-        /* Ensure sidebar buttons stack properly */
-        .fc-listing__filters--sidebar {
-            flex-direction: column;
-            gap: 0.5rem;
+    /* --- Sidebar Refinement (Match Location Feed) --- */
+    .fc-listing__sidebar-title {
+        font-family: var(--wp--preset--font-family--inter);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        color: var(--wp--preset--color--neutral-500);
+        margin: 0 0 1rem 0;
+        letter-spacing: 0.05em;
+    }
+
+    .fc-listing__filter-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-bottom: 2rem;
+
+        .fc-listing__filter-item {
+            background: transparent;
+            color: var(--wp--preset--color--neutral-700);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-family: var(--wp--preset--font-family--inter);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: left;
+            width: 100%;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+
+            &:hover {
+                background: var(--wp--preset--color--neutral-100);
+            }
+
+            &.is-active {
+                background: var(--wp--preset--color--neutral-100);
+                color: var(--wp--preset--color--divine-gold);
+                font-weight: 700;
+                border-left-color: var(--wp--preset--color--divine-gold);
+            }
+        }
+    }
+
+    /* Override Canceled State to match user preference (Grey, Sans, Strikethrough) */
+    .fc-event-card--canceled {
+        .fc-event-card__title {
+            font-family: var(--wp--preset--font-family--inter) !important;
+            color: var(--wp--preset--color--neutral-500) !important;
+            opacity: 1 !important; /* Reset opacity as we handle color directly */
+            text-decoration: line-through;
+            
+            .fc-event-card__link {
+                color: var(--wp--preset--color--neutral-500) !important;
+            }
+        }
+
+        /* Prevent hover color change on canceled items */
+        .fc-event-card__title:hover .fc-event-card__link {
+            color: var(--wp--preset--color--neutral-500) !important;
         }
     }
 }

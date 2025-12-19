@@ -9,9 +9,21 @@ $title = $attributes['title'] ?? '';
 $link_url = $attributes['linkUrl'] ?? '#';
 $link_text = $attributes['linkText'] ?? 'LEARN MORE >';
 $media_url = $attributes['mediaUrl'] ?? '';
+$card_label_color = $attributes['cardLabelColor'] ?? '';
+$card_title_color = $attributes['cardTitleColor'] ?? '';
+$card_link_color = $attributes['cardLinkColor'] ?? '';
+
+$style_string = "";
+if ($card_label_color)
+    $style_string .= " --local-card-label-color: {$card_label_color};";
+if ($card_title_color)
+    $style_string .= " --local-card-title-color: {$card_title_color};";
+if ($card_link_color)
+    $style_string .= " --local-card-link-color: {$card_link_color};";
 
 $wrapper_attributes = get_block_wrapper_attributes([
-    'class' => 'fc-card-item'
+    'class' => 'fc-card-item',
+    'style' => $style_string
 ]);
 ?>
 

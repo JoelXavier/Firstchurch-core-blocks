@@ -75,6 +75,12 @@ function firstchurch_core_blocks_init()
 
     // Register Location Feed
     register_block_type(__DIR__ . '/build/blocks/location-feed');
+
+    // Register Magazine Grid
+    register_block_type(__DIR__ . '/build/blocks/magazine-grid');
+
+    // Register Magazine Item
+    register_block_type(__DIR__ . '/build/blocks/magazine-item');
 }
 add_action('init', 'firstchurch_core_blocks_init');
 
@@ -128,6 +134,42 @@ function firstchurch_register_block_patterns()
     }
 }
 add_action('init', 'firstchurch_register_block_patterns');
+
+/**
+ * Register Global Block Styles
+ * These styles extend core blocks to match the First Church Magazine look.
+ */
+function firstchurch_register_block_styles()
+{
+    // 1. Featured Style for Groups
+    register_block_style(
+        'core/group',
+        array(
+            'name' => 'magazine-featured',
+            'label' => __('Magazine Featured', 'first-church-core-blocks'),
+        )
+    );
+
+    // 2. Cardless Style for Groups
+    register_block_style(
+        'core/group',
+        array(
+            'name' => 'magazine-cardless',
+            'label' => __('Magazine Cardless', 'first-church-core-blocks'),
+        )
+    );
+
+
+    // 4. List Style for Magazine Item
+    register_block_style(
+        'firstchurch/magazine-item',
+        array(
+            'name' => 'magazine-list',
+            'label' => __('Magazine List View', 'first-church-core-blocks'),
+        )
+    );
+}
+add_action('init', 'firstchurch_register_block_styles');
 
 /**
  * Enqueue Global Assets (Fonts)
@@ -210,114 +252,65 @@ add_action('enqueue_block_editor_assets', 'firstchurch_core_blocks_assets'); // 
  * Register custom font families via Theme JSON API.
  * This ensures they appear in the editor controls cleanly.
  */
+
+/**
+ * Enable Native Block Tools
+ * This ensures lineHeight, appearanceTools (padding, border), and spacing are enabled
+ * without injecting any hardcoded design opinions (fonts/colors).
+ */
 add_filter('wp_theme_json_data_theme', function ($theme_json) {
     $new_data = [
         'version' => 2,
         'settings' => [
             'typography' => [
-                'lineHeight' => true, // Explicitly enable Line Height control
-                'fontFamilies' => [
-                    [
-                        'name' => 'Merriweather',
-                        'slug' => 'merriweather',
-                        'fontFamily' => '"Merriweather", serif',
-                    ],
-                    [
-                        'name' => 'Playfair Display',
-                        'slug' => 'playfair-display',
-                        'fontFamily' => '"Playfair Display", serif',
-                    ],
-                    [
-                        'name' => 'Inter',
-                        'slug' => 'inter',
-                        'fontFamily' => '"Inter", sans-serif',
-                    ],
-                    [
-                        'name' => 'Tangerine',
-                        'slug' => 'tangerine',
-                        'fontFamily' => '"Tangerine", cursive',
-                    ],
-                ],
-                'fontSizes' => [
-                    [
-                        'name' => 'Small',
-                        'slug' => 'small',
-                        'size' => 'var(--wp--preset--font-size--caption)'
-                    ],
-                    [
-                        'name' => 'Medium',
-                        'slug' => 'medium',
-                        'size' => 'var(--wp--preset--font-size--body)'
-                    ],
-                    [
-                        'name' => 'Large',
-                        'slug' => 'large',
-                        'size' => 'var(--wp--preset--font-size--h4)'
-                    ],
-                    [
-                        'name' => 'Extra Large',
-                        'slug' => 'x-large',
-                        'size' => 'var(--wp--preset--font-size--h3)'
-                    ],
-                    [
-                        'name' => 'Hero',
-                        'slug' => 'hero',
-                        'size' => 'var(--wp--preset--font-size--h1)'
-                    ]
-                ]
+                'lineHeight' => true,
+                'customFontSize' => true,
             ],
-            // Enable all appearance tools (spacing, etc.) to ensure comprehensive control
-            'appearanceTools' => true,
+            'spacing' => [
+                'appearanceTools' => true,
+                'blockGap' => true,
+                'margin' => true,
+                'padding' => true,
+                'units' => ['px', 'em', 'rem', 'vh', 'vw', '%'],
+            ],
             'color' => [
-                'defaultPalette' => false,
-                'custom' => true, // Keep the custom color picker enabled
+                'custom' => true,
+                'customGradient' => true,
                 'palette' => [
                     [
-                        'name' => 'Ink Black',
+                        'name' => __('Ink Black', 'first-church-core-blocks'),
                         'slug' => 'ink-black',
                         'color' => '#1A1A1A',
                     ],
                     [
-                        'name' => 'Cardinal',
+                        'name' => __('Cardinal', 'first-church-core-blocks'),
                         'slug' => 'cardinal',
                         'color' => '#8A1C26',
                     ],
                     [
-                        'name' => 'Burgundy',
+                        'name' => __('Burgundy', 'first-church-core-blocks'),
                         'slug' => 'burgundy',
                         'color' => '#560D1A',
                     ],
                     [
-                        'name' => 'Divine Gold',
+                        'name' => __('Divine Gold', 'first-church-core-blocks'),
                         'slug' => 'divine-gold',
                         'color' => '#B08D55',
                     ],
                     [
-                        'name' => 'Navy Grey',
+                        'name' => __('Navy Grey', 'first-church-core-blocks'),
                         'slug' => 'navy-grey',
                         'color' => '#344152',
                     ],
                     [
-                        'name' => 'Sandwood',
+                        'name' => __('Sandwood', 'first-church-core-blocks'),
                         'slug' => 'sandwood',
                         'color' => '#F3F0E6',
                     ],
                     [
-                        'name' => 'Cloud Blue',
+                        'name' => __('Cloud Blue', 'first-church-core-blocks'),
                         'slug' => 'cloud-blue',
                         'color' => '#E3F4F6',
-                    ],
-                    [
-                        'name' => 'Platinum',
-                        'slug' => 'platinum',
-                        'color' => '#f4f5f6',
-                    ],
-                ],
-                'gradients' => [
-                    [
-                        'name' => 'Sand Radial',
-                        'slug' => 'sand-radial',
-                        'gradient' => 'radial-gradient(circle at center, #E8D7BE 0%, #B88C4B 100%)',
                     ],
                 ],
             ],

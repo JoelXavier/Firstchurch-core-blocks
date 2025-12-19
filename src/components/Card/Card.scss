@@ -125,7 +125,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--card-label-color, var(--wp--preset--color--neutral-900));
+    color: var(--local-card-label-color, var(--card-label-color, inherit));
     margin-bottom: var(--spacing-16, 1rem);
     display: block;
 }
@@ -136,7 +136,7 @@
     font-size: inherit;
     font-weight: 700;
     line-height: 1.2;
-    color: var(--card-title-color, var(--wp--preset--color--neutral-900));
+    color: var(--local-card-title-color, var(--card-title-color, inherit));
     margin: 0;
 }
 
@@ -156,7 +156,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--card-link-color, var(--wp--preset--color--neutral-900));
+    color: var(--local-card-link-color, var(--card-link-color, inherit));
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;

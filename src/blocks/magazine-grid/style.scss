@@ -1,0 +1,102 @@
+.fc-magazine-grid {
+    display: grid;
+    gap: var(--wp--style--block-gap, 32px);
+    width: 100%;
+    margin-top: var(--wp--style--block-gap, 2rem);
+    margin-bottom: var(--wp--style--block-gap, 2rem);
+
+    /* Base Grid Logic - Use CSS Variables */
+    grid-template-columns: minmax(0, 1fr) var(--fc-sidebar-width, 33%);
+
+    /* Position Switches */
+    &.is-position-left {
+        grid-template-columns: var(--fc-sidebar-width, 33%) minmax(0, 1fr);
+
+        /* Reorder internal groups for visual fidelity */
+        .flex-magazine-column.is-main { order: 2; }
+        .flex-magazine-column.is-sidebar { order: 1; }
+    }
+
+    &.is-position-right {
+        .flex-magazine-column.is-main { order: 1; }
+        .flex-magazine-column.is-sidebar { order: 2; }
+    }
+
+    /* Editor Specific: Match Grid Logic */
+    .block-editor-inner-blocks > .block-editor-block-list__layout {
+        display: grid;
+        grid-template-columns: inherit;
+        gap: inherit;
+        width: 100%;
+    }
+
+    /* Resilience against overflow and column drop */
+    > * {
+        min-width: 0;
+    }
+
+    @media (max-width: 782px) {
+        grid-template-columns: 1fr !important;
+        gap: 24px;
+
+        .block-editor-inner-blocks > .block-editor-block-list__layout {
+            grid-template-columns: 1fr !important;
+        }
+    }
+
+    .flex-magazine-column {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        
+        // Support native block-gap with sensible fallbacks
+        --fc-column-gap: var(--wp--style--block-gap, 32px);
+        gap: var(--fc-column-gap);
+
+        /* In the editor, ensure the inner blocks container inherits the parent's gap */
+        & > .block-editor-inner-blocks > .block-editor-block-list__layout {
+            display: flex;
+            flex-direction: column;
+            gap: inherit;
+        }
+
+        /* Reset margins to ensure perfect top alignment */
+        & > *:first-child,
+        & > .block-editor-inner-blocks > .block-editor-block-list__layout > *:first-child {
+            margin-top: 0 !important;
+        }
+        
+        &.is-sidebar {
+            --fc-column-gap: var(--wp--style--block-gap, 24px);
+        }
+    }
+}
+
+/* Global Magazine Styles - Stripped of Strict Overrides */
+
+.is-style-magazine-featured {
+    padding: var(--wp--style--spacing--padding, 40px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+
+    // REMOVED: Fixed font sizes and colors.
+    // Let Heading and Paragraph blocks use their own settings.
+
+    &:hover {
+        box-shadow: 0 12px 24px rgba(0,0,0,0.05);
+    }
+}
+
+.is-style-magazine-cardless {
+    padding: 0;
+    height: 100%;
+    background: transparent !important;
+    border: none;
+
+    // REMOVED: Strict heading border-bottoms and paragraph sizes.
+    // Use Block Styles (e.g., standard Heading styles) for this.
+}
+
+// DELETED: .is-style-magazine-display

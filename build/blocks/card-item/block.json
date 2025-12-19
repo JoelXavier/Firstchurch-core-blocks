@@ -13,6 +13,12 @@
   "supports": {
     "html": false,
     "reusable": false,
+    "color": {
+      "text": true,
+      "background": true,
+      "link": true,
+      "gradients": true
+    },
     "typography": {
       "fontSize": true,
       "lineHeight": true,
@@ -48,6 +54,15 @@
     "mediaUrl": {
       "type": "string",
       "default": ""
+    },
+    "cardLabelColor": {
+      "type": "string"
+    },
+    "cardTitleColor": {
+      "type": "string"
+    },
+    "cardLinkColor": {
+      "type": "string"
     }
   },
   "textdomain": "first-church-core-blocks",

@@ -316,7 +316,7 @@
 .fc-content-manager__list {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 16px; /* Reduced gap for accordion look */
 }
 
 .fc-content-item-card {
@@ -336,8 +336,44 @@
     justify-content: space-between;
     align-items: center;
     background: var(--wp--preset--color--neutral-50);
-    padding: 16px 24px;
+    padding: 12px 24px; /* Slightly tighter */
     border-bottom: 1px solid var(--wp--preset--color--neutral-100);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    user-select: none;
+
+    &:hover {
+        background: var(--wp--preset--color--neutral-100);
+    }
+}
+
+.fc-content-item-summary {
+    display: flex;
+    gap: 16px;
+    font-size: 0.85rem;
+    color: var(--wp--preset--color--neutral-500);
+    margin-left: 12px;
+    font-family: var(--wp--preset--font-family--ui);
+    
+    span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+.fc-content-item-card.is-collapsed {
+    border-bottom-width: 1px;
+    
+    .fc-content-item-header {
+        border-bottom: none;
+    }
+}
+
+.fc-content-item-card.is-expanded {
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    margin: 8px 0;
+    z-index: 10;
 }
 
 .fc-content-item-header h3 {

@@ -15,6 +15,7 @@ export const Hero = ({
     layout = 'middle-left',
     media = [],
     overlayOpacity = 50,
+    fixedBackground = false,
     children
 }) => {
     // --- State for Slideshow ---
@@ -38,6 +39,22 @@ export const Hero = ({
     const renderMedia = () => {
         if (!hasMedia) {
             return <div className="fc-hero__image" style={{ backgroundColor: '#2c2c2c' }} />;
+        }
+
+        // --- Fixed Background Logic ---
+        // If fixedBackground is enabled and we are in static mode, we use a div with background-attachment: fixed.
+        if (fixedBackground && mode === 'static') {
+            const item = media[0];
+            return (
+                <div 
+                    className="fc-hero__image is-fixed" 
+                    style={{ 
+                        backgroundImage: `url(${item.url})`,
+                        opacity: 1,
+                        zIndex: 1
+                    }} 
+                />
+            );
         }
 
         return media.map((item, index) => {

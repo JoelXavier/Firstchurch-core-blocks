@@ -30,6 +30,13 @@
   top: 0;
   left: 0;
   transition: opacity 1s ease-in-out;
+  
+  &.is-fixed {
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 }
 
 /* --- Overlay Layer --- */

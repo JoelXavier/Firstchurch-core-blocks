@@ -33,7 +33,6 @@ export default function Edit({ attributes, setAttributes }) {
                         value={filterStyle}
                         options={[
                             { label: 'Sidebar (Left)', value: 'sidebar' },
-                            { label: 'Pills (Top)', value: 'pills' },
                             { label: 'None', value: 'none' },
                         ]}
                         onChange={(value) => setAttributes({ filterStyle: value })}
@@ -75,11 +74,20 @@ export default function Edit({ attributes, setAttributes }) {
                 <div className="fc-listing__body">
                     {filterStyle === 'sidebar' && (
                         <div className="fc-listing__sidebar placeholder-sidebar">
-                            <div className="fc-listing__filters fc-listing__filters--sidebar">
-                                <h4 className="fc-listing__filter-group-title">Filter By Month</h4>
-                                <div className="fc-filter-btn">October 2025</div>
-                                <div className="fc-filter-btn">November 2025</div>
-                                <div className="fc-filter-btn">December 2025</div>
+                            <div className="fc-listing__filter-group">
+                                <h4 className="fc-listing__sidebar-title">{__('Filter by Month', 'first-church-core-blocks')}</h4>
+                                <div className="fc-listing__filter-list">
+                                    <div className="fc-listing__filter-item is-active">{__('All Upcoming', 'first-church-core-blocks')}</div>
+                                    <div className="fc-listing__filter-item">October 2025</div>
+                                    <div className="fc-listing__filter-item">November 2025</div>
+                                </div>
+                            </div>
+                            <div className="fc-listing__filter-group" style={{ marginTop: '2rem' }}>
+                                <h4 className="fc-listing__sidebar-title">{__('Filter by Category', 'first-church-core-blocks')}</h4>
+                                <div className="fc-listing__filter-list">
+                                    <div className="fc-listing__filter-item">{__('All Categories', 'first-church-core-blocks')}</div>
+                                    <div className="fc-listing__filter-item">Conferences</div>
+                                </div>
                             </div>
                         </div>
                     )}

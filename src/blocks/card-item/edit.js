@@ -1,10 +1,20 @@
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, InspectorControls, RichText, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, RichText, MediaUpload, MediaUploadCheck, PanelColorSettings } from '@wordpress/block-editor';
 import { PanelBody, TextControl, Button, ToggleControl } from '@wordpress/components';
 import './editor.scss';
 
 export default function Edit({ attributes, setAttributes }) {
-    const { label, title, linkUrl, linkText, mediaId, mediaUrl } = attributes;
+    const { 
+        label, 
+        title, 
+        linkUrl, 
+        linkText, 
+        mediaId, 
+        mediaUrl,
+        cardLabelColor,
+        cardTitleColor,
+        cardLinkColor
+    } = attributes;
 
     const onSelectMedia = (media) => {
         setAttributes({
@@ -18,6 +28,12 @@ export default function Edit({ attributes, setAttributes }) {
             mediaId: 0,
             mediaUrl: ''
         });
+    };
+
+    const style = {
+        '--local-card-label-color': cardLabelColor,
+        '--local-card-title-color': cardTitleColor,
+        '--local-card-link-color': cardLinkColor,
     };
 
     return (
@@ -35,9 +51,30 @@ export default function Edit({ attributes, setAttributes }) {
                         onChange={(value) => setAttributes({ linkText: value })}
                     />
                 </PanelBody>
+                <PanelColorSettings
+                    title={__('Text Colors', 'first-church-core-blocks')}
+                    initialOpen={false}
+                    colorSettings={[
+                        {
+                            value: cardLabelColor,
+                            onChange: (value) => setAttributes({ cardLabelColor: value }),
+                            label: __('Label Color', 'first-church-core-blocks'),
+                        },
+                        {
+                            value: cardTitleColor,
+                            onChange: (value) => setAttributes({ cardTitleColor: value }),
+                            label: __('Title Color', 'first-church-core-blocks'),
+                        },
+                        {
+                            value: cardLinkColor,
+                            onChange: (value) => setAttributes({ cardLinkColor: value }),
+                            label: __('Button Color', 'first-church-core-blocks'),
+                        },
+                    ]}
+                />
             </InspectorControls>
 
-            <div { ...useBlockProps({ className: 'fc-card-item' }) }>
+            <div { ...useBlockProps({ className: 'fc-card-item', style: style }) }>
                 <div className="fc-card-link-wrapper">
                     
                     {/* Image Area */}

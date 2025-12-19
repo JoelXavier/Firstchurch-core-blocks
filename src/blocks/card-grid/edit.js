@@ -77,7 +77,7 @@ export default function Edit({ attributes, setAttributes }) {
                             value={ sectionTitle }
                             onChange={ ( value ) => setAttributes( { sectionTitle: value } ) }
                             placeholder={ __( 'Section Title...', 'first-church-core-blocks' ) }
-                            style={{ color: sectionTitleColor }}
+                            style={{ color: sectionTitleColor || undefined }}
                         />
                         <div className="fc-card-grid__line"></div>
                         <RichText

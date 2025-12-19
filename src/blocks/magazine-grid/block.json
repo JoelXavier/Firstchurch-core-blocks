@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "firstchurch/magazine-grid",
+  "version": "0.1.0",
+  "title": "Magazine Grid",
+  "category": "firstchurch",
+  "icon": "layout",
+  "description": "A high-impact editorial layout with 33/66 or 66/33 splits.",
+  "supports": {
+    "html": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+        "margin": true,
+        "padding": true,
+        "blockGap": true
+    },
+    "typography": {
+        "fontSize": true,
+        "lineHeight": true,
+        "__experimentalFontFamily": true,
+        "fontWeight": true,
+        "letterSpacing": true,
+        "textTransform": true
+    }
+  },
+  "attributes": {
+    "sidebarWidth": {
+      "type": "number",
+      "default": 33
+    },
+    "sidebarPosition": {
+      "type": "string",
+      "default": "right"
+    }
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}
