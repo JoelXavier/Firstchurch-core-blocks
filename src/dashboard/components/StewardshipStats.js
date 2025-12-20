@@ -16,7 +16,7 @@ export default function StewardshipStats({ stats }) {
             color: 'var(--fc-accent)'
         },
         {
-            label: __('Active Locations', 'first-church-core-blocks'),
+            label: __('Active Temples', 'first-church-core-blocks'),
             count: stats.active_locations || stats.locations || 0, // Fallback to 'locations' if 'active_locations' mismatch
             icon: 'location',
             color: '#4b5563'

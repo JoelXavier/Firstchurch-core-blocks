@@ -213,7 +213,7 @@ body.toplevel_page_firstchurch-dashboard #wpcontent {
 .fc-dashboard__tabs .components-button.components-tab-panel__tabs-item {
     background: transparent;
     border: none;
-    border-radius: 6px; /* Professional rounded, not pill */
+    border-radius: 12px; /* Increased radius per request */
     padding: 8px 16px;
     color: #344152; /* Darker Blue-Grey */
     font-family: var(--wp--preset--font-family--ui);
@@ -246,7 +246,7 @@ body.toplevel_page_firstchurch-dashboard #wpcontent {
     border: var(--fc-glass-border);
     backdrop-filter: blur(12px);
     padding: 40px;
-    box-shadow: var(--fc-glass-shadow);
+    box-shadow: none; /* Flat design: No shadow */
     min-height: 500px;
     animation: fadeInUp 0.6s ease;
 }

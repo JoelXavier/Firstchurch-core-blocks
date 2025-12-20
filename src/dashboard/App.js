@@ -179,7 +179,7 @@ export default function App() {
                     tabs={[
                         { name: 'templates', title: 'Start Creating', className: 'fc-tab-create' },
                         { name: 'events', title: 'Events', className: 'fc-tab-events' },
-                        { name: 'locations', title: 'Locations', className: 'fc-tab-locations' },
+                        { name: 'locations', title: 'Temples', className: 'fc-tab-locations' },
                         { name: 'baptisms', title: 'Baptisms', className: 'fc-tab-baptisms' },
                         { name: 'fundraisers', title: 'Fundraisers', className: 'fc-tab-funds' },
                         { name: 'megamenu', title: 'Mega Menu', className: 'fc-tab-menu' },
