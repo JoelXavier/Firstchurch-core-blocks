@@ -1,0 +1,62 @@
+{
+  "apiVersion": 3,
+  "name": "firstchurch/donation-payment",
+  "version": "0.1.0",
+  "title": "Donation Payment",
+  "category": "firstchurch",
+  "icon": "cart",
+  "description": "A comprehensive donation and tithing form.",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    }
+  },
+  "attributes": {
+    "amounts": {
+      "type": "array",
+      "default": [10, 25, 50, 75, 100, 250, 500, 1000, 2000]
+    },
+    "defaultAmount": {
+      "type": "number",
+      "default": 100
+    },
+    "buttonText": {
+      "type": "string",
+      "default": "Donate now"
+    },
+    "title": {
+      "type": "string",
+      "default": "How much would you like to donate today?"
+    },
+    "subtitle": {
+      "type": "string",
+      "default": "All donations directly impact our organization and help us further our mission."
+    },
+    "donorTitle": {
+      "type": "string",
+      "default": "Who's Donating Today?"
+    },
+    "donorSubtitle": {
+      "type": "string",
+      "default": "We'll never share this information with anyone and we sincerely thank you."
+    },
+    "paymentTitle": {
+      "type": "string",
+      "default": "Payment Details"
+    },
+    "paymentSubtitle": {
+      "type": "string",
+      "default": "How would you like to pay for your donation?"
+    }
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

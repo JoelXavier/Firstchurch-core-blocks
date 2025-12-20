@@ -1,479 +1,637 @@
 /* ========================================= */
-/* MISSION CONTROL DASHBOARD STYLES          */
+/* MISSION CONTROL DASHBOARD STYLES ("Luminous Stewardship") */
 /* ========================================= */
 
+:root {
+    --fc-glass-bg: rgba(255, 255, 255, 0.75);
+    --fc-glass-border: 1px solid rgba(255, 255, 255, 0.3);
+    --fc-glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    --fc-accent: #C5A059; /* Gold */
+    --fc-primary: #8a2432; /* Cardinal */
+    --fc-sandwood: #F3F0E6; /* Sandwood */
+    --fc-text-dark: #1f2937;
+    --fc-text-light: #6b7280;
+}
+
+/* Global Button Override for Dashboard */
+.fc-dashboard .components-button.is-primary {
+    background: var(--fc-primary);
+    border-color: var(--fc-primary);
+    color: white;
+    transition: all 0.3s ease;
+    
+    &:hover, &:focus {
+        background: #6D1B26; /* Darker cardinal */
+        border-color: #6D1B26;
+        box-shadow: 0 4px 12px rgba(138, 36, 50, 0.3);
+    }
+    
+    &:disabled {
+        background: #f3f4f6;
+        color: #9ca3af;
+        border-color: #e5e7eb;
+    }
+}
+.fc-dashboard .components-button.is-secondary {
+    color: var(--fc-primary);
+    border-color: var(--fc-primary);
+    
+    &:hover {
+        background: rgba(138, 36, 50, 0.05);
+        color: #6D1B26;
+    }
+}
+
+body.toplevel_page_firstchurch-dashboard,
+body.toplevel_page_firstchurch-dashboard #wpcontent {
+    background: var(--fc-sandwood) !important; 
+    /* background-image: url('noise.png'); */ /* Optional noise texture if available */
+}
+
 .fc-dashboard {
-    padding: 60px 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-    font-family: var(--wp--preset--font-family--body); /* Merriweather */
-    color: var(--wp--preset--color--rich-black);
+    max-width: 1400px;
+    margin: 40px auto;
+    font-family: var(--wp--preset--font-family--body); 
+    color: var(--fc-text-dark);
+    position: relative;
+    padding: 0 40px;
 }
 
-/* --- Header Section --- */
-.fc-dashboard__header {
-    text-align: center;
-    margin-bottom: 60px;
+/* --- Layout: Hero Header --- */
+.fc-mission-control__header {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    height: 380px;
+    display: flex;
+    align-items: flex-end;
+    /* Flat Design: Removed shadow */
+    border: none; /* No border to prevent gaps */
+    background: #1a1a1a; /* fallback */
+    transition: all 0.5s ease;
 }
 
-.fc-dashboard__header h1 {
-    font-family: var(--wp--preset--font-family--heading); /* Playfair Display */
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: var(--wp--preset--color--cardinal);
-    margin-bottom: 16px;
-    line-height: 1.2;
+.fc-mission-control__banner-bg {
+    position: absolute;
+    top: -1%;
+    left: -1%;
+    right: -1%; 
+    bottom: -1%; 
+    width: 102% !important;
+    height: 102% !important;
+    min-width: 102% !important;
+    max-width: none !important; 
+    object-fit: cover !important;
+    z-index: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: scale(1.02); /* More aggressive bleed */
+    transform-origin: center;
+    transition: transform 10s ease; 
 }
 
-/* --- Sections --- */
-.fc-dashboard__section {
-    margin-bottom: 80px;
+/* Glass Overlay on Banner */
+.fc-mission-control__hero-content {
+    z-index: 10;
+    width: 100%;
+    /* Restore Layout Props */
+    display: flex;
+    padding: 40px 60px;
+    color: white;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative; 
 }
 
-.fc-dashboard__section h2 {
-    font-family: var(--wp--preset--font-family--ui); /* Inter or System */
-    font-size: 1rem;
+/* Glass Effect via Pseudo */
+.fc-mission-control__hero-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1; 
+    backdrop-filter: blur(8px);
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+    mask-image: linear-gradient(to top, black 0%, black 30%, transparent 85%);
+    -webkit-mask-image: linear-gradient(to top, black 0%, black 30%, transparent 85%);
+    border-top: 1px solid rgba(255,255,255,0.1); 
+    pointer-events: none;
+}
+
+.fc-beta-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid var(--fc-accent); 
+    background: rgba(197, 160, 89, 0.15); /* Elegant Champagne Tint */
+    color: var(--fc-accent); /* Gold Text */
+    font-family: var(--wp--preset--font-family--ui);
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--wp--preset--color--neutral-500);
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--wp--preset--color--neutral-200);
-    padding-bottom: 12px;
+    font-weight: 700;
+    border-radius: 100px;
+    margin-bottom: 12px; /* Spacing fix */
+    align-self: flex-start;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* --- Quick Actions (Buttons) --- */
-.fc-dashboard__actions {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-/* Override WordPress Components Buttons for Branding */
-.fc-dashboard .components-button.is-primary {
-    background-color: var(--wp--preset--color--cardinal);
-    border-color: var(--wp--preset--color--cardinal);
-    color: white;
-    font-family: var(--wp--preset--font-family--ui);
-    font-weight: 500;
-    padding: 8px 16px; /* Slightly larger */
-}
-
-.fc-dashboard .components-button.is-primary:hover,
-.fc-dashboard .components-button.is-primary:focus {
-    background-color: var(--wp--preset--color--burgundy);
-    border-color: var(--wp--preset--color--burgundy);
-    color: white;
-}
-
-.fc-dashboard .components-button.is-secondary {
-    color: var(--wp--preset--color--rich-black);
-    border-color: var(--wp--preset--color--neutral-300);
-    font-family: var(--wp--preset--font-family--ui);
-}
-
-.fc-dashboard .components-button.is-secondary:hover {
-    border-color: var(--wp--preset--color--divine-gold);
-    color: var(--wp--preset--color--divine-gold);
-}
-
-
-/* --- Templates Grid --- */
-.fc-dashboard__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 32px;
-}
-
-/* --- Template Card --- */
-.fc-dashboard__card {
-    border: 1px solid var(--wp--preset--color--neutral-200);
-    background: white;
-    border-radius: 4px; /* Slight rounding */
-    overflow: hidden;
+.fc-mission-control__welcome {
     display: flex;
     flex-direction: column;
+    gap: 8px; /* Ensure spacing between H1 and p */
+    max-width: 70%;
+}
+
+.fc-mission-control__welcome h1 {
+    font-family: var(--wp--preset--font-family--heading); 
+    font-size: 3rem; /* Slightly reduced for better fit */
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    line-height: 1.1;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.8s ease backwards;
+}
+
+.fc-mission-control__welcome p {
+    font-family: var(--wp--preset--font-family--ui);
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    animation: fadeInUp 0.8s ease 0.1s backwards;
+}
+
+/* Dock (Settings / Visit Site) */
+.fc-mission-control__dock {
+    display: flex;
+    gap: 12px;
+}
+
+.fc-dock-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    padding: 10px 16px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    font-family: var(--wp--preset--font-family--ui);
+    font-weight: 500;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+        background: white;
+        color: var(--fc-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    
+    svg {
+        fill: currentColor;
+    }
 }
 
-.fc-dashboard__card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.08); /* Soft elegant shadow */
-    border-color: var(--wp--preset--color--divine-gold);
+
+/* --- Glass Navigation Tabs --- */
+/* --- Professional Tabs --- */
+.fc-dashboard__tabs {
+    margin-bottom: 40px;
+    
+    .components-tab-panel__tabs {
+        display: flex;
+        gap: 8px;
+        border-bottom: none; 
+        padding-bottom: 0;
+        margin-bottom: 24px; /* Restore spacing */
+    }
 }
 
-.fc-dashboard__card-preview {
-    height: 160px;
-    background-color: var(--wp--preset--color--neutral-50);
-    border-bottom: 1px solid var(--wp--preset--color--neutral-100);
+.fc-dashboard__tabs .components-button.components-tab-panel__tabs-item {
+    background: transparent;
+    border: none;
+    border-radius: 6px; /* Professional rounded, not pill */
+    padding: 8px 16px;
+    color: #344152; /* Darker Blue-Grey */
+    font-family: var(--wp--preset--font-family--ui);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px; /* Clean tracking */
+    transition: all 0.2s ease;
+    
+    &.is-active {
+        background: var(--fc-primary);
+        color: white;
+        /* Flat Active State */
+        box-shadow: none; 
+        transform: translateY(0);
+        
+        &::after { display: none; }
+    }
+    
+    &:hover:not(.is-active) {
+        background: rgba(0,0,0,0.03); /* Subtle neutral hover */
+        color: var(--fc-primary);
+    }
+}
+
+/* --- Content Sanctuary (Main Area) --- */
+.fc-dashboard__tabs .components-tab-panel__tab-content {
+    background: var(--fc-glass-bg);
+    border-radius: 24px;
+    border: var(--fc-glass-border);
+    backdrop-filter: blur(12px);
+    padding: 40px;
+    box-shadow: var(--fc-glass-shadow);
+    min-height: 500px;
+    animation: fadeInUp 0.6s ease;
+}
+
+
+/* --- Redesigned Stats Cards (Stewardship) --- */
+.fc-stewardship-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.fc-stewardship-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
     position: relative;
+    overflow: hidden;
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    /* Flat Design: Border instead of shadow */
+    border: 1px solid rgba(0,0,0,0.08); 
+    transition: all 0.2s ease;
+    
+    &:hover {
+        /* Minimal interaction cue */
+        border-color: rgba(138, 36, 50, 0.2); 
+    }
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 4px; height: 100%;
+        background: var(--fc-accent); /* Gold Accent */
+        opacity: 0.8;
+    }
+}
+
+.fc-stewardship-card__value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a1a; /* Ink Black as requested */
+    line-height: 1;
+    margin-bottom: 8px;
+    font-family: var(--wp--preset--font-family--heading);
+}
+
+.fc-stewardship-card__label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--fc-text-light);
+    font-weight: 600;
+}
+
+.fc-stewardship-card__icon {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    opacity: 0.15; /* Slightly increased opacity for lighter gold */
+    color: var(--fc-accent); /* Gold Icon */
+    transform: scale(2);
+}
+
+/* --- Elegant Template Cards --- */
+.fc-dashboard__card {
+    background: white;
+    border-radius: 16px;
+    /* Flat Design: Border instead of shadow */
+    border: 1px solid rgba(0,0,0,0.08); 
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-top: 3px solid var(--fc-accent); 
+    
+    &:hover {
+        /* Subtle interactive state without lifting */
+        border-color: var(--fc-accent); 
+        background: #fafafa;
+
+        .fc-card-icon {
+            background: rgba(138, 36, 50, 0.1);
+            color: var(--fc-primary);
+        }
+        
+        h3 {
+             color: var(--fc-primary);
+        }
+    }
+}
+
+.fc-dashboard__card-header {
+    padding: 24px 24px 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.fc-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #f9fafb;
+    color: var(--fc-text-light);
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+    
+    svg {
+        width: 24px;
+        height: 24px;
+    }
 }
 
-.fc-dashboard__card-thumbnail-placeholder {
-    width: 60px;
-    height: 60px;
-    background-color: var(--wp--preset--color--neutral-200);
-    border-radius: 50%;
-    opacity: 0.5;
+.fc-card-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--fc-accent);
+    padding: 4px 12px;
+    background: #FFFCF2; /* Light gold tint */
+    border-radius: 100px;
+    border: 1px solid rgba(197, 160, 89, 0.2);
 }
 
-/* Card Body Override */
-.fc-dashboard__card .components-card__body {
+.fc-dashboard__card-body {
     padding: 24px;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    
+    h3 {
+        font-family: var(--wp--preset--font-family--heading);
+        font-size: 1.5rem;
+        margin: 0 0 12px 0;
+        color: var(--fc-text-dark);
+        transition: color 0.3s ease;
+        line-height: 1.2;
+    }
+    
+    p {
+        color: var(--fc-text-light);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 24px;
+        flex-grow: 1;
+    }
 }
 
-.fc-dashboard__card h3 {
-    font-family: var(--wp--preset--font-family--heading);
-    font-size: 1.4rem;
-    color: var(--wp--preset--color--rich-black);
-    margin: 0 0 8px 0;
+.fc-card-actions {
+    margin-top: auto;
+    
+    .components-button {
+        width: 100%;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid var(--fc-primary);
+        color: var(--fc-primary);
+        font-weight: 600;
+        
+        &:hover {
+            background: var(--fc-primary);
+            color: white;
+        }
+    }
 }
 
-.fc-dashboard__card p {
-    color: var(--wp--preset--color--neutral-600);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0 0 24px 0;
-    flex-grow: 1; /* Pushes button down */
+/* --- Animations --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.fc-dashboard__card .components-button {
-    width: 100%;
-    justify-content: center;
-}
-
-/* --- Top Grid Layout (Phase 2) --- */
+/* --- Utility / Legacy Support --- */
 .fc-dashboard__top-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 40px;
-    margin-bottom: 60px;
-}
-
-@media (max-width: 960px) {
-    .fc-dashboard__top-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-.fc-dashboard__main-column {
-    display: flex;
-    flex-direction: column;
-}
-
-.fc-dashboard__sidebar-column {
-    /* Sticky sidebar for large screens */
-    position: sticky;
-    top: 20px;
-    align-self: start;
-}
-
-
-/* --- Stats Bar --- */
-.fc-dashboard__stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 20px;
-    margin-bottom: 20px;
-}
-
-.fc-dashboard__stat-card {
-    background: white;
-    border: 1px solid var(--wp--preset--color--neutral-200);
-    border-radius: 4px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    transition: transform 0.2s ease;
-}
-
-.fc-dashboard__stat-card:hover {
-    transform: translateY(-2px);
-    border-color: var(--wp--preset--color--cardinal);
-}
-
-.fc-dashboard__stat-icon {
-    font-size: 24px;
-    height: 24px;
-    width: 24px;
-    color: var(--wp--preset--color--neutral-400);
-}
-
-.fc-dashboard__stat-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.fc-dashboard__stat-count {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--wp--preset--color--rich-black);
-    line-height: 1;
-}
-
-.fc-dashboard__stat-label {
-    font-size: 0.85rem;
-    color: var(--wp--preset--color--neutral-500);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 4px;
-}
-
-/* --- Activity Feed --- */
-.fc-dashboard__activity-feed {
-    background: white;
-    border: 1px solid var(--wp--preset--color--neutral-200);
-    padding: 24px;
-    border-radius: 4px;
-}
-
-.fc-dashboard__section-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--wp--preset--color--rich-black);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--wp--preset--color--neutral-100);
-    font-family: var(--wp--preset--font-family--heading);
-}
-
-.fc-dashboard__activity-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.fc-dashboard__activity-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--wp--preset--color--neutral-50);
-}
-
-.fc-dashboard__activity-item:last-child {
-    border-bottom: none;
-}
-
-.fc-dashboard__activity-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.fc-dashboard__activity-title {
-    font-weight: 600;
-    color: var(--wp--preset--color--cardinal);
-    text-decoration: none;
-    font-size: 0.95rem;
-}
-
-.fc-dashboard__activity-title:hover {
-    text-decoration: underline;
-}
-
-.fc-dashboard__activity-meta {
-    font-size: 0.8rem;
-    color: var(--wp--preset--color--neutral-500);
-}
-
-.fc-dashboard__activity-btn.components-button {
-    font-size: 0.8rem;
-    padding: 0 8px;
-    height: 28px;
-    line-height: 26px;
-    min-width: auto;
-}
-
-/* --- Content Manager (Events & Locations) --- */
-.fc-content-manager {
-    animation: fadeIn 0.4s ease;
-}
-
-.fc-content-manager__header {
     margin-bottom: 40px;
-    border-bottom: 1px solid var(--wp--preset--color--neutral-200);
-    padding-bottom: 20px;
 }
-
-.fc-content-manager__header h2 {
-    font-family: var(--wp--preset--font-family--heading);
-    font-size: 2rem;
-    color: var(--wp--preset--color--rich-black);
-    margin-bottom: 8px;
-    text-transform: none;
-    letter-spacing: normal;
-    border: none;
-    padding: 0;
-}
-
-.fc-content-manager__list {
+.fc-dashboard__sidebar-column {
     display: flex;
     flex-direction: column;
-    gap: 16px; /* Reduced gap for accordion look */
+    gap: 24px;
 }
 
-.fc-content-item-card {
-    background: white;
-    border: 1px solid var(--wp--preset--color--neutral-200);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    transition: box-shadow 0.3s ease;
-}
+/* Keep critical legacy styles if reused */
+/* Keep critical legacy styles if reused */
+.fc-content-manager__header h2 { font-family: var(--wp--preset--font-family--heading); color: var(--fc-text-dark); margin-bottom: 24px; }
+.fc-content-item-card { 
+    background: white; 
+    border-radius: 8px; 
+    border: 1px solid rgba(0,0,0,0.08); /* Flat Border */
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    
+    &:hover {
+        border-color: rgba(138, 36, 50, 0.2);
+    }
 
-.fc-content-item-card:hover {
-    box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+    &.is-expanded {
+        border-color: var(--fc-primary); /* Active Focus */
+    }
 }
 
 .fc-content-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--wp--preset--color--neutral-50);
-    padding: 12px 24px; /* Slightly tighter */
-    border-bottom: 1px solid var(--wp--preset--color--neutral-100);
+    padding: 20px 24px;
     cursor: pointer;
-    transition: background 0.2s ease;
-    user-select: none;
-
-    &:hover {
-        background: var(--wp--preset--color--neutral-100);
+    background: white;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+    
+    /* Enforce Inter/UI Font */
+    h3 {
+        font-family: var(--wp--preset--font-family--ui) !important;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--fc-text-dark);
+        letter-spacing: -0.01em;
     }
+    
+    &:hover {
+        background: #fafafa;
+    }
+}
+
+.is-expanded .fc-content-item-header {
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    background: var(--fc-sandwood); /* Contextual background */
 }
 
 .fc-content-item-summary {
     display: flex;
     gap: 16px;
+    margin-left: 24px; /* Align with title */
+    margin-top: 4px;
     font-size: 0.85rem;
-    color: var(--wp--preset--color--neutral-500);
-    margin-left: 12px;
-    font-family: var(--wp--preset--font-family--ui);
+    color: var(--fc-text-light);
     
     span {
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        gap: 4px;
+        gap: 6px;
     }
 }
 
-.fc-content-item-card.is-collapsed {
-    border-bottom-width: 1px;
-    
-    .fc-content-item-header {
-        border-bottom: none;
-    }
-}
-
-.fc-content-item-card.is-expanded {
-    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-    margin: 8px 0;
-    z-index: 10;
-}
-
-.fc-content-item-header h3 {
-    margin: 0;
-    font-family: var(--wp--preset--font-family--heading);
-    font-size: 1.25rem;
-    color: var(--wp--preset--color--cardinal);
-}
-
+/* Status Badges */
 .fc-status-badge {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
     padding: 4px 10px;
-    border-radius: 100px;
-    background: var(--wp--preset--color--neutral-200);
-    color: var(--wp--preset--color--neutral-600);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    background: #e5e7eb;
+    color: var(--fc-text-light);
+
+    &.is-publish {
+        background: rgba(45, 88, 63, 0.15); /* Sage Tint */
+        color: #2D583F; /* Sem-Success */
+    }
+    
+    &.is-draft {
+        background: rgba(0, 0, 0, 0.05);
+        color: var(--fc-text-light);
+        border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    &.is-private {
+        background: #FEF3C7; /* Amber-100 */
+        color: #92400E;     /* Amber-800 */
+    }
+    
+    &.is-archived, &.is-trash { /* CANCELED Override */
+        background: #FEE2E2 !important; /* Red-100 */
+        color: #991B1B !important;      /* Red-800 */
+        border: 1px solid rgba(153, 27, 27, 0.1);
+    }
 }
 
-.fc-status-badge.is-publish {
-    background: #e6f6ec;
-    color: #0d5a35;
-}
-
-.fc-status-badge.is-draft {
-    background: #fff4e5;
-    color: #b25e09;
-}
-
-.fc-content-item-grid {
+/* Dashboard Templates Grid */
+.fc-dashboard__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Better wrapping */
     gap: 24px;
-    padding: 24px;
+    margin-top: 24px;
 }
 
-.fc-content-item-col p {
-    margin-top: 0;
+/* Activity Feed (Updated) */
+.fc-dashboard__activity-feed {
+    background: transparent; /* Integrate with sidebar */
+    padding: 0;
+    border: none;
+}
+.fc-dashboard__activity-item {
+    background: white; 
+    border-radius: 12px;
+    padding: 16px 20px;
     margin-bottom: 12px;
-    font-size: 0.9rem;
-    color: var(--wp--preset--color--neutral-700);
-}
-
-/* DateTimePicker Styling for Dashboard */
-.fc-content-item-col .components-datetime {
-    border: 1px solid var(--wp--preset--color--neutral-100);
-    border-radius: 4px;
-    padding: 8px;
-}
-
-.fc-content-item-card .components-card__footer {
+    border: 1px solid rgba(0,0,0,0.06);
     display: flex;
-    gap: 16px;
-    padding: 16px 24px;
-    border-top: 1px solid var(--wp--preset--color--neutral-100);
-    background: var(--wp--preset--color--neutral-50);
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02); /* Very subtle lift */
+    
+    &:hover {
+        border-color: rgba(138, 36, 50, 0.2);
+        background: #fafafa;
+        transform: translateX(2px);
+    }
+
+    .fc-dashboard__activity-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .fc-dashboard__activity-title {
+        font-family: var(--wp--preset--font-family--ui); /* Sans-serif for UI */
+        font-weight: 600;
+        color: var(--fc-text-dark); 
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: var(--fc-primary);
+        }
+    }
+    
+    .fc-dashboard__activity-meta {
+        font-family: var(--wp--preset--font-family--ui); /* Sans-serif */
+        font-size: 0.75rem;
+        color: var(--fc-text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        opacity: 0.8;
+    }
+
+    /* Restyle the WordPress Button passed in */
+    .fc-dashboard__activity-btn.components-button {
+        font-family: var(--wp--preset--font-family--ui);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 0 12px;
+        height: 32px;
+        border: 1px solid rgba(0,0,0,0.1);
+        color: var(--fc-text-light);
+        background: transparent;
+        box-shadow: none;
+        
+        &:hover {
+            background: white;
+            color: var(--fc-primary);
+            border-color: var(--fc-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Restore subtle lift on hover */
+        }
+    }
+
+    /* Remove the arrow hint since we have a button now */
+    &::after {
+        display: none; 
+    }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Creation Flow Specific Styles */
-/* Creation Flow Specific Styles */
-.fc-content-item-card.is-new {
-    border: 2px dashed var(--wp--preset--color--cardinal);
-    background-color: #fff9f9;
-    animation: fadeIn 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.fc-content-item-card.is-new::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent 0%,
-        rgba(255, 255, 255, 0.4) 50%,
-        transparent 100%
-    );
-    pointer-events: none;
-    animation: shimmer 2s infinite linear;
-}
-
-@keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-}
-
-.fc-content-item-card.is-new .fc-content-item-header {
-    background: var(--wp--preset--color--cardinal);
-    color: white;
-}
-
-.fc-content-item-card.is-new .fc-content-item-header h3 {
-    color: white;
-}

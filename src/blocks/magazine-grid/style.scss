@@ -5,14 +5,15 @@
     margin-top: var(--wp--style--block-gap, 2rem);
     margin-bottom: var(--wp--style--block-gap, 2rem);
 
-    /* Base Grid Logic - Use CSS Variables */
+    /* Base Grid Logic - Use CSS Variables from Attributes */
     grid-template-columns: minmax(0, 1fr) var(--fc-sidebar-width, 33%);
+    min-height: 1px;
 
     /* Position Switches */
     &.is-position-left {
         grid-template-columns: var(--fc-sidebar-width, 33%) minmax(0, 1fr);
 
-        /* Reorder internal groups for visual fidelity */
+        /* Reorder internal columns for visual fidelity */
         .flex-magazine-column.is-main { order: 2; }
         .flex-magazine-column.is-sidebar { order: 1; }
     }
@@ -22,15 +23,15 @@
         .flex-magazine-column.is-sidebar { order: 2; }
     }
 
-    /* Editor Specific: Match Grid Logic */
-    .block-editor-inner-blocks > .block-editor-block-list__layout {
+    /* Production Standard: Ensure Grid applies in the Editor too without specific wrappers */
+    /* By targeting the common ancestors, we increase resilience */
+    :where(.wp-block-firstchurch-magazine-grid) {
         display: grid;
         grid-template-columns: inherit;
         gap: inherit;
-        width: 100%;
     }
 
-    /* Resilience against overflow and column drop */
+    /* Resilience against overflow */
     > * {
         min-width: 0;
     }
@@ -38,9 +39,10 @@
     @media (max-width: 782px) {
         grid-template-columns: 1fr !important;
         gap: 24px;
-
-        .block-editor-inner-blocks > .block-editor-block-list__layout {
-            grid-template-columns: 1fr !important;
+        
+        /* Ensure columns order naturally on mobile */
+        .flex-magazine-column {
+            order: initial !important;
         }
     }
 
@@ -49,20 +51,12 @@
         flex-direction: column;
         min-width: 0;
         
-        // Support native block-gap with sensible fallbacks
+        // Support block-gap
         --fc-column-gap: var(--wp--style--block-gap, 32px);
         gap: var(--fc-column-gap);
 
-        /* In the editor, ensure the inner blocks container inherits the parent's gap */
-        & > .block-editor-inner-blocks > .block-editor-block-list__layout {
-            display: flex;
-            flex-direction: column;
-            gap: inherit;
-        }
-
-        /* Reset margins to ensure perfect top alignment */
-        & > *:first-child,
-        & > .block-editor-inner-blocks > .block-editor-block-list__layout > *:first-child {
+        /* Reset margins for perfect alignment */
+        & > *:first-child {
             margin-top: 0 !important;
         }
         
@@ -72,7 +66,25 @@
     }
 }
 
-/* Global Magazine Styles - Stripped of Strict Overrides */
+/* Global Magazine Card Styles */
+
+.fc-magazine-item {
+    .fc-magazine-item__image-wrapper {
+        margin-bottom: 20px;
+        overflow: hidden;
+        border-radius: 4px;
+        
+        img {
+            transition: transform 0.5s ease;
+        }
+    }
+
+    &:hover .fc-magazine-item__image-wrapper img {
+        transform: scale(1.05);
+    }
+}
+
+/* Magazine Block Styles */
 
 .is-style-magazine-featured {
     padding: var(--wp--style--spacing--padding, 40px);
@@ -80,12 +92,12 @@
     display: flex;
     flex-direction: column;
     transition: all 0.3s ease;
-
-    // REMOVED: Fixed font sizes and colors.
-    // Let Heading and Paragraph blocks use their own settings.
+    background: var(--wp--preset--color--white, #ffffff);
+    border: 1px solid var(--wp--preset--color--contrast-2, #eeeeee);
 
     &:hover {
         box-shadow: 0 12px 24px rgba(0,0,0,0.05);
+        border-color: var(--wp--preset--color--contrast, #333333);
     }
 }
 
@@ -93,10 +105,5 @@
     padding: 0;
     height: 100%;
     background: transparent !important;
-    border: none;
-
-    // REMOVED: Strict heading border-bottoms and paragraph sizes.
-    // Use Block Styles (e.g., standard Heading styles) for this.
+    border: none !important;
 }
-
-// DELETED: .is-style-magazine-display

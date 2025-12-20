@@ -9,6 +9,10 @@
   "description": "A high-impact editorial layout with 33/66 or 66/33 splits.",
   "supports": {
     "html": false,
+    "layout": {
+      "allowEditing": false,
+      "allowInherit": false
+    },
     "color": {
       "background": true,
       "text": true,
@@ -22,10 +26,8 @@
     "typography": {
       "fontSize": true,
       "lineHeight": true,
-      "__experimentalFontFamily": true,
-      "fontWeight": true,
-      "letterSpacing": true,
-      "textTransform": true
+      "fontFamily": true,
+      "fontWeight": true
     }
   },
   "attributes": {

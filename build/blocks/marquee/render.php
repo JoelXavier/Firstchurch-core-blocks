@@ -3,23 +3,23 @@
  * Render callback for the Marquee block.
  */
 
-$attributes = isset($attributes) ? $attributes : [];
-$images = isset($attributes['images']) ? $attributes['images'] : [];
-$speed = isset($attributes['speed']) ? $attributes['speed'] : 30;
-$direction = isset($attributes['direction']) ? $attributes['direction'] : 'left';
-$zigzag = isset($attributes['zigzag']) ? $attributes['zigzag'] : false;
+// Defensive attribute extraction
+$images = $attributes['images'] ?? [];
+$speed = (int) ($attributes['speed'] ?? 30);
+$direction = $attributes['direction'] ?? 'left';
+$zigzag = (bool) ($attributes['zigzag'] ?? false);
 
 if (empty($images)) {
     return;
 }
 
-$wrapper_attributes = get_block_wrapper_attributes(array(
-    'class' => 'fc-marquee fc-marquee--' . esc_attr($direction) . ($zigzag ? ' fc-marquee--zigzag' : ''),
-    'style' => '--marquee-speed: ' . esc_attr($speed) . 's;'
-));
+$wrapper_attributes = get_block_wrapper_attributes([
+    'class' => 'fc-marquee fc-marquee--' . $direction . ($zigzag ? ' fc-marquee--zigzag' : ''),
+    'style' => '--marquee-speed: ' . $speed . 's;'
+]);
 ?>
 
-<div <?php echo $wrapper_attributes; ?>>
+<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <div class="fc-marquee__container">
         <!-- Track 1 -->
         <div class="fc-marquee__track">

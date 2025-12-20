@@ -1,0 +1,21 @@
+{
+  "apiVersion": 3,
+  "name": "firstchurch/baptism-stats",
+  "version": "0.1.0",
+  "title": "Baptism Stats",
+  "category": "firstchurch",
+  "icon": "analytics",
+  "description": "Display monthly baptismal report statistics.",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "style": "file:./style-index.css"
+}

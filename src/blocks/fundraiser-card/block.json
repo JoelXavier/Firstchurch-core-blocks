@@ -1,0 +1,67 @@
+{
+  "apiVersion": 3,
+  "name": "firstchurch/fundraiser-card",
+  "version": "0.1.0",
+  "title": "Fundraiser Card",
+  "category": "firstchurch",
+  "icon": "money-alt",
+  "description": "A standalone card for fundraising campaigns with progress tracking.",
+  "supports": {
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "CAMPAIGN"
+    },
+    "title": {
+      "type": "string",
+      "default": "Convention Center Fundraiser"
+    },
+    "description": {
+      "type": "string",
+      "default": "Help us build the future of First Church."
+    },
+    "useDashboardData": {
+      "type": "boolean",
+      "default": false
+    },
+    "fundraiserId": {
+        "type": "number"
+    },
+    "goalAmount": {
+      "type": "number",
+      "default": 1000000
+    },
+    "raisedAmount": {
+      "type": "number",
+      "default": 250000
+    },
+    "showProgress": {
+      "type": "boolean",
+      "default": true
+    },
+    "linkText": {
+      "type": "string",
+      "default": "MAKE A SACRIFICE"
+    },
+    "linkUrl": {
+      "type": "string",
+      "default": "#"
+    }
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

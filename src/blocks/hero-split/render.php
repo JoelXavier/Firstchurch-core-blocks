@@ -3,7 +3,7 @@
  * Render callback for the Hero Split block.
  */
 
-$attributes = $attributes ?? [];
+// Defensive attribute extraction
 $label = $attributes['label'] ?? '';
 $title = $attributes['title'] ?? '';
 $link_text = $attributes['linkText'] ?? '';
@@ -32,27 +32,27 @@ if ($image_aspect_ratio) {
 
 $wrapper_attributes = get_block_wrapper_attributes([
     'class' => $wrapper_classes,
-    'style' => "--hero-split-bg: {$background_color}; --hero-split-text: {$text_color}; --hero-split-link: {$link_color};"
+    'style' => "--hero-split-bg: " . esc_attr($background_color) . "; --hero-split-text: " . esc_attr($text_color) . "; --hero-split-link: " . esc_attr($link_color) . ";"
 ]);
 ?>
 
-<section <?php echo $wrapper_attributes; ?>>
+<section <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <!-- Image Side -->
     <div class="fc-hero-split__media">
-        <?php if (!empty($image_url)): ?>
+        <?php if ($image_url): ?>
             <img src="<?php echo esc_url($image_url); ?>" alt="" class="fc-hero-split__image" />
         <?php endif; ?>
     </div>
 
     <!-- Content Side -->
     <div class="fc-hero-split__content">
-        <?php if (!empty($label)): ?>
+        <?php if ($label): ?>
             <span class="fc-hero-split__label"><?php echo esc_html($label); ?></span>
         <?php endif; ?>
 
         <h2 class="fc-hero-split__title"><?php echo wp_kses_post($title); ?></h2>
 
-        <?php if (!empty($link_text)): ?>
+        <?php if ($link_text): ?>
             <a href="<?php echo esc_url($link_url); ?>" class="fc-hero-split__link">
                 <?php echo esc_html($link_text); ?>
                 <!-- Simple chevron arrow SVG -->

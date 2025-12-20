@@ -1,7 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { 
     useBlockProps, 
-    InnerBlocks, 
+    useInnerBlocksProps, 
     InspectorControls 
 } from '@wordpress/block-editor';
 import { 
@@ -54,6 +54,12 @@ export default function Edit({ attributes, setAttributes }) {
         'firstchurch/listing'
     ];
 
+    const innerBlocksProps = useInnerBlocksProps(blockProps, {
+        template: TEMPLATE,
+        templateLock: false,
+        allowedBlocks: ALLOWED_BLOCKS,
+    });
+
     return (
         <>
             <InspectorControls>
@@ -72,13 +78,7 @@ export default function Edit({ attributes, setAttributes }) {
                     />
                 </PanelBody>
             </InspectorControls>
-            <div {...blockProps}>
-                <InnerBlocks
-                    template={TEMPLATE}
-                    templateLock={false}
-                    allowedBlocks={ALLOWED_BLOCKS}
-                />
-            </div>
+            <div {...innerBlocksProps} />
         </>
     );
 }

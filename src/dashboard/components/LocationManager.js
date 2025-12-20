@@ -158,7 +158,7 @@ export default function LocationManager() {
                     </Card>
                 )}
 
-                {locations.map((location, index) => {
+                {Array.isArray(locations) && locations.map((location, index) => {
                     const isExpanded = location.id === expandedId;
                     return (
                         <Card key={location.id} className={`fc-content-item-card ${isExpanded ? 'is-expanded' : 'is-collapsed'}`}>

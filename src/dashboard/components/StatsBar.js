@@ -8,6 +8,8 @@ export default function StatsBar({ stats }) {
         { label: __('Articles', 'first-church-core-blocks'), count: stats.articles, icon: 'dashicons-admin-post' },
         { label: __('Events', 'first-church-core-blocks'), count: stats.events, icon: 'dashicons-calendar-alt' },
         { label: __('Locations', 'first-church-core-blocks'), count: stats.locations, icon: 'dashicons-location' },
+        { label: __('Fundraisers', 'first-church-core-blocks'), count: stats.fundraisers, icon: 'dashicons-money-alt' },
+        { label: __('Baptisms', 'first-church-core-blocks'), count: stats.baptisms || 0, icon: 'dashicons-analytics' },
         { label: __('Pages', 'first-church-core-blocks'), count: stats.pages, icon: 'dashicons-admin-page' },
     ];
 

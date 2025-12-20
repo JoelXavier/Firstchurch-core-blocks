@@ -2,7 +2,7 @@
 /**
  * Plugin Name: First Church Core Blocks
  * Description: A suite of dynamic, server-side rendered blocks with a Storybook-first development workflow.
- * Version: 0.1.0
+ * Version: 1.0.0
  * Author: Antigravity
  * License: GPL-2.0-or-later
  * Text Domain: first-church-core-blocks
@@ -12,969 +12,609 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-
 /**
- * Registers all blocks in the plugin.
+ * Main Plugin Class: FirstChurchBlocks
+ * Structured as a Singleton to ensure clean hook registration and asset management.
  */
-function firstchurch_core_blocks_init()
+final class FirstChurchBlocks
 {
-    // Register the Global Navigation blocks
-    register_block_type(__DIR__ . '/build/blocks/global-nav');
-    register_block_type(__DIR__ . '/build/blocks/sleek-nav');
+    private static $instance = null;
 
-    // Register the Hero block
-    register_block_type(__DIR__ . '/build/blocks/hero');
-    register_block_type(__DIR__ . '/build/blocks/section-header');
-    register_block_type(__DIR__ . '/build/blocks/marquee');
+    /**
+     * Singleton Instance Getter
+     */
+    public static function get_instance()
+    {
+        if (null === self::$instance) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
-    // Register the Location block
-    register_block_type(__DIR__ . '/build/blocks/location');
+    /**
+     * Constructor
+     */
+    private function __construct()
+    {
+        $this->init_hooks();
+    }
 
-    // Register the Quote block
-    register_block_type(__DIR__ . '/build/blocks/quote');
+    /**
+     * Centralized Hook Registration
+     */
+    private function init_hooks()
+    {
+        // Core Block Registration
+        add_action('init', [$this, 'register_blocks'], 10);
+        add_filter('block_categories_all', [$this, 'register_category'], 10, 2);
 
-    // Register the Card Grid block (Parent)
-    register_block_type(__DIR__ . '/build/blocks/card-grid');
+        // Custom Post Types, Taxonomies & Meta
+        add_action('init', [$this, 'register_post_types'], 10);
+        add_action('init', [$this, 'rename_post_object'], 999);
 
-    // Register the Card Item block (Child)
-    register_block_type(__DIR__ . '/build/blocks/card-item');
+        // Assets (Global, Admin, Editor)
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_global_assets']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_branding']);
+        add_action('enqueue_block_editor_assets', [$this, 'enqueue_editor_assets']);
 
-    // Register the Fundraiser block
-    register_block_type(__DIR__ . '/build/blocks/fundraiser');
+        // Admin Pages & Dashboard
+        add_action('admin_menu', [$this, 'register_admin_pages']);
+        add_action('admin_menu', [$this, 'rename_post_menu'], 999);
+        add_action('admin_bar_menu', [$this, 'update_admin_bar_logo'], 999);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_dashboard_assets']);
 
-    // Register Quick Links (Parent) and Item (Child)
-    register_block_type(__DIR__ . '/build/blocks/quick-link-item');
-    register_block_type(__DIR__ . '/build/blocks/quick-links');
+        // Block Enhancements
+        add_action('init', [$this, 'register_block_patterns'], 10);
+        add_action('init', [$this, 'register_block_styles'], 10);
+        add_action('init', [$this, 'register_settings'], 10);
 
-    // Register Hero Split
-    register_block_type(__DIR__ . '/build/blocks/hero-split');
+        // Theme Configuration
+        add_action('after_setup_theme', [$this, 'theme_setup']);
+        add_filter('wp_theme_json_data_theme', [$this, 'configure_theme_json']);
+        add_filter('should_load_remote_block_patterns', '__return_false');
 
-    // Register Content Listing / Feed
-    register_block_type(__DIR__ . '/build/blocks/listing');
+        // Templates
+        add_filter('theme_post_templates', [$this, 'register_templates']);
+        add_filter('theme_page_templates', [$this, 'register_templates']);
+        add_filter('template_include', [$this, 'load_template']);
 
-    // Register Manual Event List & Item
-    register_block_type(__DIR__ . '/build/blocks/event-list');
-    register_block_type(__DIR__ . '/build/blocks/event-item');
+        // Auth & Navigation Redirects
+        add_filter('login_redirect', [$this, 'handle_login_redirect'], 10, 3);
+        add_action('admin_init', [$this, 'handle_dashboard_redirect']);
 
-    // Register Article Blocks
-    register_block_type(__DIR__ . '/build/blocks/article-hero');
-    register_block_type(__DIR__ . '/build/blocks/article-body');
-
-    // Register Footer Blocks
-    register_block_type(__DIR__ . '/build/blocks/footer');
-    register_block_type(__DIR__ . '/build/blocks/footer-column');
-
-    // Register Section Block
-    register_block_type(__DIR__ . '/build/blocks/section');
-
-    // Register Breadcrumbs
-    register_block_type(__DIR__ . '/build/blocks/breadcrumbs');
-
-    // Register Event Feed (Auto)
-    register_block_type(__DIR__ . '/build/blocks/event-feed');
-
-    // Register Location Feed
-    register_block_type(__DIR__ . '/build/blocks/location-feed');
-
-    // Register Magazine Grid
-    register_block_type(__DIR__ . '/build/blocks/magazine-grid');
-
-    // Register Magazine Item
-    register_block_type(__DIR__ . '/build/blocks/magazine-item');
-}
-add_action('init', 'firstchurch_core_blocks_init');
-
-/**
- * Register Custom Block Category "First Church"
- */
-function firstchurch_core_blocks_category($categories, $post)
-{
-    return array_merge(
-        $categories,
-        [
-            [
-                'slug' => 'firstchurch',
-                'title' => 'First Church',
-            ],
-        ]
-    );
-}
-add_filter('block_categories_all', 'firstchurch_core_blocks_category', 10, 2);
-
-/**
- * Register Block Patterns
- */
-function firstchurch_register_block_patterns()
-{
-    $pattern_categories = [
-        'firstchurch' => ['label' => 'First Church'],
-    ];
-
-    foreach ($pattern_categories as $name => $properties) {
-        if (!WP_Block_Patterns_Registry::get_instance()->is_registered($name)) {
-            register_block_pattern_category($name, $properties);
+        // Load Dashboard API logic
+        if (file_exists(plugin_dir_path(__FILE__) . 'src/dashboard/api.php')) {
+            require_once plugin_dir_path(__FILE__) . 'src/dashboard/api.php';
         }
     }
 
-    $patterns = [
-        'article-layout',
-        'mission-statement',
-        'team-profile',
-    ];
+    /**
+     * Register all custom blocks from the build directory.
+     */
+    public function register_blocks()
+    {
+        $blocks = [
+            'global-nav',
+            'sleek-nav',
+            'hero',
+            'section-header',
+            'marquee',
+            'location',
+            'quote',
+            'card-grid',
+            'card-item',
+            'fundraiser',
+            'fundraiser-grid',
+            'fundraiser-card',
+            'donation-payment',
+            'quick-link-item',
+            'quick-links',
+            'hero-split',
+            'listing',
+            'event-list',
+            'event-item',
+            'article-hero',
+            'article-body',
+            'footer',
+            'footer-column',
+            'section',
+            'breadcrumbs',
+            'event-feed',
+            'location-feed',
+            'magazine-grid',
+            'magazine-item',
+            'baptism-stats'
+        ];
 
-    foreach ($patterns as $pattern) {
-        $pattern_file = __DIR__ . '/src/patterns/' . $pattern . '.php';
+        foreach ($blocks as $block) {
+            $block_dir = __DIR__ . '/build/blocks/' . $block;
+            if (file_exists($block_dir . '/block.json')) {
+                register_block_type($block_dir);
+            }
+        }
+    }
 
-        if (file_exists($pattern_file)) {
-            register_block_pattern(
-                'firstchurch/' . $pattern,
-                require $pattern_file
+    /**
+     * Register the "First Church" Block Category.
+     */
+    public function register_category($categories, $post)
+    {
+        return array_merge(
+            $categories,
+            [
+                [
+                    'slug' => 'firstchurch',
+                    'title' => __('First Church', 'first-church-core-blocks'),
+                ]
+            ]
+        );
+    }
+
+    /**
+     * Enqueue global styles for the frontend.
+     */
+    public function enqueue_global_assets()
+    {
+        wp_enqueue_style(
+            'first-church-tokens',
+            plugins_url('src/tokens.css', __FILE__),
+            [],
+            filemtime(plugin_dir_path(__FILE__) . 'src/tokens.css')
+        );
+
+        wp_enqueue_style(
+            'first-church-global',
+            plugins_url('src/assets/global.css', __FILE__),
+            ['first-church-tokens'],
+            '1.0.0'
+        );
+    }
+
+    /**
+     * Enqueue assets specifically for the Block Editor.
+     */
+    public function enqueue_editor_assets()
+    {
+        // Design Tokens are essential for editor preview
+        wp_enqueue_style(
+            'first-church-tokens-editor',
+            plugins_url('src/tokens.css', __FILE__),
+            [],
+            filemtime(plugin_dir_path(__FILE__) . 'src/tokens.css')
+        );
+
+        // Extensions (Modifications to core blocks)
+        $extensions = ['separator', 'event-settings', 'location-settings', 'core-mods'];
+        foreach ($extensions as $ext) {
+            $path = "build/extensions/{$ext}.js";
+            if (file_exists(plugin_dir_path(__FILE__) . $path)) {
+                wp_enqueue_script(
+                    "first-church-ext-{$ext}",
+                    plugins_url($path, __FILE__),
+                    ['wp-blocks', 'wp-dom-ready', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-i18n'],
+                    filemtime(plugin_dir_path(__FILE__) . $path),
+                    true
+                );
+            }
+        }
+
+        // Extension CSS
+        if (file_exists(plugin_dir_path(__FILE__) . 'build/extensions/style-separator.css')) {
+            wp_enqueue_style(
+                'first-church-ext-separator-css',
+                plugins_url('build/extensions/style-separator.css', __FILE__),
+                [],
+                filemtime(plugin_dir_path(__FILE__) . 'build/extensions/style-separator.css')
             );
         }
     }
-}
-add_action('init', 'firstchurch_register_block_patterns');
 
-/**
- * Register Global Block Styles
- * These styles extend core blocks to match the First Church Magazine look.
- */
-function firstchurch_register_block_styles()
-{
-    // 1. Featured Style for Groups
-    register_block_style(
-        'core/group',
-        array(
-            'name' => 'magazine-featured',
-            'label' => __('Magazine Featured', 'first-church-core-blocks'),
-        )
-    );
-
-    // 2. Cardless Style for Groups
-    register_block_style(
-        'core/group',
-        array(
-            'name' => 'magazine-cardless',
-            'label' => __('Magazine Cardless', 'first-church-core-blocks'),
-        )
-    );
-
-
-    // 4. List Style for Magazine Item
-    register_block_style(
-        'firstchurch/magazine-item',
-        array(
-            'name' => 'magazine-list',
-            'label' => __('Magazine List View', 'first-church-core-blocks'),
-        )
-    );
-}
-add_action('init', 'firstchurch_register_block_styles');
-
-/**
- * Enqueue Global Assets (Fonts)
- */
-function firstchurch_core_blocks_assets()
-{
-    // Load Google Fonts globally for all blocks
-    // DISABLED: We now rely on the native WordPress Font Library (Site Editor) to handle this.
-    // 1. Enqueue Design Tokens (Variables)
-    // We use plugins_url to point to the source file for now, ensuring :root isn't wrapped
-    wp_enqueue_style(
-        'antigravity-design-tokens',
-        plugins_url('src/tokens.css', __FILE__),
-        [],
-        filemtime(plugin_dir_path(__FILE__) . 'src/tokens.css') // Cache busting
-    );
-
-    // Enqueue Global Extensions (Block Styles)
-    // JS for Editor
-    wp_enqueue_script(
-        'firstchurch-separator-style',
-        plugins_url('build/extensions/separator.js', __FILE__),
-        ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'],
-        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/separator.js'),
-        true
-    );
-
-    // Event Settings Extension
-    wp_enqueue_script(
-        'firstchurch-event-settings',
-        plugins_url('build/extensions/event-settings.js', __FILE__),
-        ['wp-plugins', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-core-data', 'wp-i18n'],
-        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/event-settings.js'),
-        true
-    );
-
-    // Location Settings Extension
-    wp_enqueue_script(
-        'firstchurch-location-settings',
-        plugins_url('build/extensions/location-settings.js', __FILE__),
-        ['wp-plugins', 'wp-edit-post', 'wp-components', 'wp-data', 'wp-core-data', 'wp-i18n'],
-        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/location-settings.js'),
-        true
-    );
-
-    // Core Block Modifications (Rename/Recategorize)
-    $core_mods_path = plugin_dir_path(__FILE__) . 'build/extensions/core-mods.js';
-    wp_enqueue_script(
-        'firstchurch-core-mods',
-        plugins_url('build/extensions/core-mods.js', __FILE__),
-        ['wp-blocks', 'wp-hooks', 'wp-dom-ready'],
-        file_exists($core_mods_path) ? filemtime($core_mods_path) : '1.0.0',
-        true
-    );
-
-    // CSS for Frontend & Editor
-    // Note: Webpack usually outputs style-[name].css or [name].css depending on config.
-    // Based on directory listing, it is style-separator.css
-    wp_enqueue_style(
-        'firstchurch-separator-style-css',
-        plugins_url('build/extensions/style-separator.css', __FILE__),
-        [],
-        filemtime(plugin_dir_path(__FILE__) . 'build/extensions/style-separator.css')
-    );
-}
-add_action('wp_enqueue_scripts', 'firstchurch_core_blocks_assets');
-add_action('enqueue_block_editor_assets', 'firstchurch_core_blocks_assets'); // Ensure fonts load in editor too
-
-/**
- * Register custom font families in the Block Editor.
- *
- * @param array $settings Default editor settings.
- * @return array Filtered settings.
- */
-/**
- * Register custom font families via Theme JSON API.
- * This ensures they appear in the editor controls cleanly.
- */
-/**
- * Register custom font families via Theme JSON API.
- * This ensures they appear in the editor controls cleanly.
- */
-
-/**
- * Enable Native Block Tools
- * This ensures lineHeight, appearanceTools (padding, border), and spacing are enabled
- * without injecting any hardcoded design opinions (fonts/colors).
- */
-add_filter('wp_theme_json_data_theme', function ($theme_json) {
-    $new_data = [
-        'version' => 2,
-        'settings' => [
-            'typography' => [
-                'lineHeight' => true,
-                'customFontSize' => true,
-            ],
-            'spacing' => [
-                'appearanceTools' => true,
-                'blockGap' => true,
-                'margin' => true,
-                'padding' => true,
-                'units' => ['px', 'em', 'rem', 'vh', 'vw', '%'],
-            ],
-            'color' => [
-                'custom' => true,
-                'customGradient' => true,
-                'palette' => [
-                    [
-                        'name' => __('Ink Black', 'first-church-core-blocks'),
-                        'slug' => 'ink-black',
-                        'color' => '#1A1A1A',
-                    ],
-                    [
-                        'name' => __('Cardinal', 'first-church-core-blocks'),
-                        'slug' => 'cardinal',
-                        'color' => '#8A1C26',
-                    ],
-                    [
-                        'name' => __('Burgundy', 'first-church-core-blocks'),
-                        'slug' => 'burgundy',
-                        'color' => '#560D1A',
-                    ],
-                    [
-                        'name' => __('Divine Gold', 'first-church-core-blocks'),
-                        'slug' => 'divine-gold',
-                        'color' => '#B08D55',
-                    ],
-                    [
-                        'name' => __('Navy Grey', 'first-church-core-blocks'),
-                        'slug' => 'navy-grey',
-                        'color' => '#344152',
-                    ],
-                    [
-                        'name' => __('Sandwood', 'first-church-core-blocks'),
-                        'slug' => 'sandwood',
-                        'color' => '#F3F0E6',
-                    ],
-                    [
-                        'name' => __('Cloud Blue', 'first-church-core-blocks'),
-                        'slug' => 'cloud-blue',
-                        'color' => '#E3F4F6',
-                    ],
-                ],
-            ],
-        ],
-    ];
-
-    return $theme_json->update_with($new_data);
-});
-
-/**
- * Curator Mode: Disable Default Patterns
- * 
- * 1. Remove core patterns provided by WordPress natively.
- * 2. Disable the official patterns that load remotely from wordpress.org.
- */
-add_action('after_setup_theme', function () {
-    remove_theme_support('core-block-patterns');
-});
-
-add_filter('should_load_remote_block_patterns', '__return_false');
-
-/**
- * Cleanup Default Theme Elements
- * Hides standard headers, footers, and widget areas that "Blank" themes might still output.
- */
-// DISABLED: May hide core content wrappers in some themes
-/*
-add_action('wp_head', function () {
-    ?>
-    <style>
-        header#masthead,
-        footer#colophon,
-        #header,
-        #footer,
-        #sidebar,
-        #comments,
-        .comments-area,
-        .post-navigation,
-        .site-header,
-        .site-footer,
-        .site-info,
-        .entry-header,
-        .entry-footer,
-        .widget-area,
-        .wp-block-site-title,
-        .wp-block-site-tagline,
-        .wp-block-search,
-        .wp-block-page-list,
-        .page-title,
-        .post-edit-link,
-        header.header,
-        h1.entry-title {
-            display: none !important;
-        }
-
-        .site-content,
-        .entry-content {
-            margin: 0 !important;
-            padding: 0 !important;
-            max-width: 100% !important;
-        }
-    </style>
-    <?php
-});
-*/
-
-/**
- * Register Custom Post Types (Events, Locations)
- */
-function firstchurch_register_cpts()
-{
-    // Events
-    register_post_type('event', array(
-        'labels' => array(
-            'name' => 'Events',
-            'singular_name' => 'Event',
-            'add_new_item' => 'Add New Event',
-            'edit_item' => 'Edit Event',
-        ),
-        'public' => true,
-        'show_in_rest' => true, // Essential for Block Editor
-        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
-        'menu_icon' => 'dashicons-calendar-alt',
-        'has_archive' => true,
-        'rewrite' => array('slug' => 'events'),
-    ));
-
-    // Event Categories (Taxonomy)
-    register_taxonomy('event_category', 'event', array(
-        'labels' => array(
-            'name' => 'Event Categories',
-            'singular_name' => 'Event Category',
-            'add_new_item' => 'Add New Category',
-            'new_item_name' => 'New Category Name',
-        ),
-        'hierarchical' => true,
-        'show_in_rest' => true,
-        'public' => true,
-        'rewrite' => array('slug' => 'event-category'),
-    ));
-
-    // Locations
-    register_post_type('location', array(
-        'labels' => array(
-            'name' => 'Locations',
-            'singular_name' => 'Location',
-            'add_new' => 'Add New',
-            'add_new_item' => 'Add New Location',
-            'edit_item' => 'Edit Location',
-            'new_item' => 'New Location',
-            'view_item' => 'View Location',
-            'view_items' => 'View Locations',
-            'search_items' => 'Search Locations',
-            'not_found' => 'No locations found',
-            'not_found_in_trash' => 'No locations found in Trash',
-            'all_items' => 'All Locations',
-            'archives' => 'Location Archives',
-            'attributes' => 'Location Attributes',
-            'insert_into_item' => 'Insert into location',
-            'uploaded_to_this_item' => 'Uploaded to this location',
-        ),
-        'public' => true,
-        'show_in_rest' => true,
-        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
-        'menu_icon' => 'dashicons-location',
-        'has_archive' => true,
-        'rewrite' => array('slug' => 'locations'),
-    ));
-
-    // Location Categories (Taxonomy)
-    register_taxonomy('location_category', 'location', array(
-        'labels' => array(
-            'name' => 'Location Categories',
-            'singular_name' => 'Location Category',
-            'add_new_item' => 'Add New Category',
-            'new_item_name' => 'New Category Name',
-        ),
-        'hierarchical' => true,
-        'show_in_rest' => true, // Essential for Block Editor
-        'public' => true,
-    ));
-
-    // Register Event Meta (Start Date) for Querying
-    register_post_meta('event', '_event_start_date', array(
-        'show_in_rest' => true,
-        'single' => true,
-        'type' => 'string', // Stored as YYYY-MM-DD HH:MM:SS
-        'auth_callback' => function () {
-            return current_user_can('edit_posts');
-        }
-    ));
-
-    register_post_meta('event', '_event_end_date', array(
-        'show_in_rest' => true,
-        'single' => true,
-        'type' => 'string',
-        'auth_callback' => function () {
-            return current_user_can('edit_posts');
-        }
-    ));
-
-    register_post_meta('event', '_event_schedule', array(
-        'show_in_rest' => array(
-            'schema' => array(
-                'type' => 'array',
-                'items' => array(
-                    'type' => 'object',
-                    'properties' => array(
-                        'time' => array('type' => 'string'),
-                        'activity' => array('type' => 'string'),
-                    ),
-                ),
-            ),
-        ),
-        'single' => true,
-        'type' => 'array',
-        'auth_callback' => function () {
-            return current_user_can('edit_posts');
-        }
-    ));
-
-    // Remaining Event Meta
-    $meta_keys = [
-        '_event_label' => 'string',
-        '_event_location' => 'string',
-        '_event_cta_text' => 'string',
-        '_event_cta_url' => 'string',
-        '_event_is_canceled' => 'boolean',
-    ];
-
-    foreach ($meta_keys as $key => $type) {
-        register_post_meta('event', $key, array(
-            'show_in_rest' => true,
-            'single' => true,
-            'type' => $type,
-            'auth_callback' => function () {
-                return current_user_can('edit_posts');
-            }
-        ));
+    /**
+     * Enqueue Admin Branding Assets.
+     */
+    public function enqueue_admin_assets()
+    {
+        wp_enqueue_style(
+            'first-church-admin-base',
+            plugins_url('src/assets/admin.css', __FILE__),
+            [],
+            '1.0.0'
+        );
     }
 
-    // Location Meta
-    $location_meta = [
-        '_location_status' => 'string',       // e.g. "Temporarily Closed due to Hurricane"
-        '_location_region' => 'string',       // e.g. "St. Elizabeth, Jamaica"
-        '_location_address' => 'string',      // e.g. "Main Street Lacovia, St. Elizabeth"
-        '_location_times' => 'string',        // e.g. "Wednesday @ 6:30pm..."
-        '_location_phone' => 'string',        // e.g. "876-555-5555"
-        '_location_map_embed' => 'string',    // e.g. "https://www.google.com/maps/embed?..." (iframe src)
-    ];
+    public function enqueue_admin_branding()
+    {
+        wp_enqueue_style(
+            'first-church-admin-theme',
+            plugins_url('src/admin.css', __FILE__),
+            [],
+            '1.0.1'
+        );
+    }
 
-    foreach ($location_meta as $key => $type) {
-        $args = array(
+    /**
+     * Register Custom Post Types and their taxonomies.
+     */
+    public function register_post_types()
+    {
+        // Events
+        register_post_type('event', [
+            'labels' => [
+                'name' => 'Events',
+                'singular_name' => 'Event',
+                'add_new_item' => 'Add New Event',
+                'edit_item' => 'Edit Event',
+            ],
+            'public' => true,
+            'show_in_rest' => true,
+            'supports' => ['title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'],
+            'menu_icon' => 'dashicons-calendar-alt',
+            'has_archive' => true,
+            'rewrite' => ['slug' => 'events'],
+        ]);
+
+        register_taxonomy('event_category', 'event', [
+            'labels' => ['name' => 'Event Categories', 'singular_name' => 'Event Category'],
+            'hierarchical' => true,
+            'show_in_rest' => true,
+            'public' => true,
+            'rewrite' => ['slug' => 'event-category'],
+        ]);
+
+        // Locations
+        register_post_type('location', [
+            'labels' => ['name' => 'Locations', 'singular_name' => 'Location'],
+            'public' => true,
+            'show_in_rest' => true,
+            'supports' => ['title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'],
+            'menu_icon' => 'dashicons-location',
+            'has_archive' => true,
+            'rewrite' => ['slug' => 'locations'],
+        ]);
+
+        register_taxonomy('location_category', 'location', [
+            'labels' => ['name' => 'Location Categories', 'singular_name' => 'Location Category'],
+            'hierarchical' => true,
+            'show_in_rest' => true,
+            'public' => true,
+        ]);
+
+        // Baptismal Reports (Hidden from Admin Menu, Managed via Dashboard)
+        register_post_type('fc_baptism_report', [
+            'labels' => ['name' => 'Baptism Reports', 'singular_name' => 'Baptism Report'],
+            'public' => false, // Internal use only
+            'show_in_rest' => true,
+            'supports' => ['title', 'custom-fields'], // Title will be Label (e.g. Week 1)
+            'show_ui' => false, // Managed via Mission Control
+        ]);
+
+        // Meta Registration for REST API
+        $this->register_meta_fields();
+    }
+
+    /**
+     * Register Meta Fields for CPTs to expose to REST/Editor.
+     */
+    private function register_meta_fields()
+    {
+        $meta_keys = [
+            'event' => [
+                '_event_start_date' => 'string',
+                '_event_end_date' => 'string',
+                '_event_label' => 'string',
+                '_event_location' => 'string',
+                '_event_cta_url' => 'string',
+                '_event_is_canceled' => 'boolean',
+            ],
+            'location' => [
+                '_location_status' => 'string',
+                '_location_region' => 'string',
+                '_location_address' => 'string',
+                '_location_phone' => 'string',
+            ],
+            'fc_baptism_report' => [
+                '_fc_baptism_count' => 'integer',
+                '_fc_report_label' => 'string',
+                '_fc_report_month' => 'string' // YYYY-MM
+            ]
+        ];
+
+        foreach ($meta_keys as $post_type => $keys) {
+            foreach ($keys as $key => $type) {
+                register_post_meta($post_type, $key, [
+                    'show_in_rest' => true,
+                    'single' => true,
+                    'type' => $type,
+                    'auth_callback' => function () {
+                        return current_user_can('edit_posts');
+                    }
+                ]);
+            }
+        }
+
+        // Special handling for iframe (Map Embed)
+        register_post_meta('location', '_location_map_embed', [
             'show_in_rest' => true,
             'single' => true,
-            'type' => $type,
             'auth_callback' => function () {
                 return current_user_can('edit_posts');
-            }
-        );
-
-        // Special handling for map embed to allow HTML (iframes)
-        if ($key === '_location_map_embed') {
-            // Remove 'type' => 'string' to bypass strict sanitization
-            // or provide a custom sanitize callback that allows HTML
-            unset($args['type']);
-            $args['sanitize_callback'] = function ($meta_value) {
-                return wp_kses($meta_value, array(
-                    'iframe' => array(
+            },
+            'sanitize_callback' => function ($value) {
+                return wp_kses($value, [
+                    'iframe' => [
                         'src' => true,
                         'width' => true,
                         'height' => true,
                         'frameborder' => true,
                         'style' => true,
                         'allowfullscreen' => true,
-                        'loading' => true,
-                        'referrerpolicy' => true
-                    )
-                ));
-            };
+                        'loading' => true
+                    ]
+                ]);
+            }
+        ]);
+    }
+
+    /**
+     * Register Admin Sidebar Pages.
+     */
+    public function register_admin_pages()
+    {
+        add_menu_page(
+            __('Mission Control', 'first-church-core-blocks'),
+            __('Mission Control', 'first-church-core-blocks'),
+            'edit_posts',
+            'firstchurch-dashboard',
+            [$this, 'render_admin_dashboard'],
+            'dashicons-chart-pie',
+            3
+        );
+    }
+
+    /**
+     * Render the Mission Control Dashboard wrapper.
+     */
+    public function render_admin_dashboard()
+    {
+        echo '<div id="fc-dashboard-root"></div>';
+    }
+
+    /**
+     * Enqueue Dashboard-specific React assets.
+     */
+    public function enqueue_dashboard_assets($hook)
+    {
+        if (strpos($hook, 'firstchurch-dashboard') === false) {
+            return;
         }
 
-        register_post_meta('location', $key, $args);
-    }
-}
-add_action('init', 'firstchurch_register_cpts');
+        $asset_path = plugin_dir_path(__FILE__) . 'build/dashboard.asset.php';
+        if (file_exists($asset_path)) {
+            $asset_file = include($asset_path);
 
-/**
- * Rename "Posts" to "Articles" in Admin Menu
- */
-function firstchurch_rename_post_menu()
-{
-    global $menu, $submenu;
+            wp_enqueue_media(); // Required for 'Edit Banner' functionality
 
-    $menu[5][0] = 'Articles';
-    $submenu['edit.php'][5][0] = 'Articles';
-    $submenu['edit.php'][10][0] = 'Add New Article';
-}
-add_action('admin_menu', 'firstchurch_rename_post_menu', 999);
+            wp_enqueue_script(
+                'first-church-dashboard-script',
+                plugins_url('build/dashboard.js', __FILE__),
+                $asset_file['dependencies'],
+                $asset_file['version'],
+                true
+            );
 
-/**
- * Rename "Posts" to "Articles" in Post Type Labels
- */
-function firstchurch_rename_post_object()
-{
-    global $wp_post_types;
+            // Ensure tokens are available for dashboard
+            wp_enqueue_style(
+                'first-church-tokens',
+                plugins_url('src/tokens.css', __FILE__),
+                [],
+                filemtime(plugin_dir_path(__FILE__) . 'src/tokens.css')
+            );
 
-    if (empty($wp_post_types['post'])) {
-        return;
-    }
-
-    $labels = &$wp_post_types['post']->labels;
-    $labels->name = 'Articles';
-    $labels->singular_name = 'Article';
-    $labels->add_new = 'Add New Article';
-    $labels->add_new_item = 'Add New Article';
-    $labels->edit_item = 'Edit Article';
-    $labels->new_item = 'New Article';
-    $labels->view_item = 'View Article';
-    $labels->search_items = 'Search Articles';
-    $labels->not_found = 'No articles found';
-    $labels->not_found_in_trash = 'No articles found in Trash';
-    $labels->all_items = 'All Articles';
-    $labels->menu_name = 'Articles';
-    $labels->name_admin_bar = 'Article';
-}
-add_action('init', 'firstchurch_rename_post_object', 999);
-
-/**
- * Admin Dashboard Branding
- * Styles the WordPress Admin (Sidebar, Top Bar) to match the First Church Brand.
- */
-function firstchurch_enqueue_admin_branding()
-{
-    wp_enqueue_style(
-        'firstchurch-admin-theme',
-        plugins_url('src/admin.css', __FILE__),
-        [],
-        '1.0.1'
-    );
-}
-add_action('admin_enqueue_scripts', 'firstchurch_enqueue_admin_branding');
-
-/**
- * Replace WordPress Admin Bar Logo (Smarter Method)
- * Uses the native API instead of CSS hacks.
- */
-function firstchurch_update_admin_bar_logo($wp_admin_bar)
-{
-    // Remove the default WordPress logo node
-    $wp_admin_bar->remove_node('wp-logo');
-
-    // Add our custom logo node
-    // We use an <img> tag to ensure it occupies space correctly and isn't affected by font-icon CSS.
-    $logo_url = plugins_url('src/assets/church-logo.png', __FILE__);
-
-    $wp_admin_bar->add_node(array(
-        'id' => 'firstchurch-logo', // New ID to prevent conflicts
-        'title' => '<img src="' . esc_url($logo_url) . '" alt="First Church" style="height: 24px; width: auto; vertical-align: middle; margin-top: 2px;">',
-        'href' => admin_url('admin.php?page=firstchurch-dashboard'), // Deep link to Mission Control
-        'meta' => array(
-            'title' => 'First Church Mission Control',
-            'class' => 'firstchurch-logo-node' // Add a custom class for safety
-        ),
-    ));
-}
-add_action('admin_bar_menu', 'firstchurch_update_admin_bar_logo', 999);
-
-/**
- * Register "Blank Canvas" Template for Posts (Articles) & Pages
- * Since this is a plugin, we must manually inject the template into the dropdown.
- */
-function firstchurch_register_templates($templates)
-{
-    $templates['firstchurch_blank_canvas'] = 'First Church: Blank Canvas';
-    return $templates;
-}
-add_filter('theme_post_templates', 'firstchurch_register_templates');
-add_filter('theme_page_templates', 'firstchurch_register_templates');
-
-/**
- * Load the "Blank Canvas" Template file
- */
-function firstchurch_load_template($template)
-{
-    $post_id = get_the_ID();
-    if (!$post_id) {
-        return $template;
-    }
-
-    $slug = get_post_meta($post_id, '_wp_page_template', true);
-
-    if ($slug === 'firstchurch_blank_canvas') {
-        $file = plugin_dir_path(__FILE__) . 'templates/blank-canvas.php';
-        if (file_exists($file)) {
-            return $file;
-        }
-    }
-
-    return $template;
-}
-add_filter('template_include', 'firstchurch_load_template');
-
-/**
- * Register Mission Control Dashboard
- */
-function firstchurch_register_dashboard_page()
-{
-    add_menu_page(
-        __('Mission Control', 'first-church-core-blocks'),
-        __('Mission Control', 'first-church-core-blocks'),
-        'edit_posts',
-        'firstchurch-dashboard',
-        'firstchurch_render_dashboard_page',
-        'dashicons-chart-pie',
-        3 // Position just below Dashboard
-    );
-}
-add_action('admin_menu', 'firstchurch_register_dashboard_page');
-
-function firstchurch_render_dashboard_page()
-{
-    ?>
-    <div id="fc-dashboard-root"></div>
-    <?php
-}
-
-function firstchurch_enqueue_dashboard_assets($hook)
-{
-    // Use looser check to ensure it catches the page handle
-    if (strpos($hook, 'firstchurch-dashboard') === false) {
-        return;
-    }
-
-    $asset_file = include(plugin_dir_path(__FILE__) . 'build/dashboard.asset.php');
-
-    // 1. Enqueue Design Tokens (Variables) - Essential for Dashboard
-    // Use the NEW handle 'firstchurch-design-tokens'
-    wp_enqueue_style(
-        'firstchurch-design-tokens',
-        plugins_url('src/tokens.css', __FILE__),
-        [],
-        '1.0.0'
-    );
-
-    // 2. Enqueue Dashboard App
-    wp_enqueue_script(
-        'firstchurch-dashboard-script',
-        plugins_url('build/dashboard.js', __FILE__),
-        $asset_file['dependencies'],
-        $asset_file['version'],
-        true
-    );
-
-    wp_enqueue_style(
-        'firstchurch-dashboard-style',
-        plugins_url('build/style-dashboard.css', __FILE__),
-        array('wp-components', 'firstchurch-design-tokens'), // Make sure tokens load first
-        $asset_file['version']
-    );
-}
-add_action('admin_enqueue_scripts', 'firstchurch_enqueue_dashboard_assets');
-
-// Include Dashboard API
-require_once plugin_dir_path(__FILE__) . 'src/dashboard/api.php';
-
-/**
- * Redirect Default Login to Mission Control
- */
-function firstchurch_login_redirect($redirect_to, $request, $user)
-{
-    // If the user has capabilities to edit posts, send them to Mission Control
-    if (isset($user->roles) && is_array($user->roles) && !empty($user->roles)) {
-        return admin_url('admin.php?page=firstchurch-dashboard');
-    }
-    return $redirect_to;
-}
-add_filter('login_redirect', 'firstchurch_login_redirect', 10, 3);
-
-/**
- * Redirect /wp-admin/ (Dashboard) to Mission Control
- * This effectively hides the default WP Dashboard.
- */
-function firstchurch_dashboard_redirect()
-{
-    // getting the current screen to ensure we only redirect from the 'dashboard'
-    $screen = get_current_screen();
-    if ($screen && $screen->base == 'dashboard') {
-        wp_redirect(admin_url('admin.php?page=firstchurch-dashboard'));
-        exit;
-    }
-}
-// ... existing dashboard code ...
-
-/**
- * Register Block Patterns
- */
-function firstchurch_register_patterns()
-{
-    // Register categories
-    register_block_pattern_category('firstchurch', array('label' => __('First Church', 'first-church-core-blocks')));
-    register_block_pattern_category('firstchurch/articles', array('label' => __('First Church: Articles', 'first-church-core-blocks')));
-    register_block_pattern_category('firstchurch/microsites', array('label' => __('First Church: Microsites', 'first-church-core-blocks')));
-    register_block_pattern_category('firstchurch/events', array('label' => __('First Church: Events', 'first-church-core-blocks')));
-    register_block_pattern_category('firstchurch/locations', array('label' => __('First Church: Locations', 'first-church-core-blocks')));
-
-    // List of patterns to register
-    $patterns = [
-        'article-a',
-        'article-b',
-        'article-c',
-        'mission-statement',
-        'team-profile'
-    ];
-
-    foreach ($patterns as $pattern_slug) {
-        $pattern_path = plugin_dir_path(__FILE__) . 'src/patterns/' . $pattern_slug . '.php';
-
-        if (file_exists($pattern_path)) {
-            $pattern_data = require $pattern_path;
-
-            register_block_pattern(
-                isset($pattern_data['slug']) ? $pattern_data['slug'] : 'firstchurch/' . $pattern_slug,
-                $pattern_data
+            wp_enqueue_style(
+                'first-church-dashboard-style',
+                plugins_url('build/style-dashboard.css', __FILE__),
+                ['wp-components', 'first-church-tokens'],
+                $asset_file['version']
             );
         }
     }
+
+    /**
+     * Register Block Patterns.
+     */
+    public function register_block_patterns()
+    {
+        $categories = [
+            'firstchurch' => __('First Church', 'first-church-core-blocks'),
+            'firstchurch/articles' => __('First Church: Articles', 'first-church-core-blocks'),
+            'firstchurch/microsites' => __('First Church: Microsites', 'first-church-core-blocks'),
+            'firstchurch/events' => __('First Church: Events', 'first-church-core-blocks'),
+            'firstchurch/locations' => __('First Church: Locations', 'first-church-core-blocks'),
+        ];
+
+        foreach ($categories as $slug => $label) {
+            register_block_pattern_category($slug, ['label' => $label]);
+        }
+
+        $patterns = ['article-a', 'article-b', 'article-c', 'mission-statement', 'team-profile'];
+        foreach ($patterns as $slug) {
+            $path = __DIR__ . "/src/patterns/{$slug}.php";
+            if (file_exists($path)) {
+                $data = require $path;
+                register_block_pattern(
+                    $data['slug'] ?? "firstchurch/{$slug}",
+                    $data
+                );
+            }
+        }
+    }
+
+    /**
+     * Register Custom Block Styles.
+     */
+    public function register_block_styles()
+    {
+        $styles = [
+            'core/group' => [
+                ['name' => 'magazine-featured', 'label' => __('Magazine Featured', 'first-church-core-blocks')],
+                ['name' => 'magazine-cardless', 'label' => __('Magazine Cardless', 'first-church-core-blocks')],
+            ],
+            'firstchurch/magazine-item' => [
+                ['name' => 'magazine-list', 'label' => __('Magazine List View', 'first-church-core-blocks')],
+            ]
+        ];
+
+        foreach ($styles as $block => $configs) {
+            foreach ($configs as $config) {
+                register_block_style($block, $config);
+            }
+        }
+    }
+
+    /**
+     * Register Site Settings via REST API.
+     */
+    public function register_settings()
+    {
+        $settings = ['fc_mega_menu_data', 'fc_footer_data'];
+        foreach ($settings as $opt) {
+            register_setting('firstchurch_settings', $opt, [
+                'type' => 'object',
+                'show_in_rest' => ['schema' => ['type' => 'object']],
+            ]);
+        }
+    }
+
+    /**
+     * Rename default "Posts" to "Articles".
+     */
+    public function rename_post_object()
+    {
+        global $wp_post_types;
+        if (!isset($wp_post_types['post']))
+            return;
+
+        $labels = &$wp_post_types['post']->labels;
+        $labels->name = 'Articles';
+        $labels->singular_name = 'Article';
+        $labels->menu_name = 'Articles';
+        $labels->name_admin_bar = 'Article';
+    }
+
+    public function rename_post_menu()
+    {
+        global $menu, $submenu;
+        if (isset($menu[5])) {
+            $menu[5][0] = 'Articles';
+            if (isset($submenu['edit.php'][5]))
+                $submenu['edit.php'][5][0] = 'Articles';
+        }
+    }
+
+    /**
+     * Update Admin Bar Branding with Church Logo.
+     */
+    public function update_admin_bar_logo($wp_admin_bar)
+    {
+        $wp_admin_bar->remove_node('wp-logo');
+        $logo = plugins_url('src/assets/church-logo.png', __FILE__);
+
+        $wp_admin_bar->add_node([
+            'id' => 'firstchurch-logo',
+            'title' => '<img src="' . esc_url($logo) . '" alt="First Church" style="height:24px; vertical-align:middle;">',
+            'href' => admin_url('admin.php?page=firstchurch-dashboard'),
+        ]);
+    }
+
+    /**
+     * Handle Blank Canvas Templates.
+     */
+    public function register_templates($templates)
+    {
+        $templates['firstchurch_blank_canvas'] = __('First Church: Blank Canvas', 'first-church-core-blocks');
+        return $templates;
+    }
+
+    public function load_template($template)
+    {
+        $id = get_the_ID();
+        if ($id && get_post_meta($id, '_wp_page_template', true) === 'firstchurch_blank_canvas') {
+            $file = plugin_dir_path(__FILE__) . 'templates/blank-canvas.php';
+            if (file_exists($file))
+                return $file;
+        }
+        return $template;
+    }
+
+    /**
+     * Theme Setup logic (Disable default patterns).
+     */
+    public function theme_setup()
+    {
+        remove_theme_support('core-block-patterns');
+
+        // Restore Theme Colors (Classic/Hybrid Support)
+        add_theme_support('editor-color-palette', [
+            ['name' => 'Cardinal', 'slug' => 'cardinal', 'color' => '#8A1C26'],
+            ['name' => 'Burgundy', 'slug' => 'burgundy', 'color' => '#560D1A'],
+            ['name' => 'Divine Gold', 'slug' => 'divine-gold', 'color' => '#B08D55'],
+            ['name' => 'Sandwood', 'slug' => 'sandwood', 'color' => '#F3F0E6'],
+            ['name' => 'Ink Black', 'slug' => 'ink-black', 'color' => '#1A1A1A'],
+            ['name' => 'Navy Grey', 'slug' => 'navy-grey', 'color' => '#344152'],
+            ['name' => 'Cloud Blue', 'slug' => 'cloud-blue', 'color' => '#E3F4F6'],
+            ['name' => 'Platinum', 'slug' => 'platinum', 'color' => '#f4f5f6'],
+        ]);
+
+    }
+
+    /**
+     * Configure Theme JSON settings (Color Palette).
+     */
+    public function configure_theme_json($theme_json)
+    {
+        $palette = [
+            'settings' => [
+                'color' => [
+                    'palette' => [
+                        ['name' => 'Cardinal', 'slug' => 'cardinal', 'color' => '#8A1C26'],
+                        ['name' => 'Burgundy', 'slug' => 'burgundy', 'color' => '#560D1A'],
+                        ['name' => 'Divine Gold', 'slug' => 'divine-gold', 'color' => '#B08D55'],
+                        ['name' => 'Sandwood', 'slug' => 'sandwood', 'color' => '#F3F0E6'],
+                        ['name' => 'Ink Black', 'slug' => 'ink-black', 'color' => '#1A1A1A'],
+                    ]
+                ],
+                'spacing' => ['appearanceTools' => true]
+            ]
+        ];
+        return $theme_json->update_with($palette);
+    }
+
+    /**
+     * Login Redirect to Mission Control.
+     */
+    public function handle_login_redirect($url, $request, $user)
+    {
+        if (isset($user->roles) && is_array($user->roles)) {
+            return admin_url('admin.php?page=firstchurch-dashboard');
+        }
+        return $url;
+    }
+
+    /**
+     * Dashboard Redirect to Mission Control.
+     */
+    public function handle_dashboard_redirect()
+    {
+        $screen = get_current_screen();
+        if ($screen && $screen->base === 'dashboard') {
+            wp_redirect(admin_url('admin.php?page=firstchurch-dashboard'));
+            exit;
+        }
+    }
 }
-add_action('init', 'firstchurch_register_patterns');
 
 /**
- * Register Global Settings for Mega Menu
+ * Bootstrap the Plugin
  */
-function firstchurch_register_settings()
-{
-    register_setting('firstchurch_settings', 'fc_mega_menu_data', array(
-        'type' => 'object',
-        'show_in_rest' => array(
-            'schema' => array(
-                'type' => 'object',
-                'properties' => array(
-                    'mainLinks' => array(
-                        'type' => 'array',
-                        'items' => array(
-                            'type' => 'object',
-                            'properties' => array(
-                                'label' => array('type' => 'string'),
-                                'url' => array('type' => 'string'),
-                            ),
-                        ),
-                    ),
-                    'newsItems' => array(
-                        'type' => 'array',
-                        'items' => array(
-                            'type' => 'object',
-                            'properties' => array(
-                                'category' => array('type' => 'string'),
-                                'title' => array('type' => 'string'),
-                                'image' => array('type' => 'string'),
-                                'link' => array('type' => 'string'),
-                            ),
-                        ),
-                    ),
-                    'quickLinks' => array(
-                        'type' => 'array',
-                        'items' => array(
-                            'type' => 'object',
-                            'properties' => array(
-                                'label' => array('type' => 'string'),
-                                'url' => array('type' => 'string'),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'default' => array(
-            'mainLinks' => array(
-                array('label' => 'Branch Temples', 'url' => '#'),
-                array('label' => 'Scheduled Events', 'url' => '#'),
-                array('label' => 'Locations', 'url' => '#'),
-                array('label' => 'Store', 'url' => '#'),
-                array('label' => 'Literature', 'url' => '#'),
-                array('label' => 'ByLaws', 'url' => '#'),
-                array('label' => 'Donation', 'url' => '#'),
-            ),
-            'newsItems' => array(
-                array(
-                    'category' => 'FROM THE TEMPLE',
-                    'title' => '24 baptized in the Greenwich temple',
-                    'image' => '',
-                    'link' => '#',
-                ),
-                array(
-                    'category' => 'COMMUNITY',
-                    'title' => 'First Church Taskforce is seeking volunteers to help out Jamaica',
-                    'image' => '',
-                    'link' => '#',
-                ),
-            ),
-            'quickLinks' => array(
-                array('label' => 'F.C Calendar of events', 'url' => '#'),
-                array('label' => 'First Church Newsletter', 'url' => '#'),
-                array('label' => 'Truth of God Times Magazine', 'url' => '#'),
-                array('label' => 'Youtube – Watch First Church Videos', 'url' => '#'),
-                array('label' => 'Minister evaluation form', 'url' => '#'),
-                array('label' => 'History of the Ministry', 'url' => '#'),
-                array('label' => 'Terms and privacy', 'url' => '#'),
-                array('label' => 'Contact', 'url' => '#'),
-            ),
-        ),
-    ));
-
-    register_setting('firstchurch_settings', 'fc_footer_data', array(
-        'type' => 'object',
-        'show_in_rest' => array(
-            'schema' => array(
-                'type' => 'object',
-                'properties' => array(
-                    'logoUrl' => array('type' => 'string'),
-                    'logoTextPrimary' => array('type' => 'string'),
-                    'logoTextSecondary' => array('type' => 'string'),
-                    'missionText' => array('type' => 'string'),
-                    'copyrightText' => array('type' => 'string'),
-                    'socialLinks' => array(
-                        'type' => 'array',
-                        'items' => array(
-                            'type' => 'object',
-                            'properties' => array(
-                                'icon' => array('type' => 'string'),
-                                'url' => array('type' => 'string'),
-                                'label' => array('type' => 'string'),
-                            ),
-                        ),
-                    ),
-                    'columns' => array(
-                        'type' => 'array',
-                        'items' => array(
-                            'type' => 'object',
-                            'properties' => array(
-                                'title' => array('type' => 'string'),
-                                'links' => array(
-                                    'type' => 'array',
-                                    'items' => array(
-                                        'type' => 'object',
-                                        'properties' => array(
-                                            'label' => array('type' => 'string'),
-                                            'url' => array('type' => 'string'),
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        'default' => array(
-            'logoUrl' => '',
-            'logoTextPrimary' => 'First Church',
-            'logoTextSecondary' => 'Of Our Lord Jesus Christ',
-            'missionText' => 'A community dedicated to the glory of God and the service of our neighbors.',
-            'copyrightText' => '© 2024 First Church. All rights reserved.',
-            'socialLinks' => array(
-                array('icon' => 'youtube', 'url' => '#', 'label' => 'YouTube'),
-                array('icon' => 'facebook', 'url' => '#', 'label' => 'Facebook'),
-            ),
-            'columns' => array(
-                array(
-                    'title' => 'The Church',
-                    'links' => array(
-                        array('label' => 'Our History', 'url' => '#'),
-                        array('label' => 'What We Believe', 'url' => '#'),
-                    )
-                ),
-                array(
-                    'title' => 'Ministries',
-                    'links' => array(
-                        array('label' => 'Youth', 'url' => '#'),
-                        array('label' => 'Bylaws', 'url' => '#'),
-                    )
-                ),
-                array(
-                    'title' => 'Connect',
-                    'links' => array(
-                        array('label' => 'Locations', 'url' => '#'),
-                        array('label' => 'Contact', 'url' => '#'),
-                    )
-                ),
-                array(
-                    'title' => 'Give',
-                    'links' => array(
-                        array('label' => 'Donation', 'url' => '#'),
-                        array('label' => 'Resources', 'url' => '#'),
-                    )
-                ),
-            ),
-        ),
-    ));
-}
-
-add_action('init', 'firstchurch_register_settings');
-/**
- * Enable Backend Preview for Synced Patterns (wp_block)
- * Fixes the "View" icon being disabled in the editor.
- */
-
+FirstChurchBlocks::get_instance();

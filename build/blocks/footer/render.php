@@ -7,16 +7,14 @@
  * @param   WP_Block $block - The block instance.
  */
 
-$logo_url = isset($attributes['logoUrl']) ? $attributes['logoUrl'] : ''; // OR fallback from plugin asset if we passed it (complex)
-// Note: In PHP we might not have easy access to the asset in 'src/assets', so we rely on user upload or fallback logic if needed.
-// For now, if no logo is uploaded, we might want to hide it or show a placeholder text.
-
-$logo_text_primary = isset($attributes['logoTextPrimary']) ? $attributes['logoTextPrimary'] : 'First Church';
-$logo_text_secondary = isset($attributes['logoTextSecondary']) ? $attributes['logoTextSecondary'] : '';
-$mission_text = isset($attributes['missionText']) ? $attributes['missionText'] : '';
-$copyright_text = isset($attributes['copyrightText']) ? $attributes['copyrightText'] : '';
-$social_links = isset($attributes['socialLinks']) ? $attributes['socialLinks'] : [];
-$use_global_sync = $attributes['useGlobalSync'] ?? true;
+// Defensive attribute extraction
+$logo_url = $attributes['logoUrl'] ?? '';
+$logo_text_primary = $attributes['logoTextPrimary'] ?? 'First Church';
+$logo_text_secondary = $attributes['logoTextSecondary'] ?? '';
+$mission_text = $attributes['missionText'] ?? '';
+$copyright_text = $attributes['copyrightText'] ?? '';
+$social_links = $attributes['socialLinks'] ?? [];
+$use_global_sync = (bool) ($attributes['useGlobalSync'] ?? true);
 
 $global_footer_data = ($use_global_sync) ? get_option('fc_footer_data') : null;
 
@@ -38,7 +36,7 @@ if ($global_footer_data) {
 $wrapper_attributes = get_block_wrapper_attributes(['class' => 'fc-footer']);
 ?>
 
-<footer <?php echo $wrapper_attributes; ?>>
+<footer <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <div class="fc-footer__content">
 
         <!-- Brand Column (Left) -->
@@ -61,19 +59,19 @@ $wrapper_attributes = get_block_wrapper_attributes(['class' => 'fc-footer']);
         <!-- InnerBlocks Content (Columns) goes here -->
         <div class="fc-footer__nav-grid">
             <?php if ($global_footer_data && !empty($global_footer_data['columns'])): ?>
-                    <?php foreach ($global_footer_data['columns'] as $column): ?>
-                            <div class="fc-footer__nav-col">
-                                <h4 class="fc-footer__heading"><?php echo esc_html($column['title']); ?></h4>
-                                <ul class="wp-block-list">
-                                    <?php foreach ($column['links'] as $link): ?>
-                                            <li><a href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($link['label']); ?></a></li>
-                    <?php endforeach; ?>
-                                </ul>
-                            </div>
-                    <?php endforeach; ?>
+                <?php foreach ($global_footer_data['columns'] as $column): ?>
+                    <div class="fc-footer__nav-col">
+                        <h4 class="fc-footer__heading"><?php echo esc_html($column['title']); ?></h4>
+                        <ul class="wp-block-list">
+                            <?php foreach ($column['links'] as $link): ?>
+                                <li><a href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($link['label']); ?></a></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endforeach; ?>
             <?php else: ?>
-                    <?php echo $content; ?>
-        <?php endif; ?>
+                <?php echo $content; ?>
+            <?php endif; ?>
         </div>
 
     </div>
@@ -100,8 +98,8 @@ $wrapper_attributes = get_block_wrapper_attributes(['class' => 'fc-footer']);
                             elseif ($icon === 'facebook')
                                 echo '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>';
                             ?>
-                                </a>
-                        <?php endif; ?>
+                        </a>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
         </div>

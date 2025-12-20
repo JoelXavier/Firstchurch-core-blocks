@@ -6,8 +6,8 @@ $content = $content ?? ''; // InnerBlocks content
 // Extract attributes with defaults matching block.json
 $mode = $attributes['mode'] ?? 'static';
 $layout = $attributes['layout'] ?? 'bottom-left';
-$overlayOpacity = $attributes['overlayOpacity'] ?? 80;
-$fixedBackground = $attributes['fixedBackground'] ?? false;
+$overlay_opacity = (int) ($attributes['overlayOpacity'] ?? 80);
+$fixed_background = (bool) ($attributes['fixedBackground'] ?? false);
 $media = $attributes['media'] ?? [];
 
 // Escape attributes for HTML data output
@@ -15,8 +15,8 @@ $wrapper_attributes = get_block_wrapper_attributes(['class' => 'fc-hero-wrapper'
 $props_json = htmlspecialchars(json_encode([
     'mode' => $mode,
     'layout' => $layout,
-    'overlayOpacity' => $overlayOpacity,
-    'fixedBackground' => $fixedBackground,
+    'overlayOpacity' => $overlay_opacity,
+    'fixedBackground' => $fixed_background,
     'media' => $media
 ]));
 
@@ -30,7 +30,8 @@ $props_json = htmlspecialchars(json_encode([
 // This avoids needing to hydrate the Content itself, which is cleaner for SEO.
 
 ?>
-<div <?php echo $wrapper_attributes; ?> style="position: relative;">
+<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+    style="position: relative;">
 
     <!-- React Root for Background/Slideshow -->
     <!-- The frontend script will find this and mount the Hero Background logic -->
@@ -39,7 +40,7 @@ $props_json = htmlspecialchars(json_encode([
 
         <!-- No-JS / Server Rendered Background -->
         <?php if (!empty($media[0]['url'])): ?>
-            <?php if ($fixedBackground && $mode === 'static'): ?>
+            <?php if ($fixed_background && $mode === 'static'): ?>
                 <!-- Fixed Background Implementation (Div with background-image) -->
                 <div class="fc-hero__fixed-bg" style="
                     background-image: url('<?php echo esc_url($media[0]['url']); ?>');
@@ -61,7 +62,7 @@ $props_json = htmlspecialchars(json_encode([
 
             <!-- Static Overlay Fallback -->
             <div class="fc-hero__overlay"
-                style="opacity: <?php echo $overlayOpacity / 100; ?>; position:absolute; top:0; left:0; width:100%; height:100%;">
+                style="opacity: <?php echo (float) ($overlay_opacity / 100); ?>; position:absolute; top:0; left:0; width:100%; height:100%;">
             </div>
         <?php endif; ?>
     </div>

@@ -3,12 +3,12 @@
  * Render callback for the Quote block.
  */
 
-$attributes = $attributes ?? [];
+// Defensive attribute extraction
 $quote = $attributes['quote'] ?? '';
 $citation = $attributes['citation'] ?? '';
 $layout = $attributes['layout'] ?? 'center';
 $variant = $attributes['variant'] ?? 'default';
-$show_icon = $attributes['showIcon'] ?? true;
+$show_icon = (bool) ($attributes['showIcon'] ?? true);
 
 // Wrapper Attributes
 $wrapper_attributes = get_block_wrapper_attributes([
@@ -16,20 +16,19 @@ $wrapper_attributes = get_block_wrapper_attributes([
 ]);
 ?>
 
-<div <?php echo $wrapper_attributes; ?>>
+<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <div class="fc-quote__container">
 
-        <!-- Decorative Icon -->
         <?php if ($show_icon): ?>
-            <div class="fc-quote__icon" aria-hidden="true">“</div>
+            <div class="fc-quote__icon" aria-hidden="true">&ldquo;</div>
         <?php endif; ?>
 
         <blockquote class="fc-quote__content">
-            <?php if (!empty($quote)): ?>
+            <?php if ($quote): ?>
                 <p class="fc-quote__text"><?php echo wp_kses_post($quote); ?></p>
             <?php endif; ?>
 
-            <?php if (!empty($citation)): ?>
+            <?php if ($citation): ?>
                 <footer class="fc-quote__citation">
                     <span class="fc-quote__line"></span>
                     <cite><?php echo esc_html($citation); ?></cite>

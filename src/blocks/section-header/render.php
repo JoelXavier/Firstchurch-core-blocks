@@ -3,25 +3,25 @@
  * Render callback for the Section Header block.
  */
 
-$attributes = isset($attributes) ? $attributes : [];
-$title = isset($attributes['title']) ? $attributes['title'] : '';
-$subtitle = isset($attributes['subtitle']) ? $attributes['subtitle'] : '';
-$alignment = isset($attributes['alignment']) ? $attributes['alignment'] : 'left';
-$show_decoration = isset($attributes['showDecoration']) ? $attributes['showDecoration'] : true;
-$decoration_color = isset($attributes['decorationColor']) ? $attributes['decorationColor'] : 'gold';
+// Defensive attribute extraction
+$title = $attributes['title'] ?? '';
+$subtitle = $attributes['subtitle'] ?? '';
+$alignment = $attributes['alignment'] ?? 'left';
+$show_decoration = (bool) ($attributes['showDecoration'] ?? true);
+$decoration_color = $attributes['decorationColor'] ?? 'gold';
 
-$wrapper_attributes = get_block_wrapper_attributes(array(
-    'class' => 'fc-section-header fc-section-header--align-' . esc_attr($alignment)
-));
+$wrapper_attributes = get_block_wrapper_attributes([
+    'class' => 'fc-section-header fc-section-header--align-' . $alignment
+]);
 ?>
 
-<div <?php echo $wrapper_attributes; ?>>
+<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <?php if ($title): ?>
-        <h2 class="fc-section-header__title"><?php echo wp_kses_post($title); ?></h2>
+        <h2 class="fc-section-header__title"><?php echo esc_html($title); ?></h2>
     <?php endif; ?>
 
     <?php if ($subtitle): ?>
-        <p class="fc-section-header__subtitle"><?php echo wp_kses_post($subtitle); ?></p>
+        <p class="fc-section-header__subtitle"><?php echo esc_html($subtitle); ?></p>
     <?php endif; ?>
 
     <?php if ($show_decoration): ?>

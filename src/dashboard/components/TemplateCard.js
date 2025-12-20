@@ -1,10 +1,20 @@
 import { __ } from '@wordpress/i18n';
-import { Card, CardBody, Button, Spinner } from '@wordpress/components';
+import { Card, CardBody, Button, Dashicon } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 
 export default function TemplateCard({ template }) {
     const [isCreating, setIsCreating] = useState(false);
+
+    // Helper: Select Icon based on context
+    const getIcon = () => {
+        if (template.postType === 'event') return 'calendar-alt';
+        if (template.postType === 'location') return 'location';
+        if (template.title.toLowerCase().includes('homepage')) return 'admin-home';
+        if (template.title.toLowerCase().includes('profile')) return 'admin-users';
+        if (template.title.toLowerCase().includes('mission')) return 'admin-site';
+        return 'layout'; // Default
+    };
 
     const handleCreate = async () => {
         setIsCreating(true);
@@ -16,9 +26,6 @@ export default function TemplateCard({ template }) {
                 data: {
                     status: 'draft',
                     title: `New ${template.title}`, 
-                    // 2. Inject Pattern Content (Conceptually - in real app might need block parsing)
-                    // For now, assume pattern slug is handled or just placeholder.
-                    // A real implementation would fetch the pattern content first.
                     content: `<!-- wp:pattern {"slug":"${template.pattern}"} /-->` 
                 }
             });
@@ -35,16 +42,22 @@ export default function TemplateCard({ template }) {
 
     return (
         <Card className="fc-dashboard__card">
-            <div className="fc-dashboard__card-preview">
-                {/* Placeholder for thumbnail */}
-                <div className="fc-dashboard__card-thumbnail-placeholder" />
+             <div className="fc-dashboard__card-header">
+                <div className="fc-card-icon">
+                    <Dashicon icon={getIcon()} />
+                </div>
+                <div className="fc-card-label">{template.postType === 'post' ? 'Article' : template.postType}</div>
             </div>
-            <CardBody>
+            
+            <CardBody className="fc-dashboard__card-body">
                 <h3>{template.title}</h3>
-                <p>{template.description}</p>
-                <Button variant="primary" onClick={handleCreate} isBusy={isCreating} disabled={isCreating}>
-                    { __('Use Template', 'first-church-core-blocks') }
-                </Button>
+                <p>{template.description || __('Start with this pre-designed template.', 'first-church-core-blocks')}</p>
+                
+                <div className="fc-card-actions">
+                    <Button variant="primary" onClick={handleCreate} isBusy={isCreating} disabled={isCreating}>
+                        { __('Create', 'first-church-core-blocks') }
+                    </Button>
+                </div>
             </CardBody>
         </Card>
     );

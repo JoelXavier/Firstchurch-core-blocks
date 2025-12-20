@@ -3,15 +3,15 @@
  * Render for Sleek Navigation Block
  */
 
-$attributes = isset($attributes) ? $attributes : [];
+// Defensive attribute extraction
+$attributes = $attributes ?? [];
+$logo_url = $attributes['logoUrl'] ?? '';
+$site_name = $attributes['siteName'] ?? 'First Church';
+$hamburger_color = $attributes['hamburgerColor'] ?? 'currentColor';
 
-$logo_url = isset($attributes['logoUrl']) ? $attributes['logoUrl'] : '';
-$site_name = isset($attributes['siteName']) ? $attributes['siteName'] : 'First Church';
-$hamburger_color = isset($attributes['hamburgerColor']) ? $attributes['hamburgerColor'] : 'currentColor';
-
-$wrapper_attributes = get_block_wrapper_attributes(array(
+$wrapper_attributes = get_block_wrapper_attributes([
     'class' => 'fc-sleek-nav'
-));
+]);
 
 // Global Menu Logic
 $use_global_menu = $attributes['useGlobalMenu'] ?? true;
@@ -30,7 +30,7 @@ $news_items = $menu_data['newsItems'] ?? [];
 $quick_links = $menu_data['quickLinks'] ?? [];
 
 ?>
-<header <?php echo $wrapper_attributes; ?>>
+<header <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <div class="fc-sleek-nav__container">
         <div class="fc-sleek-nav__brand">
             <?php if ($logo_url): ?>

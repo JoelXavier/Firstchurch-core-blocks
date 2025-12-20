@@ -3,13 +3,13 @@
  * Render callback for the Breadcrumbs block.
  */
 
-$attributes = isset($attributes) ? $attributes : [];
-$separator = isset($attributes['separator']) ? $attributes['separator'] : '/';
-$show_home = isset($attributes['showHome']) ? $attributes['showHome'] : true;
+// Defensive attribute extraction
+$separator = $attributes['separator'] ?? '/';
+$show_home = (bool) ($attributes['showHome'] ?? true);
 
-$wrapper_attributes = get_block_wrapper_attributes(array(
+$wrapper_attributes = get_block_wrapper_attributes([
     'class' => 'fc-breadcrumbs'
-));
+]);
 
 // Build the trail
 $trail_items = [];
@@ -82,7 +82,8 @@ if (is_singular() || is_page()) {
 
 ?>
 
-<nav <?php echo $wrapper_attributes; ?> aria-label="Breadcrumb">
+<nav <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+    aria-label="<?php esc_attr_e('Breadcrumb', 'first-church-core-blocks'); ?>">
     <?php foreach ($trail_items as $index => $item): ?>
         <?php if ($index > 0): ?>
             <span class="fc-breadcrumbs__separator" aria-hidden="true"><?php echo esc_html($separator); ?></span>

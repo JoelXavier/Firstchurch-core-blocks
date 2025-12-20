@@ -5,11 +5,11 @@
  * @param array $attributes Block attributes.
  */
 
-// Generate a unique ID for this block instance
-$block_id = 'fc-global-nav-' . uniqid();
+// Generate a unique ID for this block instance (safer than uniqid)
+$block_id = 'fc-global-nav-' . wp_rand();
 
 // Logic for Global Mega Menu Sync
-$use_global_menu = $attributes['useGlobalMenu'] ?? true;
+$use_global_menu = (bool) ($attributes['useGlobalMenu'] ?? true);
 if ($use_global_menu) {
     $global_menu_data = get_option('fc_mega_menu_data');
     if ($global_menu_data) {
@@ -20,9 +20,14 @@ if ($use_global_menu) {
 // Encode attributes to pass to React
 $attributes_json = wp_json_encode($attributes);
 
+$wrapper_attributes = get_block_wrapper_attributes([
+    'id' => $block_id,
+    'class' => 'fc-global-nav-root',
+    'data-attributes' => $attributes_json
+]);
+
 ?>
-<div id="<?php echo esc_attr($block_id); ?>" class="fc-global-nav-root"
-    data-attributes="<?php echo esc_attr($attributes_json); ?>">
+<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <!-- Content will be hydrated by React -->
     <noscript>
         <nav>

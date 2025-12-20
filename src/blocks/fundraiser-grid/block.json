@@ -1,0 +1,29 @@
+{
+  "apiVersion": 3,
+  "name": "firstchurch/fundraiser-grid",
+  "version": "0.1.0",
+  "title": "Fundraiser Grid",
+  "category": "firstchurch",
+  "icon": "grid-view",
+  "description": "A container to organize fundraiser cards in columns.",
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"],
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    }
+  },
+  "attributes": {
+    "columns": {
+      "type": "number",
+      "default": 3
+    }
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

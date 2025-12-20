@@ -11,7 +11,7 @@ export default function ActivityFeed({ items }) {
                 {items.map((item) => (
                     <li key={item.id} className="fc-dashboard__activity-item">
                         <div className="fc-dashboard__activity-info">
-                            <a href={item.link} className="fc-dashboard__activity-title">{item.title}</a>
+                            <a href={item.link} className="fc-dashboard__activity-title">{item.title || __('Untitled Draft', 'first-church-core-blocks')}</a>
                             <span className="fc-dashboard__activity-meta">
                                 {item.type} • {item.status} • {item.date}
                             </span>

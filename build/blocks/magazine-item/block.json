@@ -45,6 +45,14 @@
     "layout": {
       "type": "string",
       "default": "vertical"
+    },
+    "useDashboardData": {
+      "type": "boolean",
+      "default": false
+    },
+    "fundraiserId": {
+      "type": "number",
+      "default": 0
     }
   },
   "textdomain": "first-church-core-blocks",
