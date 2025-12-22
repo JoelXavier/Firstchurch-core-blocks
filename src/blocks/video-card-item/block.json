@@ -1,24 +1,15 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
-  "name": "firstchurch/card-item",
-  "version": "0.1.0",
-  "title": "Card Item",
+  "name": "firstchurch/video-card-item",
+  "version": "0.1.1",
+  "title": "Video Card Item",
   "category": "firstchurch",
-  "parent": [
-    "firstchurch/card-grid"
-  ],
-  "icon": "feedback",
-  "description": "A single content card with image, label, title, and link.",
+  "icon": "format-video",
+  "description": "A card that uses a YouTube video thumbnail as its image.",
   "supports": {
     "html": false,
     "reusable": false,
-    "color": {
-      "text": false,
-      "background": true,
-      "link": false,
-      "gradients": true
-    },
     "typography": {
       "fontSize": true,
       "lineHeight": true,
@@ -28,16 +19,33 @@
       "letterSpacing": true,
       "textDecoration": true,
       "textTransform": true
+    },
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "color": {
+      "text": false,
+      "background": true,
+      "link": false,
+      "gradients": true
+    },
+    "border": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true
     }
   },
   "attributes": {
     "label": {
       "type": "string",
-      "default": "LABEL"
+      "default": "VIDEO"
     },
     "title": {
       "type": "string",
-      "default": "Section Header"
+      "default": "Watch Recent Service"
     },
     "linkUrl": {
       "type": "string",
@@ -45,11 +53,15 @@
     },
     "linkText": {
       "type": "string",
-      "default": "LEARN MORE"
+      "default": "WATCH NOW >"
     },
-    "mediaId": {
-      "type": "number",
-      "default": 0
+    "videoUrl": {
+      "type": "string",
+      "default": ""
+    },
+    "videoId": {
+      "type": "string",
+      "default": ""
     },
     "mediaUrl": {
       "type": "string",
@@ -67,5 +79,7 @@
   },
   "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
   "render": "file:./render.php"
 }

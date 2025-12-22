@@ -21,9 +21,14 @@ $data = firstchurch_get_event_feed_data(
     ['month' => $active_month, 'category' => $active_cat]
 );
 
-$events = $data['events'];
-$months_list = $data['months'];
-$categories_list = $data['categories'];
+// Fallback if the function returns null or fails
+if (!is_array($data)) {
+    $data = [];
+}
+
+$events = $data['events'] ?? [];
+$months_list = $data['months'] ?? [];
+$categories_list = $data['categories'] ?? [];
 
 $wrapper_attributes = get_block_wrapper_attributes([
     'class' => 'fc-listing fc-event-feed layout-' . $filter_style
@@ -104,56 +109,55 @@ $wrapper_attributes = get_block_wrapper_attributes([
                         $card_class = 'fc-event-card' . ($event['is_canceled'] ? ' fc-event-card--canceled' : '');
                         ?>
                         <div class="<?php echo esc_attr($card_class); ?>">
-                            <a href="<?php echo esc_url($event['cta']['url']); ?>" class="event-card-link"
-                                style="display:contents;" <?php echo $target; // phpcs:ignore ?>>
+                            <?php if ($event['img_url']): ?>
+                                <div class="fc-event-card__media">
+                                    <img src="<?php echo esc_url($event['img_url']); ?>"
+                                        alt="<?php echo esc_attr($event['title']); ?>">
+                                </div>
+                            <?php endif; ?>
 
-                                <?php if ($event['img_url']): ?>
-                                    <div class="fc-event-card__media">
-                                        <img src="<?php echo esc_url($event['img_url']); ?>"
-                                            alt="<?php echo esc_attr($event['title']); ?>">
-                                    </div>
+                            <div class="fc-event-card__date-badge">
+                                <span class="fc-event-card__month"><?php echo esc_html($event['date_badge']['month']); ?></span>
+                                <span class="fc-event-card__day"><?php echo esc_html($event['date_badge']['day']); ?></span>
+                            </div>
+
+                            <div class="fc-event-card__content">
+                                <span class="fc-event-card__label"><?php echo esc_html($event['label']); ?></span>
+                                <h3 class="fc-event-card__title">
+                                    <a href="<?php echo esc_url($event['cta']['url']); ?>" class="fc-event-card__link" <?php echo $target; // phpcs:ignore ?>>
+                                        <?php echo esc_html($event['title']); ?>
+                                    </a>
+                                </h3>
+
+                                <?php if ($event['location']): ?>
+                                    <div class="fc-event-card__location"><?php echo esc_html($event['location']); ?></div>
                                 <?php endif; ?>
 
-                                <div class="fc-event-card__date-badge">
-                                    <span
-                                        class="fc-event-card__month"><?php echo esc_html($event['date_badge']['month']); ?></span>
-                                    <span class="fc-event-card__day"><?php echo esc_html($event['date_badge']['day']); ?></span>
+                                <div class="fc-event-card__meta">
+                                    <?php if (empty($event['schedule_lines'])): ?>
+                                        <?php echo esc_html($event['date_string']); ?>
+                                    <?php endif; ?>
                                 </div>
 
-                                <div class="fc-event-card__content">
-                                    <span class="fc-event-card__label"><?php echo esc_html($event['label']); ?></span>
-                                    <h3 class="fc-event-card__title">
-                                        <span class="fc-event-card__link"><?php echo esc_html($event['title']); ?></span>
-                                    </h3>
-
-                                    <?php if ($event['location']): ?>
-                                        <div class="fc-event-card__location"><?php echo esc_html($event['location']); ?></div>
-                                    <?php endif; ?>
-
-                                    <div class="fc-event-card__meta">
-                                        <?php if (empty($event['schedule_lines'])): ?>
-                                            <?php echo esc_html($event['date_string']); ?>
-                                        <?php endif; ?>
+                                <?php if (!empty($event['schedule_lines'])): ?>
+                                    <div class="fc-event-card__schedule-list">
+                                        <?php foreach ($event['schedule_lines'] as $line): ?>
+                                            <div class="fc-event-card__schedule-item"><?php echo esc_html($line); ?></div>
+                                        <?php endforeach; ?>
                                     </div>
+                                <?php endif; ?>
+                            </div>
 
-                                    <?php if (!empty($event['schedule_lines'])): ?>
-                                        <div class="fc-event-card__schedule-list">
-                                            <?php foreach ($event['schedule_lines'] as $line): ?>
-                                                <div class="fc-event-card__schedule-item"><?php echo esc_html($line); ?></div>
-                                            <?php endforeach; ?>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-
-                                <div class="fc-event-card__action">
-                                    <?php if ($event['is_canceled']): ?>
-                                        <span
-                                            class="fc-event-card__status-badge"><?php esc_html_e('Canceled', 'first-church-core-blocks'); ?></span>
-                                    <?php else: ?>
-                                        <span class="fc-event-card__button"><?php echo esc_html($event['cta']['text']); ?></span>
-                                    <?php endif; ?>
-                                </div>
-                            </a>
+                            <div class="fc-event-card__action">
+                                <?php if ($event['is_canceled']): ?>
+                                    <span
+                                        class="fc-event-card__status-badge"><?php esc_html_e('Canceled', 'first-church-core-blocks'); ?></span>
+                                <?php else: ?>
+                                    <a href="<?php echo esc_url($event['cta']['url']); ?>" class="fc-event-card__button" <?php echo $target; // phpcs:ignore ?>>
+                                        <?php echo esc_html($event['cta']['text']); ?>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>

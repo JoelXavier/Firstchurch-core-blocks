@@ -1,7 +1,7 @@
 .wp-block-separator.is-style-elegant-fade {
     border: none;
     height: 1px;
-    background: linear-gradient(to right, transparent, currentColor, transparent);
+    background: linear-gradient(to right, transparent, var(--wp--preset--color--divine-gold, #B08D55), transparent);
     opacity: 0.6;
     margin-top: 3rem;
     margin-bottom: 3rem;

@@ -244,6 +244,22 @@ function firstchurch_get_dashboard_templates()
     $stats = [
         'articles' => wp_count_posts('post')->publish,
         'events' => wp_count_posts('event')->publish,
+        'upcoming_events' => (function () {
+            // "Upcoming" requires checking the date, not just post status.
+            $query = new WP_Query([
+                'post_type' => 'event',
+                'post_status' => ['publish', 'future'], // Include future in case WP scheduled them
+                'meta_query' => [
+                    [
+                        'key' => '_event_start_date',
+                        'value' => current_time('Y-m-d'), // Use WP Timezone, not server UTC
+                        'compare' => '>='
+                    ]
+                ],
+                'fields' => 'ids',
+            ]);
+            return $query->found_posts;
+        })(),
         'locations' => wp_count_posts('location')->publish,
         'pages' => wp_count_posts('page')->publish,
         'baptisms' => (function () {
@@ -696,8 +712,136 @@ function firstchurch_get_event_feed_data($attributes, $filters)
         return $cached;
     }
 
-    // ... (rest of function logic remains same, but we are replacing the block) ...
-    // To avoid rewriting the huge function, let's target the bumpers specifically first.
+    // 2. Prepare Query Args
+    $per_page = (int) ($attributes['perPage'] ?? 50);
+    $active_month = isset($filters['month']) ? sanitize_text_field($filters['month']) : '';
+    $active_cat = isset($filters['category']) ? sanitize_text_field($filters['category']) : '';
+
+    $args = [
+        'post_type' => 'event',
+        'posts_per_page' => $per_page,
+        'post_status' => 'publish',
+        'meta_key' => '_event_start_date',
+        'orderby' => 'meta_value',
+        'order' => 'ASC',
+        'meta_query' => [
+            [
+                'key' => '_event_start_date',
+                'value' => date('Y-m-d'), // Only upcoming events
+                'compare' => '>='
+            ]
+        ]
+    ];
+
+    // Filter by Month (YYYY-MM)
+    if ($active_month) {
+        $start_date = $active_month . '-01';
+        $end_date = date('Y-m-t', strtotime($start_date));
+        $args['meta_query'][] = [
+            'key' => '_event_start_date',
+            'value' => [$start_date, $end_date],
+            'compare' => 'BETWEEN',
+            'type' => 'DATE'
+        ];
+    }
+
+    // Filter by Category
+    if ($active_cat) {
+        $args['tax_query'] = [
+            [
+                'taxonomy' => 'event_category',
+                'field' => 'slug',
+                'terms' => $active_cat,
+            ]
+        ];
+    }
+
+    // 3. Fetch Events
+    $query = new WP_Query($args);
+    $events = [];
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $pid = get_the_ID();
+
+            // Extract Meta
+            $start_date = get_post_meta($pid, '_event_start_date', true);
+            $label = get_post_meta($pid, '_event_label', true) ?: 'Event';
+            $location = get_post_meta($pid, '_event_location', true) ?: '';
+            $is_canceled = (bool) get_post_meta($pid, '_event_is_canceled', true);
+
+            // Format Dates
+            $timestamp = strtotime($start_date);
+            $date_badge = [
+                'month' => date('M', $timestamp),
+                'day' => date('d', $timestamp)
+            ];
+            $date_string = date('l, F j, Y', $timestamp);
+
+            // Schedule Lines (Complex Schedule)
+            $schedule_raw = get_post_meta($pid, '_event_schedule', true);
+            $schedule_lines = !empty($schedule_raw) ? array_filter(explode("\n", $schedule_raw)) : [];
+
+            // CTA
+            $cta_text = get_post_meta($pid, '_event_cta_text', true) ?: 'Details';
+            $cta_url = get_post_meta($pid, '_event_cta_url', true) ?: get_permalink();
+            $is_external = false; // logic could be added here similar to before
+
+            $events[] = [
+                'id' => $pid,
+                'title' => get_the_title(),
+                'label' => $label,
+                'img_url' => get_the_post_thumbnail_url($pid, 'large'),
+                'location' => $location,
+                'date_badge' => $date_badge,
+                'date_string' => $date_string,
+                'schedule_lines' => $schedule_lines,
+                'cta' => [
+                    'text' => $cta_text,
+                    'url' => $cta_url,
+                    'is_external' => $is_external
+                ],
+                'is_canceled' => $is_canceled
+            ];
+        }
+        wp_reset_postdata();
+    }
+
+    // 4. Fetch Filters (Months & Categories)
+
+    // Categories
+    $cats_raw = get_terms(['taxonomy' => 'event_category', 'hide_empty' => true]);
+    $categories = [];
+    if (!is_wp_error($cats_raw)) {
+        foreach ($cats_raw as $c) {
+            $categories[] = [
+                'slug' => $c->slug,
+                'name' => $c->name
+            ];
+        }
+    }
+
+    // Months (Naive approach: next 12 months, or check DB. Let's do next 6 months for efficiency)
+    $months = [];
+    for ($i = 0; $i < 6; $i++) {
+        $timestamp = strtotime("first day of +$i month");
+        $months[] = [
+            'key' => date('Y-m', $timestamp),
+            'label' => date('F Y', $timestamp)
+        ];
+    }
+
+    $data = [
+        'events' => $events,
+        'months' => $months,
+        'categories' => $categories
+    ];
+
+    // Cache for 1 week
+    set_transient($cache_key, $data, WEEK_IN_SECONDS);
+
+    return $data;
 }
 
 

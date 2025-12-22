@@ -1,0 +1,8 @@
+@import '../../components/Card/Card.scss';
+
+/* Fix for Video Card: Constrain absolute iframe to the image wrapper */
+.fc-video-card-item .fc-card-image-wrapper {
+    position: relative;
+}
+
+/* Local overrides if necessary (currently none to match original design) */

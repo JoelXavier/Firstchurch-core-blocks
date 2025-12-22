@@ -63,6 +63,12 @@ export default function Edit({ attributes, setAttributes }) {
                         checked={attributes.zigzag}
                         onChange={(value) => setAttributes({ zigzag: value })}
                     />
+                    <ToggleControl
+                        label={__('Black & White Mode', 'first-church-core-blocks')}
+                        help={__('If enabled, images are B&W until hovered.', 'first-church-core-blocks')}
+                        checked={attributes.grayscale !== false} // Default true
+                        onChange={(value) => setAttributes({ grayscale: value })}
+                    />
                 </PanelBody>
             </InspectorControls>
 

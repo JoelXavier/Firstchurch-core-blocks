@@ -107,6 +107,7 @@ final class FirstChurchBlocks
             'fundraiser',
             'fundraiser-grid',
             'fundraiser-card',
+            'video-card-item',
             'donation-payment',
             'quick-link-item',
             'quick-links',
@@ -169,6 +170,15 @@ final class FirstChurchBlocks
             ['first-church-tokens'],
             '1.0.0'
         );
+        // Extension CSS (Separator) - Ensure this loads on frontend too
+        if (file_exists(plugin_dir_path(__FILE__) . 'build/extensions/style-separator.css')) {
+            wp_enqueue_style(
+                'first-church-ext-separator-css',
+                plugins_url('build/extensions/style-separator.css', __FILE__),
+                [],
+                filemtime(plugin_dir_path(__FILE__) . 'build/extensions/style-separator.css')
+            );
+        }
     }
 
     /**
@@ -582,9 +592,13 @@ final class FirstChurchBlocks
                         ['name' => 'Divine Gold', 'slug' => 'divine-gold', 'color' => '#B08D55'],
                         ['name' => 'Sandwood', 'slug' => 'sandwood', 'color' => '#F3F0E6'],
                         ['name' => 'Ink Black', 'slug' => 'ink-black', 'color' => '#1A1A1A'],
+                        ['name' => 'Navy Grey', 'slug' => 'navy-grey', 'color' => '#344152'],
+                        ['name' => 'Cloud Blue', 'slug' => 'cloud-blue', 'color' => '#E3F4F6'],
+                        ['name' => 'Platinum', 'slug' => 'platinum', 'color' => '#F4F5F6'],
                     ]
                 ],
-                'spacing' => ['appearanceTools' => true]
+                'appearanceTools' => true,
+                'spacing' => []
             ]
         ];
         return $theme_json->update_with($palette);

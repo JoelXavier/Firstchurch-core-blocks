@@ -26,6 +26,10 @@
     "zigzag": {
       "type": "boolean",
       "default": false
+    },
+    "grayscale": {
+      "type": "boolean",
+      "default": true
     }
   },
   "supports": {

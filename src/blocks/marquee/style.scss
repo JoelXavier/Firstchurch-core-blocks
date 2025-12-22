@@ -37,18 +37,27 @@
         flex: 0 0 auto; // Prevent shrinking (overlap) and growing
         
          img {
-            max-height: 350px; // Increased form 80px to 350px
+             max-height: 350px; // Increased form 80px to 350px
             width: auto;
             max-width: none; 
             object-fit: contain;
-            filter: grayscale(100%); 
-            opacity: 0.7;
             transition: all 0.3s ease;
             
             &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
+
+    // Conditional Grayscale Effect
+    &--grayscale {
+        .fc-marquee__item img {
+            filter: grayscale(100%); 
+            opacity: 0.7;
+
+            &:hover {
                 filter: grayscale(0%);
                 opacity: 1;
-                transform: scale(1.05);
             }
         }
     }

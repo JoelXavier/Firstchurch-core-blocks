@@ -67,8 +67,25 @@ export default function MegaMenuManager({ initialData, onSaveSuccess }) {
         setMenuData(newData);
     };
 
+    const openMediaLibrary = (index) => {
+        const frame = wp.media({
+            title: __('Select Link Image', 'first-church-core-blocks'),
+            multiple: false,
+            library: { type: 'image' },
+            button: { text: __('Use Image', 'first-church-core-blocks') }
+        });
+
+        frame.on('select', () => {
+            const attachment = frame.state().get('selection').first().toJSON();
+            updateNewsItem(index, 'image', attachment.url);
+        });
+
+        frame.open();
+    };
+
     return (
         <div className="fc-content-manager fc-mega-menu-manager">
+            {/* ... header ... */}
             <header className="fc-content-manager__header">
                 <h2>{ __('Mega Menu Manager', 'first-church-core-blocks') }</h2>
                 <p>{ __('Configure the global navigation columns shared across your site.', 'first-church-core-blocks') }</p>
@@ -161,11 +178,32 @@ export default function MegaMenuManager({ initialData, onSaveSuccess }) {
                                                 />
                                             </div>
                                             <div className="fc-content-item-col">
-                                                <TextControl
-                                                    label={__('Image URL', 'first-church-core-blocks')}
-                                                    value={item.image}
-                                                    onChange={(val) => updateNewsItem(index, 'image', val)}
-                                                />
+                                                <label className="components-base-control__label" style={{ marginBottom: '8px', display: 'block' }}>{__('Image', 'first-church-core-blocks')}</label>
+                                                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                                                    {item.image && (
+                                                        <div style={{ 
+                                                            width: '40px', 
+                                                            height: '40px', 
+                                                            borderRadius: '4px', 
+                                                            overflow: 'hidden', 
+                                                            border: '1px solid #ddd',
+                                                            background: '#f0f0f0'
+                                                        }}>
+                                                            <img 
+                                                                src={item.image} 
+                                                                alt="Thumbnail" 
+                                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                                                            />
+                                                        </div>
+                                                    )}
+                                                    <Button 
+                                                        variant="secondary" 
+                                                        onClick={() => openMediaLibrary(index)}
+                                                        isSmall
+                                                    >
+                                                        {item.image ? __('Replace Image', 'first-church-core-blocks') : __('Select Image', 'first-church-core-blocks')}
+                                                    </Button>
+                                                </div>
                                             </div>
                                             <div className="fc-content-item-col">
                                                 <TextControl

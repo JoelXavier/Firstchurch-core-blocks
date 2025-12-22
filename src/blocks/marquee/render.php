@@ -8,13 +8,14 @@ $images = $attributes['images'] ?? [];
 $speed = (int) ($attributes['speed'] ?? 30);
 $direction = $attributes['direction'] ?? 'left';
 $zigzag = (bool) ($attributes['zigzag'] ?? false);
+$grayscale = (bool) ($attributes['grayscale'] ?? true);
 
 if (empty($images)) {
     return;
 }
 
 $wrapper_attributes = get_block_wrapper_attributes([
-    'class' => 'fc-marquee fc-marquee--' . $direction . ($zigzag ? ' fc-marquee--zigzag' : ''),
+    'class' => 'fc-marquee fc-marquee--' . $direction . ($zigzag ? ' fc-marquee--zigzag' : '') . ($grayscale ? ' fc-marquee--grayscale' : ''),
     'style' => '--marquee-speed: ' . $speed . 's;'
 ]);
 ?>
