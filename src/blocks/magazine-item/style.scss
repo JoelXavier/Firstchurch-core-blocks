@@ -97,8 +97,10 @@
             flex: 0 0 140px; // Smaller thumbnail for sidebar balance
             width: 140px;
             padding-bottom: 0;
+            width: 140px;
+            padding-bottom: 0;
             height: 105px; // Reduced from 135px
-            border-radius: 4px;
+            border-radius: 0; // Enforce sharp corners
 
             &::before {
                 display: none;
@@ -161,6 +163,17 @@
         &:hover {
             transform: none;
             box-shadow: none;
+        }
+    }
+
+    /* No Background Mode (Vertical Layout) */
+    &.fc-magazine-item--no-background {
+        background-color: transparent !important;
+        box-shadow: none !important; // Often desirable when bg is gone
+
+        .fc-magazine-item__content {
+            padding: 1.5rem 0 0 0 !important; // Top spacing, but flush left/right/bottom
+            background-color: transparent !important;
         }
     }
 }

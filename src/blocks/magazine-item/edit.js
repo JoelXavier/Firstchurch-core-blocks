@@ -113,6 +113,14 @@ export default function Edit({ attributes, setAttributes }) {
                         ]}
                         onChange={(val) => setAttributes({ layout: val })}
                     />
+                    {layout === 'vertical' && (
+                        <ToggleControl
+                            label={__('Show Text Background', 'first-church-core-blocks')}
+                            help={__('Disable to make text transparent and aligned with image edge.', 'first-church-core-blocks')}
+                            checked={attributes.showBackground !== false} // Default true
+                            onChange={(val) => setAttributes({ showBackground: val })}
+                        />
+                    )}
                 </PanelBody>
             </InspectorControls>
             <div {...blockProps}>

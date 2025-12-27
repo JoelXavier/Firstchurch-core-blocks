@@ -35,6 +35,10 @@
     "decorationPosition": {
         "type": "string",
         "default": "bottom"
+    },
+    "noise": {
+        "type": "boolean",
+        "default": false
     }
   },
   	"textdomain": "first-church-core-blocks",

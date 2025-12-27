@@ -53,6 +53,10 @@
     "fundraiserId": {
       "type": "number",
       "default": 0
+    },
+    "showBackground": {
+      "type": "boolean",
+      "default": true
     }
   },
   "textdomain": "first-church-core-blocks",

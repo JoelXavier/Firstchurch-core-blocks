@@ -32,23 +32,35 @@ $quick_links = $menu_data['quickLinks'] ?? [];
 ?>
 <header <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
     <div class="fc-sleek-nav__container">
-        <div class="fc-sleek-nav__brand">
-            <?php if ($logo_url): ?>
-                <div class="fc-sleek-nav__logo-preview">
-                    <img src="<?php echo esc_url($logo_url); ?>" alt="<?php echo esc_attr($site_name); ?>" />
-                </div>
-            <?php endif; ?>
-            <div class="fc-sleek-nav__text">
-                <h1 class="fc-sleek-nav__site-name"><?php echo wp_kses_post($site_name); ?></h1>
-            </div>
-        </div>
 
-        <div class="fc-sleek-nav__hamburger" style="color: <?php echo esc_attr($hamburger_color); ?>">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
+        <?php if (!empty($attributes['logoLink'])): ?>
+            <a href="<?php echo esc_url($attributes['logoLink']); ?>" class="fc-sleek-nav__brand"
+                style="text-decoration: none; color: inherit;">
+            <?php else: ?>
+                <div class="fc-sleek-nav__brand">
+                <?php endif; ?>
+
+                <?php if ($logo_url): ?>
+                    <div class="fc-sleek-nav__logo-preview">
+                        <img src="<?php echo esc_url($logo_url); ?>" alt="<?php echo esc_attr($site_name); ?>" />
+                    </div>
+                <?php endif; ?>
+                <div class="fc-sleek-nav__text">
+                    <h1 class="fc-sleek-nav__site-name"><?php echo wp_kses_post($site_name); ?></h1>
+                </div>
+
+                <?php if (!empty($attributes['logoLink'])): ?>
+            </a>
+        <?php else: ?>
         </div>
+    <?php endif; ?>
+
+    <div class="fc-sleek-nav__hamburger" style="color: <?php echo esc_attr($hamburger_color); ?>">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+        </svg>
+    </div>
     </div>
 
     <div class="fc-sleek-nav__overlay fc-full-page-menu"

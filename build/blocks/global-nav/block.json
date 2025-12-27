@@ -39,6 +39,10 @@
       "type": "string",
       "default": ""
     },
+    "logoLink": {
+      "type": "string",
+      "default": "/"
+    },
     "ctaLabel": {
       "type": "string",
       "default": "GIVE"

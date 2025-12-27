@@ -26,6 +26,17 @@
     },
     "headerColor": {
         "type": "string"
+    },
+    "cornerRadius": {
+        "type": "string",
+        "default": "0px"
+    },
+    "viewAllColor": {
+        "type": "string"
+    },
+    "cardGap": {
+        "type": "string",
+        "default": "0px"
     }
   },
   "supports": {

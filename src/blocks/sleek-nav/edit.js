@@ -111,6 +111,13 @@ export default function Edit({ attributes, setAttributes }) {
                     >
                         {isMenuOpen ? __('Close Menu Preview', 'first-church-core-blocks') : __('Edit Full Screen Menu', 'first-church-core-blocks')}
                     </Button>
+                    <br />
+                    <TextControl
+                        label={__('Logo Link', 'first-church-core-blocks')}
+                        value={attributes.logoLink}
+                        onChange={(val) => setAttributes({ logoLink: val })}
+                        help={__('Where the logo should link to (e.g. /).', 'first-church-core-blocks')}
+                    />
                 </PanelBody>
 
                 {!useGlobalMenu && (

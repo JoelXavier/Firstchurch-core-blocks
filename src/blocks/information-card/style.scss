@@ -1,0 +1,91 @@
+.fc-information-card {
+    background: #fff;
+    padding: 32px;
+    border: 1px solid #eee;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    &__label {
+        display: block;
+        font-family: inherit;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        color: #8B1D22; // Burgundy
+        margin-bottom: 12px;
+        text-transform: uppercase;
+    }
+
+    &__title {
+        font-family: 'Playfair Display', serif;
+        font-size: 24px;
+        color: #1A1A1A;
+        margin: 0 0 16px 0;
+        line-height: 1.25;
+    }
+
+    &__description {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 24px;
+        flex-grow: 1;
+    }
+
+    &__footer {
+        margin-top: auto; /* Push to bottom */
+    }
+
+    &__button {
+        display: inline-block;
+        background: #B08D55; // Divine Gold
+        color: #fff;
+        text-decoration: none;
+        padding: 12px 24px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        border-radius: 0; // Square buttons as per theme
+        transition: background 0.3s ease;
+        text-align: center;
+        width: 100%;
+
+        &:hover {
+            background: #967544;
+            color: #fff;
+        }
+    }
+
+    &__bottom-bar {
+        margin-top: auto;
+        height: 6px;
+        background-color: #B08D55; // Divine Gold
+        width: 100%;
+        border-radius: 4px 4px 0 0;
+        opacity: 0.8;
+    }
+}
+
+// Editor-only styles
+.is-focused.fc-information-card {
+    outline: 2px solid #8B1D22;
+}
+
+.fc-information-card__button.disabled-in-editor {
+    cursor: default;
+}

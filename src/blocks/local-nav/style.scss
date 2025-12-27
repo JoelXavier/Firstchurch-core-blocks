@@ -1,0 +1,126 @@
+.fc-local-nav {
+    display: flex;
+    flex-direction: column;
+    padding: var(--wp--preset--spacing--24, 1.5rem);
+    border-radius: 4px; 
+    transition: all 0.3s ease;
+
+    // Default Colors (if not overridden by WP controls)
+    &:not(.has-background) {
+        background-color: var(--wp--preset--color--neutral-50, #f9fafb);
+    }
+    &:not(.has-text-color) {
+        color: var(--wp--preset--color--neutral-900, #333);
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    &__title {
+        font-family: var(--wp--preset--font-family--playfair-display, serif);
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+        color: inherit;
+    }
+
+    &__toggle {
+        display: none; // Hidden on desktop
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        color: inherit;
+        transition: transform 0.3s ease;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    &__menu {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap; // Allow wrapping on desktop if many items
+        gap: 1.5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        align-items: center;
+    }
+
+    &__item {
+        margin: 0;
+    }
+
+    &__link {
+        display: inline-block;
+        text-decoration: none;
+        color: inherit; // Inherit from block text color
+        font-family: var(--wp--preset--font-family--inter, sans-serif);
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.2s ease;
+        opacity: 0.8;
+
+        &:hover {
+            opacity: 1;
+            color: var(--wp--preset--color--divine-gold, #B08D55);
+        }
+    }
+
+    // --- Mobile / Responsive ---
+    @media (max-width: 768px) {
+        
+        &__toggle {
+            display: flex; // Show toggle
+        }
+
+        &__menu {
+            display: none; // Hide menu by default
+            flex-direction: column;
+            margin-top: 1rem;
+            border-top: 1px solid var(--wp--preset--color--neutral-200, #eee);
+            padding-top: 1rem;
+            // opacity removed
+        }
+
+        &__list {
+            flex-direction: column; // Vertical
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        &__link {
+            width: 100%;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        // Expanded State
+        &.is-open {
+            .fc-local-nav__toggle {
+                transform: rotate(180deg);
+            }
+            
+            .fc-local-nav__menu {
+                display: flex;
+            }
+        }
+    }
+}
+
+// Utility for Desktop Hide (outside module scope usually, but scoped here for block)
+@media (min-width: 769px) {
+    .fc-local-nav .fc-hide-desktop {
+        display: none !important;
+    }
+}

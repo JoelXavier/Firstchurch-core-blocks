@@ -7,6 +7,7 @@ $media_url = isset($attributes['mediaUrl']) ? (string) $attributes['mediaUrl'] :
 $layout = isset($attributes['layout']) ? (string) $attributes['layout'] : 'vertical';
 $useDashboardData = isset($attributes['useDashboardData']) ? (bool) $attributes['useDashboardData'] : false;
 $fundraiserId = isset($attributes['fundraiserId']) ? $attributes['fundraiserId'] : null;
+$showBackground = isset($attributes['showBackground']) ? $attributes['showBackground'] : true;
 
 // Handle Dashboard Data Override
 $fundraiser_data = null;
@@ -27,7 +28,9 @@ if ($useDashboardData && $fundraiserId) {
 }
 
 $wrapper_attrs = get_block_wrapper_attributes([
-    'class' => 'fc-magazine-item is-layout-' . esc_attr($layout) . ($fundraiser_data ? ' is-linked-fundraiser' : ''),
+    'class' => 'fc-magazine-item is-layout-' . esc_attr($layout) . 
+               ($fundraiser_data ? ' is-linked-fundraiser' : '') .
+               (!$showBackground ? ' fc-magazine-item--no-background' : ''),
     'data-fundraiser-id' => $useDashboardData ? esc_attr($fundraiserId) : '',
     'data-raised' => $fundraiser_data ? (float) $fundraiser_data['raised'] : 0,
     'data-target' => $fundraiser_data ? (float) $fundraiser_data['target'] : 0,

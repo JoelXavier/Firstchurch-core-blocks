@@ -57,6 +57,7 @@ final class FirstChurchBlocks
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_branding']);
         add_action('enqueue_block_editor_assets', [$this, 'enqueue_editor_assets']);
+        add_action('wp_head', [$this, 'inject_userway_widget']);
 
         // Admin Pages & Dashboard
         add_action('admin_menu', [$this, 'register_admin_pages']);
@@ -125,7 +126,9 @@ final class FirstChurchBlocks
             'location-feed',
             'magazine-grid',
             'magazine-item',
-            'baptism-stats'
+            'baptism-stats',
+            'information-card',
+            'local-nav'
         ];
 
         foreach ($blocks as $block) {
@@ -260,7 +263,7 @@ final class FirstChurchBlocks
             'show_in_rest' => true,
             'supports' => ['title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'],
             'menu_icon' => 'dashicons-calendar-alt',
-            'has_archive' => true,
+            'has_archive' => false, // Disabled to allow custom 'Events' page at /events
             'rewrite' => ['slug' => 'events'],
         ]);
 
@@ -625,6 +628,16 @@ final class FirstChurchBlocks
             wp_redirect(admin_url('admin.php?page=firstchurch-dashboard'));
             exit;
         }
+    }
+
+    /**
+     * Inject UserWay Accessibility Widget.
+     */
+    public function inject_userway_widget()
+    {
+        ?>
+        <script src="https://cdn.userway.org/widget.js" data-account="LlnNivO099"></script>
+        <?php
     }
 }
 

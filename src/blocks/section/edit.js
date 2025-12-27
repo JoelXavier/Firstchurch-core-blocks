@@ -54,6 +54,14 @@ export default function Edit({ attributes, setAttributes }) {
                         />
                     )}
                 </PanelBody>
+                <PanelBody title={__('Background', 'first-church-core-blocks')}>
+                    <ToggleControl
+                        label={__('Noise Texture', 'first-church-core-blocks')}
+                        help={__('Adds a subtle grain effect to the background.', 'first-church-core-blocks')}
+                        checked={attributes.noise}
+                        onChange={(val) => setAttributes({ noise: val })}
+                    />
+                </PanelBody>
             </InspectorControls>
 
 			<div {...blockProps}>

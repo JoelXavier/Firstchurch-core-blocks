@@ -131,6 +131,12 @@ export default function Edit({ attributes, setAttributes }) {
                         value={logoTextSecondary}
                         onChange={(val) => setAttributes({ logoTextSecondary: val })}
                     />
+                    <TextControl
+                        label={__('Logo Link', 'first-church-core-blocks')}
+                        value={attributes.logoLink}
+                        onChange={(val) => setAttributes({ logoLink: val })}
+                        help={__('Where the logo should link to (e.g. /).', 'first-church-core-blocks')}
+                    />
                 </PanelBody>
 
                 <PanelBody title={__('Top Navigation', 'first-church-core-blocks')} initialOpen={false}>
@@ -305,6 +311,7 @@ export default function Edit({ attributes, setAttributes }) {
                 announcements={announcements}
                 menuData={effectiveMenuData}
                 logoSrc={logoUrl}
+                logoLink={attributes.logoLink}
             />
 		</div>
 	);

@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".fc-local-nav").forEach(e=>{const t=e.querySelector(".fc-local-nav__toggle"),a=e.querySelector(".fc-local-nav__menu");t&&a&&t.addEventListener("click",()=>{const a="true"===t.getAttribute("aria-expanded");t.setAttribute("aria-expanded",!a),e.classList.toggle("is-open")})})});

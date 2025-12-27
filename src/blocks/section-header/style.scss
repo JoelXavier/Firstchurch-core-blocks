@@ -42,10 +42,11 @@
     }
 
     &__line {
-        height: 3px;
+        height: 4px;
         width: 60px;
-        background-color: var(--wp--preset--color--secondary, #D4AF37); // Default Gold
+        background-color: var(--wp--preset--color--divine-gold);
         margin-top: 0.5rem;
+        border-radius: 2px;
         
         &--neutral {
              background-color: var(--wp--preset--color--neutral-500);

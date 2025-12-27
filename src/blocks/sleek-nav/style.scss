@@ -290,11 +290,14 @@
         .fc-quick-nav-list {
             gap: 20px;
             a, .fc-quick-link-preview {
-                font-family: var(--wp--preset--font-family--heading);
-                font-size: 16px;
+                font-family: var(--wp--preset--font-family--ui); // Inter
+                font-size: 15px;
+                font-weight: 600;
                 color: #fff;
                 text-decoration: none;
                 opacity: 0.9;
+                text-transform: uppercase;
+                letter-spacing: 1px;
                 transition: all 0.3s;
                 &:hover {
                     opacity: 1;

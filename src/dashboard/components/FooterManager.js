@@ -92,6 +92,27 @@ export default function FooterManager({ initialData, onSaveSuccess }) {
         setFooterData({ ...footerData, socialLinks: newSocials });
     };
 
+    const addSocial = () => {
+        const newSocials = [...footerData.socialLinks, { label: '', url: '' }];
+        setFooterData({ ...footerData, socialLinks: newSocials });
+    };
+
+    const removeSocial = (index) => {
+        const newSocials = footerData.socialLinks.filter((_, i) => i !== index);
+        setFooterData({ ...footerData, socialLinks: newSocials });
+    };
+
+    const addDefaultSocials = () => {
+        const defaults = [
+            { label: 'Facebook', url: '' },
+            { label: 'Instagram', url: '' },
+            { label: 'YouTube', url: '' }
+        ];
+        // Append defaults only if they don't exist (roughly)
+        const newSocials = [...footerData.socialLinks, ...defaults];
+        setFooterData({ ...footerData, socialLinks: newSocials });
+    };
+
     return (
         <div className="fc-content-manager fc-footer-manager">
             <header className="fc-content-manager__header">
@@ -181,16 +202,47 @@ export default function FooterManager({ initialData, onSaveSuccess }) {
                         <>
                             <CardBody>
                                 <div className="fc-content-item-grid">
+                                    {footerData.socialLinks.length === 0 && (
+                                        <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
+                                            {__('No social links configured. Add one below.', 'first-church-core-blocks')}
+                                        </div>
+                                    )}
                                     {footerData.socialLinks.map((link, index) => (
                                         <div key={index} className="fc-content-item-col" style={{ borderBottom: index < footerData.socialLinks.length - 1 ? '1px solid #eee' : 'none', paddingBottom: '16px', marginBottom: '16px' }}>
-                                            <strong>{link.label}</strong>
-                                            <TextControl
-                                                label={__('URL', 'first-church-core-blocks')}
-                                                value={link.url}
-                                                onChange={(val) => updateSocial(index, 'url', val)}
-                                            />
+                                            <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+                                                <div style={{ flexGrow: 1 }}>
+                                                    <TextControl
+                                                        label={__('Platform Label', 'first-church-core-blocks')}
+                                                        value={link.label}
+                                                        onChange={(val) => updateSocial(index, 'label', val)}
+                                                        placeholder="e.g. Facebook"
+                                                    />
+                                                    <TextControl
+                                                        label={__('URL', 'first-church-core-blocks')}
+                                                        value={link.url}
+                                                        onChange={(val) => updateSocial(index, 'url', val)}
+                                                        placeholder="https://..."
+                                                    />
+                                                </div>
+                                                <Button 
+                                                    isDestructive 
+                                                    variant="secondary" 
+                                                    onClick={() => removeSocial(index)}
+                                                    style={{ marginTop: '24px' }}
+                                                >
+                                                    {__('Remove', 'first-church-core-blocks')}
+                                                </Button>
+                                            </div>
                                         </div>
                                     ))}
+                                    <div style={{ display: 'flex', gap: '10px', marginTop: '16px' }}>
+                                        <Button variant="secondary" onClick={addSocial}>
+                                            {__('Add Social Link', 'first-church-core-blocks')}
+                                        </Button>
+                                        <Button variant="tertiary" onClick={addDefaultSocials}>
+                                            {__('Add Defaults (FB, IG, YT)', 'first-church-core-blocks')}
+                                        </Button>
+                                    </div>
                                 </div>
                             </CardBody>
                             <CardFooter>

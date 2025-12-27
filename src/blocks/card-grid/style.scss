@@ -33,6 +33,7 @@
 
     .fc-card-grid__subheader {
         font-size: 1.1rem;
+        line-height: 1.6; // Increased from default for better mobile readability
         opacity: 0.8;
         margin-top: 1rem;
         max-width: 800px;

@@ -1,0 +1,52 @@
+{
+  "apiVersion": 3,
+  "name": "firstchurch/information-card",
+  "version": "0.1.0",
+  "title": "Information Card",
+  "category": "firstchurch",
+  "icon": "info",
+  "description": "A card for displaying general information with a label, title, and link.",
+  "supports": {
+    "html": false,
+    "spacing": {
+      "margin": true,
+      "padding": true,
+      "blockGap": true
+    },
+    "typography": {
+      "fontSize": true,
+      "lineHeight": true
+    }
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "default": "INFO"
+    },
+    "title": {
+      "type": "string",
+      "default": "About Our Mission"
+    },
+    "description": {
+      "type": "string",
+      "default": "Learn more about what we do and how we serve the community."
+    },
+    "linkText": {
+      "type": "string",
+      "default": "LEARN MORE"
+    },
+    "linkUrl": {
+      "type": "string",
+      "default": "#"
+    },
+    "showLink": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "textdomain": "first-church-core-blocks",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}

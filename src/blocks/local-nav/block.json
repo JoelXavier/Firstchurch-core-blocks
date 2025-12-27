@@ -1,0 +1,41 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "first-church/local-nav",
+    "version": "1.0.0",
+    "title": "Local Manual Navigation",
+    "category": "design",
+    "icon": "menu",
+    "description": "A manual, modular navigation block for local page links.",
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "In This Section"
+        },
+        "hideTitleDesktop": {
+            "type": "boolean",
+            "default": false
+        },
+        "links": {
+            "type": "array",
+            "default": [],
+            "items": {
+                "type": "object"
+            }
+        }
+    },
+    "supports": {
+        "html": false,
+        "anchor": true,
+        "align": ["wide", "full"],
+        "color": {
+            "background": true,
+            "text": true
+        }
+    },
+    "textdomain": "first-church-core-blocks",
+    "editorScript": "file:./index.js",
+    "viewScript": "file:./view.js",
+    "style": "file:./style-index.css",
+    "render": "file:./render.php"
+}

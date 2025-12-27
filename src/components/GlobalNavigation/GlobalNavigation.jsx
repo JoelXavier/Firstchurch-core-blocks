@@ -21,7 +21,8 @@ export const GlobalNavigation = ({
   logoTextSecondary = "Of Our Lord Jesus Christ",
   ctaLabel = "Button",
   menuData, // New Prop
-  logoSrc // New Prop for WP
+  logoSrc, // New Prop for WP
+  logoLink // New Prop for Link
 }) => {
   // Use passed logoSrc or fallback to imported default
   const displayLogo = logoSrc || logo;
@@ -76,36 +77,69 @@ export const GlobalNavigation = ({
         }}>
           
           {/* Branding (Left) */}
-          <div className="fc-global-header__brand" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-             <img 
-              src={displayLogo} 
-              alt="Church Logo" 
-              style={{ height: '100px', width: 'auto', objectFit: 'contain' }} 
-             />
-             
-             <div className="fc-global-header__brand-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-               <span style={{ 
-                 fontFamily: 'var(--wp--preset--font-family--brand)', 
-                 fontSize: '48px', 
-                 color: 'var(--wp--preset--color--cardinal)',
-                 fontWeight: '700',
-                 textShadow: '0.5px 0 0 currentColor',
-                 lineHeight: '1.1'
-               }}>
-                 {logoTextPrimary}
-               </span>
-               <span style={{ 
-                 fontFamily: 'var(--wp--preset--font-family--brand)', 
-                 fontSize: '32px', 
-                 color: 'var(--wp--preset--color--cardinal)',
-                 fontWeight: '700',
-                 lineHeight: '1',
-                 marginTop: '-4px'
-               }}>
-                 {logoTextSecondary}
-               </span>
+          {logoLink ? (
+             <a href={logoLink} className="fc-global-header__brand" style={{ display: 'flex', alignItems: 'center', gap: '32px', textDecoration: 'none' }}>
+                 <img 
+                  src={displayLogo} 
+                  alt="Church Logo" 
+                  style={{ height: '100px', width: 'auto', objectFit: 'contain' }} 
+                 />
+                 
+                 <div className="fc-global-header__brand-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                   <span style={{ 
+                     fontFamily: 'var(--wp--preset--font-family--brand)', 
+                     fontSize: '48px', 
+                     color: 'var(--wp--preset--color--cardinal)',
+                     fontWeight: '700',
+                     textShadow: '0.5px 0 0 currentColor',
+                     lineHeight: '1.1'
+                   }}>
+                     {logoTextPrimary}
+                   </span>
+                   <span style={{ 
+                     fontFamily: 'var(--wp--preset--font-family--brand)', 
+                     fontSize: '32px', 
+                     color: 'var(--wp--preset--color--cardinal)',
+                     fontWeight: '700',
+                     lineHeight: '1',
+                     marginTop: '-4px'
+                   }}>
+                     {logoTextSecondary}
+                   </span>
+                 </div>
+             </a>
+          ) : (
+             <div className="fc-global-header__brand" style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+                 <img 
+                  src={displayLogo} 
+                  alt="Church Logo" 
+                  style={{ height: '100px', width: 'auto', objectFit: 'contain' }} 
+                 />
+                 
+                 <div className="fc-global-header__brand-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                   <span style={{ 
+                     fontFamily: 'var(--wp--preset--font-family--brand)', 
+                     fontSize: '48px', 
+                     color: 'var(--wp--preset--color--cardinal)',
+                     fontWeight: '700',
+                     textShadow: '0.5px 0 0 currentColor',
+                     lineHeight: '1.1'
+                   }}>
+                     {logoTextPrimary}
+                   </span>
+                   <span style={{ 
+                     fontFamily: 'var(--wp--preset--font-family--brand)', 
+                     fontSize: '32px', 
+                     color: 'var(--wp--preset--color--cardinal)',
+                     fontWeight: '700',
+                     lineHeight: '1',
+                     marginTop: '-4px'
+                   }}>
+                     {logoTextSecondary}
+                   </span>
+                 </div>
              </div>
-          </div>
+          )}
 
           {/* Right Section: Nav Items + Actions */}
           <div className="fc-global-header__right" style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
