@@ -33,16 +33,21 @@ export const GlobalNavigation = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Menu State
 
   useEffect(() => {
+    // Determine active list length
+    const list = (menuData && menuData.announcements && menuData.announcements.length > 0) 
+        ? menuData.announcements 
+        : announcements;
+
     const interval = setInterval(() => {
       setFade('out');
       setTimeout(() => {
-        setCurrentAnnouncement((prev) => (prev + 1) % announcements.length);
+        setCurrentAnnouncement((prev) => (prev + 1) % list.length);
         setFade('in');
       }, 500); // 0.5s fade out before switch
     }, 5000); // 5s duration
 
     return () => clearInterval(interval);
-  }, [announcements.length]);
+  }, [announcements.length, menuData]);
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -198,22 +203,22 @@ export const GlobalNavigation = ({
                </button>
 
                {/* Hamburger Menu Toggle */}
-               <button 
-                 onClick={() => setIsMenuOpen(true)}
-                 style={{ 
-                   background: 'none', 
-                   border: 'none', 
-                   cursor: 'pointer', 
-                   color: 'var(--wp--preset--color--ink-black)',
-                   display: 'flex', 
-                   flexDirection: 'column', 
-                   gap: '6px',
-                   padding: 0
-                 }} aria-label="Open Full Menu">
-                 <span style={{ display: 'block', width: '32px', height: '3px', backgroundColor: 'currentColor', borderRadius: '2px' }}></span>
-                 <span style={{ display: 'block', width: '32px', height: '3px', backgroundColor: 'currentColor', borderRadius: '2px' }}></span>
-                 <span style={{ display: 'block', width: '20px', height: '3px', backgroundColor: 'currentColor', marginLeft: 'auto', borderRadius: '2px' }}></span>
-               </button>
+                <button 
+                  onClick={() => setIsMenuOpen(true)}
+                  style={{ 
+                    background: 'none', 
+                    border: 'none', 
+                    cursor: 'pointer', 
+                    color: 'var(--wp--preset--color--ink-black)',
+                    display: 'flex', 
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 0
+                  }} aria-label="Open Full Menu">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
              </div>
           </div>
         </div>
@@ -232,16 +237,44 @@ export const GlobalNavigation = ({
         }}>
           
           {/* Announcement Text */}
-          <div style={{
+          <div 
+            key={currentAnnouncement} /* Force remount to prevent ghosting */
+            style={{
             fontFamily: 'var(--wp--preset--font-family--ui)',
             fontSize: '13px',
             fontWeight: '500',
             color: 'var(--wp--preset--color--ink-black)', 
             textAlign: 'center',
             transition: 'opacity 0.5s ease-in-out',
-            opacity: fade === 'in' ? 1 : 0
+            opacity: fade === 'in' ? 1 : 0,
+            position: 'relative', /* Ensure z-index works */
+            zIndex: 2,
+            width: '100%',
+            maxWidth: '600px', // Prevent too wide
+            padding: '0 20px'
           }}>
-             {announcements[currentAnnouncement]}
+             {(() => {
+                // Get active list (prefer menuData)
+                const list = (menuData && menuData.announcements && menuData.announcements.length > 0) 
+                    ? menuData.announcements 
+                    : announcements;
+                
+                const item = list[currentAnnouncement];
+                
+                // Handle String vs Object
+                const text = typeof item === 'string' ? item : item.text;
+                const url = typeof item === 'object' && item.url ? item.url : null;
+                
+                if (url) {
+                    return (
+                        <a href={url} className="fc-announcement-link">
+                            {text}
+                        </a>
+                    );
+                }
+                
+                return text;
+             })()}
           </div>
 
           {/* Progress Dots (Absolute positioned or flexed) */}
@@ -251,7 +284,7 @@ export const GlobalNavigation = ({
             display: 'flex', 
             gap: '8px'
           }}>
-             {announcements.map((_, idx) => (
+             {((menuData && menuData.announcements && menuData.announcements.length > 0) ? menuData.announcements : announcements).map((_, idx) => (
                <div key={idx} style={{
                  width: '6px',
                  height: '6px',

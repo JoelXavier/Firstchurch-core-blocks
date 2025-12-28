@@ -2,7 +2,7 @@
 /**
  * Plugin Name: First Church Core Blocks
  * Description: A suite of dynamic, server-side rendered blocks with a Storybook-first development workflow.
- * Version: 1.0.0
+ * Version: 1.1.1
  * Author: Antigravity
  * License: GPL-2.0-or-later
  * Text Domain: first-church-core-blocks
@@ -74,6 +74,7 @@ final class FirstChurchBlocks
         add_action('after_setup_theme', [$this, 'theme_setup']);
         add_filter('wp_theme_json_data_theme', [$this, 'configure_theme_json']);
         add_filter('should_load_remote_block_patterns', '__return_false');
+        add_filter('register_block_type_args', [$this, 'enable_core_block_typography'], 10, 2);
 
         // Templates
         add_filter('theme_post_templates', [$this, 'register_templates']);
@@ -128,7 +129,9 @@ final class FirstChurchBlocks
             'magazine-item',
             'baptism-stats',
             'information-card',
-            'local-nav'
+            'local-nav',
+            'text-paragraph',
+            'text-heading'
         ];
 
         foreach ($blocks as $block) {
@@ -579,6 +582,9 @@ final class FirstChurchBlocks
             ['name' => 'Platinum', 'slug' => 'platinum', 'color' => '#f4f5f6'],
         ]);
 
+        // Force enable Line Height (common fix for missing controls)
+        add_theme_support('custom-line-height');
+
     }
 
     /**
@@ -638,6 +644,22 @@ final class FirstChurchBlocks
         ?>
         <script src="https://cdn.userway.org/widget.js" data-account="LlnNivO099"></script>
         <?php
+    }
+
+    /**
+     * Surgically enable typography controls for specific Core blocks.
+     */
+    public function enable_core_block_typography($args, $name)
+    {
+        $target_blocks = ['core/paragraph', 'core/heading', 'core/list', 'core/quote'];
+        if (in_array($name, $target_blocks)) {
+            $args['supports']['typography']['lineHeight'] = true;
+            $args['supports']['typography']['fontSize'] = true;
+            $args['supports']['typography']['fontStyle'] = true;
+            $args['supports']['typography']['fontWeight'] = true;
+            $args['supports']['typography']['letterSpacing'] = true;
+        }
+        return $args;
     }
 }
 

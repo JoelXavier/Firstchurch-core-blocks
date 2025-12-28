@@ -276,10 +276,7 @@ function firstchurch_get_dashboard_templates()
         'orderby' => 'modified',
         'order' => 'DESC',
         'post_status' => ['publish', 'draft', 'pending', 'future'],
-        // 'author'      => get_current_user_id() // Optional: restrict to current user? 
-        // Let's keep it global for now for better team visibility, or restrict if user wants "MY" drafts.
-        // User said "My Recent Drafts", so let's restrict to author.
-        'author' => get_current_user_id()
+        // 'author' => get_current_user_id() // Removed to show ALL team drafts
     ];
     $recent_query = get_posts($recent_args);
     $recent_activity = [];

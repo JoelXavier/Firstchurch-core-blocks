@@ -1,0 +1,15 @@
+.wp-block-firstchurch-paragraph {
+    /* Aggressive wrapping for long non-breaking strings */
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+    white-space: normal !important;
+    
+    /* Ensure container constraints */
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Specific fix for the editor wrapper */
+.block-editor-block-list__block.wp-block-firstchurch-paragraph {
+    max-width: 100%;
+}

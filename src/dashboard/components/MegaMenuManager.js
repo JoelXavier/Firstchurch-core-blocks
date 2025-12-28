@@ -16,7 +16,8 @@ export default function MegaMenuManager({ initialData, onSaveSuccess }) {
     const [menuData, setMenuData] = useState(initialData || {
         mainLinks: [],
         newsItems: [],
-        quickLinks: []
+        quickLinks: [],
+        announcements: [] // Added Announcements
     });
     const [isSaving, setIsSaving] = useState(false);
     const [notice, setNotice] = useState(null);
@@ -64,6 +65,36 @@ export default function MegaMenuManager({ initialData, onSaveSuccess }) {
         const newData = { ...menuData };
         newData.quickLinks = [...newData.quickLinks];
         newData.quickLinks[index] = { ...newData.quickLinks[index], [key]: value };
+        setMenuData(newData);
+    };
+
+    // Announcement Handlers
+    const updateAnnouncement = (index, key, value) => {
+        const newData = { ...menuData };
+        // Ensure array exists
+        if (!newData.announcements) newData.announcements = [];
+        newData.announcements = [...newData.announcements];
+        
+        // Handle conversion from string (legacy) to object
+        if (typeof newData.announcements[index] === 'string') {
+            newData.announcements[index] = { text: newData.announcements[index], url: '' };
+        }
+
+        newData.announcements[index] = { ...newData.announcements[index], [key]: value };
+        setMenuData(newData);
+    };
+
+    const addAnnouncement = () => {
+        const newData = { ...menuData };
+        if (!newData.announcements) newData.announcements = [];
+        newData.announcements = [...newData.announcements, { text: 'New Announcement', url: '' }];
+        setMenuData(newData);
+    };
+
+    const removeAnnouncement = (index) => {
+        const newData = { ...menuData };
+        if (!newData.announcements) return;
+        newData.announcements = newData.announcements.filter((_, i) => i !== index);
         setMenuData(newData);
     };
 
@@ -260,6 +291,69 @@ export default function MegaMenuManager({ initialData, onSaveSuccess }) {
                                             </div>
                                         </div>
                                     ))}
+                                </div>
+                            </CardBody>
+                            <CardFooter>
+                                <Button variant="primary" onClick={handleSave} disabled={isSaving}>
+                                    {isSaving ? <Spinner /> : __('Save Changes', 'first-church-core-blocks')}
+                                </Button>
+                            </CardFooter>
+                        </>
+                    )}
+                </Card>
+
+                {/* Column 4: Announcements */}
+                <Card className={`fc-content-item-card ${expandedId === 'column4' ? 'is-expanded' : 'is-collapsed'}`}>
+                    <CardHeader className="fc-content-item-header" onClick={() => setExpandedId(expandedId === 'column4' ? null : 'column4')}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexGrow: 1 }}>
+                            <span style={{ fontSize: '18px', opacity: 0.5 }}>{expandedId === 'column4' ? '−' : '+'}</span>
+                            <h3 style={{ margin: 0 }}>{ __('ANNOUNCEMENTS BAR', 'first-church-core-blocks') }</h3>
+                            {expandedId !== 'column4' && (
+                                <div className="fc-content-item-summary">
+                                    <span>📢 {(menuData.announcements || []).length} { __('Items', 'first-church-core-blocks') }</span>
+                                </div>
+                            )}
+                        </div>
+                    </CardHeader>
+                    {expandedId === 'column4' && (
+                        <>
+                            <CardBody>
+                                <div className="fc-content-item-list">
+                                    <div style={{ marginBottom: '16px' }}>
+                                        <Button variant="secondary" onClick={addAnnouncement} isSmall>
+                                            {__('+ Add Announcement', 'first-church-core-blocks')}
+                                        </Button>
+                                    </div>
+                                    {(menuData.announcements || []).map((item, index) => {
+                                        // Normalized item
+                                        const text = typeof item === 'string' ? item : item.text;
+                                        const url = typeof item === 'string' ? '' : item.url;
+                                        
+                                        return (
+                                            <div key={index} className="fc-content-item-grid" style={{ padding: '0 0 16px 0', borderBottom: '1px solid #eee', marginBottom: '16px', display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                                                <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                                                    <TextControl
+                                                        label={__('Announcement Text', 'first-church-core-blocks')}
+                                                        value={text}
+                                                        onChange={(val) => updateAnnouncement(index, 'text', val)}
+                                                    />
+                                                    <TextControl
+                                                        label={__('Link URL (Optional)', 'first-church-core-blocks')}
+                                                        value={url}
+                                                        onChange={(val) => updateAnnouncement(index, 'url', val)}
+                                                    />
+                                                </div>
+                                                <Button 
+                                                    isDestructive 
+                                                    variant="link" 
+                                                    onClick={() => removeAnnouncement(index)}
+                                                    style={{ marginTop: '24px' }}
+                                                >
+                                                    {__('Remove', 'first-church-core-blocks')}
+                                                </Button>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </CardBody>
                             <CardFooter>

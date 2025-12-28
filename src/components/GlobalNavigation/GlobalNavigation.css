@@ -141,6 +141,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* Mobile Safari Fix */
   background-color: #2A050A; /* Dark Burgundy */
   color: #fff;
   z-index: 1000;
@@ -415,6 +416,7 @@
     display: none !important;
   }
 
+
   /* Adjust Header Height if needed */
   .fc-global-header__top {
     min-height: 100px !important; /* Smaller on mobile */
@@ -423,4 +425,18 @@
   .fc-global-header__brand img {
     height: 70px !important; /* Smaller logo */
   }
+}
+
+/* Announcement Link Style - Global */
+.fc-announcement-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.fc-announcement-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.8;
 }

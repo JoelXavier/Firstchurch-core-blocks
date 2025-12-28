@@ -3,6 +3,66 @@
 /* Fix for Video Card: Constrain absolute iframe to the image wrapper */
 .fc-video-card-item .fc-card-image-wrapper {
     position: relative;
+    /* Ensure aspect ratio or height is maintained by the card styles, usually handled by card-image-wrapper */
+}
+
+/* Video Facade (Click-to-Load) Styles */
+.fc-video-facade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    background: #000; /* Fallback */
+
+    .fc-video-thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+        display: block;
+    }
+
+    /* Subtle zoom effect on hover */
+    &:hover .fc-video-thumbnail {
+        transform: scale(1.05);
+    }
+
+    /* Centered Play Button */
+    .fc-video-play-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        transition: all 0.3s ease;
+        z-index: 2;
+        padding: 0;
+        cursor: pointer;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            margin-left: 3px; /* Optical centering for triangle */
+        }
+    }
+
+    &:hover .fc-video-play-btn {
+        background: #ff0000; /* YouTube Redish */
+        border-color: #ff0000;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
 }
 
 /* Local overrides if necessary (currently none to match original design) */

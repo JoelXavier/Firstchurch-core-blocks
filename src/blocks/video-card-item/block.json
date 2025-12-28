@@ -79,6 +79,7 @@
   },
   "textdomain": "first-church-core-blocks",
   "editorScript": "file:./index.js",
+  "viewScript": "file:./view.js",
   "editorStyle": "file:./index.css",
   "style": "file:./style-index.css",
   "render": "file:./render.php"

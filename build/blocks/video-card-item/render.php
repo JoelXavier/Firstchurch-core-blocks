@@ -42,10 +42,18 @@ $wrapper_attributes = get_block_wrapper_attributes([
 
         <div class="fc-card-image-wrapper">
             <?php if ($video_id): ?>
-                <iframe src="https://www.youtube.com/embed/<?php echo esc_attr($video_id); ?>"
-                    title="<?php echo esc_attr($title); ?>" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+                <div class="fc-video-facade" data-video-id="<?php echo esc_attr($video_id); ?>"
+                    data-title="<?php echo esc_attr($title); ?>">
+
+                    <img src="https://img.youtube.com/vi/<?php echo esc_attr($video_id); ?>/maxresdefault.jpg"
+                        alt="<?php echo esc_attr($title); ?>" class="fc-video-thumbnail" loading="lazy" />
+
+                    <button class="fc-video-play-btn" aria-label="Play Video">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                    </button>
+                </div>
             <?php else: ?>
                 <div class="fc-card-image-placeholder"
                     style="background: #000; display: flex; align-items: center; justify-content: center; color: white;">

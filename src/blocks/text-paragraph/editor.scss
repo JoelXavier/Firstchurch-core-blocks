@@ -1,0 +1,5 @@
+/* Ensure the editor canvas respects the wrap */
+.wp-block-firstchurch-paragraph {
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+}

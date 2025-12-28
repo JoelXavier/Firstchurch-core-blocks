@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "firstchurch/heading",
+	"version": "1.0.1",
+	"title": "FC Heading",
+	"category": "firstchurch",
+	"icon": "heading",
+	"description": "A semantic heading block for First Church content.",
+	"keywords": ["heading", "title"],
+	"supports": {
+		"anchor": true,
+		"className": true,
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalFontFamily": true
+		},
+		"color": {
+			"text": true,
+			"background": true,
+			"gradients": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"__experimentalSelector": "h1,h2,h3,h4,h5,h6"
+	},
+	"attributes": {
+		"content": {
+			"type": "string",
+			"source": "html",
+			"selector": "h1,h2,h3,h4,h5,h6",
+			"default": ""
+		},
+		"level": {
+			"type": "number",
+			"default": 2
+		}
+	},
+	"textdomain": "first-church-core-blocks",
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
+}

@@ -6,7 +6,7 @@ export default function ActivityFeed({ items }) {
 
     return (
         <div className="fc-dashboard__activity-feed">
-            <h3 className="fc-dashboard__section-title">{__('My Recent Drafts', 'first-church-core-blocks')}</h3>
+            <h3 className="fc-dashboard__section-title">{__('Recent Team Drafts', 'first-church-core-blocks')}</h3>
             <ul className="fc-dashboard__activity-list">
                 {items.map((item) => (
                     <li key={item.id} className="fc-dashboard__activity-item">
